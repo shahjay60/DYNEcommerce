@@ -1,0 +1,35 @@
+﻿<!-- Add to cart bar -->
+@model Domain.CustomerModel
+
+<a href="javascript:void(0)" class="overlay" onclick="closeAccount()"></a>
+<div class="cart-inner">
+    <div class="cart_top">
+        <h3>my account</h3>
+        <div class="close-cart">
+            <a href="javascript:void(0)" onclick="closeAccount()">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("Login", "Customer", FormMethod.Post, new { @class = "theme-form", role = "form" }))
+    {
+        <div class="form-group">
+            <label for="email">Email</label>
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label for="review">Password</label>
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "txtpwd" })
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-solid btn-md btn-block  " value="Login" id="btnSubmit" />
+        </div>
+
+    }
+    <div class="accout-fwd">
+        <a href="forget-pwd.html" class="d-block"><h5>forget password?</h5></a>
+        <a href="@Url.Action("Register", "Customer")" class="d-block"><h6>you have no account ?<span>signup now</span></h6></a>
+    </div>
+</div>
+<!-- Add to cart bar end-->

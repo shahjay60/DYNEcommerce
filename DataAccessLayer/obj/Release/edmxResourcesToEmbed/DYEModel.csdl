@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TMATS00012020Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="GRP_MASTER">
+    <Key>
+      <PropertyRef Name="GRP_CD" />
+    </Key>
+    <Property Name="GRP_CD" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="GRP_SNAME" Type="String" MaxLength="40" FixedLength="true" Unicode="false" />
+    <Property Name="GRP_NAME" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="GROUP_YN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="FOR_GRP_CD" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="LEVEL_TEXT" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="Customer_Profit_Percentage" Type="Double" />
+    <Property Name="Delear_Profit_Percentage" Type="Double" />
+    <Property Name="Export_To_Zen_Cart" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+    <Property Name="DateModified" Type="DateTime" Precision="0" />
+    <Property Name="Notes" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="GRP_sname_SL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="TMATS00012020Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="GRP_MASTER" EntityType="Self.GRP_MASTER" />
+    <EntitySet Name="ITMMASTs" EntityType="TMATS00012020Model.ITMMAST" />
+    <EntitySet Name="itmmast_photos" EntityType="TMATS00012020Model.itmmast_photos" />
+    <EntitySet Name="CustomerCarts" EntityType="TMATS00012020Model.CustomerCart" />
+    <EntitySet Name="CustomerWishlists" EntityType="TMATS00012020Model.CustomerWishlist" />
+    <EntitySet Name="CustomerRegistrations" EntityType="TMATS00012020Model.CustomerRegistration" />
+  </EntityContainer>
+  <EntityType Name="ITMMAST">
+    <Key>
+      <PropertyRef Name="ITEM_CD" />
+    </Key>
+    <Property Name="ITEM_CD" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="ITEM_DESC" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="GRP_CD" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="UNIT" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="RATE" Type="Double" />
+    <Property Name="Packing_Qty" Type="Int32" />
+    <Property Name="SALE_PRICE" Type="Double" />
+    <Property Name="AVG_COST" Type="Double" />
+    <Property Name="USER_AVG_COST" Type="Double" />
+    <Property Name="OP_STK" Type="Double" />
+    <Property Name="OP_RATE" Type="Double" />
+    <Property Name="OP_VAL" Type="Double" />
+    <Property Name="MIN_STK_LEVEL" Type="Int32" />
+    <Property Name="MAX_STK_LEVEL" Type="Int32" />
+    <Property Name="REORDER_LEVEL" Type="Int32" />
+    <Property Name="ABC" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="XYZ" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="GI_QTY_MM" Type="Double" />
+    <Property Name="GI_VAL_MM" Type="Double" />
+    <Property Name="IS_QTY_MM" Type="Double" />
+    <Property Name="IS_VAL_MM" Type="Double" />
+    <Property Name="CL_STK" Type="Double" />
+    <Property Name="CL_VAL" Type="Double" />
+    <Property Name="LOCATION" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="OP_DATE" Type="DateTime" Precision="0" />
+    <Property Name="USER_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="Active_InActive" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="Inv_NonInv" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="Subtitution" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+    <Property Name="Model_No" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="CostADdPer" Type="Double" />
+    <Property Name="unit_dec_After_Conv" Type="Double" />
+    <Property Name="Temp_GI_QTY_MM" Type="Double" />
+    <Property Name="TEMP_IS_QTY_MM" Type="Double" />
+    <Property Name="TEMP_CL_QTY_MM" Type="Double" />
+    <Property Name="TEMP_AVG_COST" Type="Double" />
+    <Property Name="Super_session_to" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Brand_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Made_in" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Vehical_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Material" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Type_Of_Item" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="Alias_01" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="Alias_02" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="Last_Cost" Type="Double" />
+    <Property Name="Last_Cost_Date" Type="DateTime" Precision="0" />
+    <Property Name="Per_Add_at_Cost_For_Display" Type="Double" />
+    <Property Name="Created_Date" Type="DateTime" Precision="0" />
+    <Property Name="User_Avg_Cost_Taken_In_Inv_Value_Y_N" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="Packing_Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Collection_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Last_Purchase_Qty" Type="Double" />
+    <Property Name="SALE_PRICE2" Type="Double" />
+    <Property Name="SALE_PRICE3" Type="Double" />
+    <Property Name="Bar_Code" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="Batch_Req_Y_N" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="Remark_Memo_Itmmast" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Updated_Y_N" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+    <Property Name="Updated_Date_Time" Type="DateTime" Precision="0" />
+    <Property Name="Expiry_Days" Type="Double" />
+    <Property Name="Rate_Change_Allow" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="Trasnfer_To_POS_Location" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="Restaurant_Stock_Calc_To_Item_Cd" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Restaurant_Item_Cd_Conv" Type="Double" />
+    <Property Name="Restaurant_Change_Rate_Allowed" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="Type_Of_Item_F_B_T_G" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="C_001" Type="Int32" />
+    <Property Name="C_002" Type="Int32" />
+    <Property Name="C_003" Type="Int32" />
+    <Property Name="C_004" Type="Int32" />
+    <Property Name="C_005" Type="Int32" />
+    <Property Name="C_006" Type="Int32" />
+    <Property Name="C_007" Type="Int32" />
+    <Property Name="C_008" Type="Int32" />
+    <Property Name="C_009" Type="Int32" />
+    <Property Name="C_010" Type="Int32" />
+    <Property Name="C_011" Type="Int32" />
+    <Property Name="C_012" Type="Int32" />
+    <Property Name="C_013" Type="Int32" />
+    <Property Name="C_014" Type="Int32" />
+    <Property Name="C_015" Type="Int32" />
+    <Property Name="Export_To_Zen_Cart" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+    <Property Name="DateModified" Type="DateTime" Precision="3" />
+    <Property Name="Item_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tax01" Type="Double" />
+    <Property Name="tax02" Type="Double" />
+    <Property Name="POS_Disc_Per" Type="Double" />
+    <Property Name="POS_Disc_Dt_From" Type="DateTime" Precision="0" />
+    <Property Name="POS_Disc_Dt_To" Type="DateTime" Precision="0" />
+    <Property Name="Alias_03" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="Alias_04" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="Alias_05" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="Alias_06" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="Alias_07" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="Alias_08" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="Alias_09" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="Alias_10" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="Last_Current_PUR_Date" Type="DateTime" Precision="0" />
+    <Property Name="Last_Current_SALE_Date" Type="DateTime" Precision="0" />
+    <Property Name="Last_avg_cost_calc_date" Type="DateTime" Precision="0" />
+    <Property Name="last_import_cost_date" Type="DateTime" Precision="0" />
+    <Property Name="last_import_cost" Type="Double" />
+    <Property Name="last_import_Qty" Type="Double" />
+    <Property Name="SP_Inclusive_TAX" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="Allow_Item_Name_Modification" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="Loyalty_Points" Type="Int32" />
+    <Property Name="tax03" Type="Double" />
+    <Property Name="tax04" Type="Double" />
+    <Property Name="tax05" Type="Double" />
+    <Property Name="tax06" Type="Double" />
+    <Property Name="tax07" Type="Double" />
+    <Property Name="tax08" Type="Double" />
+    <Property Name="ITEM_DESC_SL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="SALE_PRICE4" Type="Double" />
+    <Property Name="SALE_PRICE5" Type="Double" />
+    <Property Name="Item_Weight" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="Item_Volume" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="NO_OF_MONTH_ST_REQ" Type="Int32" />
+    <Property Name="LEAD_TIME_IN_MONTH" Type="Int32" />
+  </EntityType>
+  <EntityType Name="itmmast_photos">
+    <Key>
+      <PropertyRef Name="Record_id" />
+    </Key>
+    <Property Name="Record_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="item_cd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Item_Pic_cd" Type="Int32" />
+    <Property Name="image_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="image_data" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="CustomerCart">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ProductId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDatetime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="CustomerWishlist">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <Property Name="ProductId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDatetime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="CustomerRegistration">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Pincode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ShippingAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BillingAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="RegistrationDatetime" Type="DateTime" Precision="3" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

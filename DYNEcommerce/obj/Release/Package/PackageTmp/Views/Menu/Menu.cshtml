@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Domain.GRP_MASTERDomain>
+
+
+<ul class="nav-cat title-font">
+
+    @foreach (var item in Model)
+    {
+        <li>
+            <a href="category-page(left-sidebar).html">
+                <img src="~/Assets/Images/01.png" alt="category-product">@item.GRP_NAME
+            </a>
+        </li>
+    }
+
+
+    <li>
+        <a class="mor-slide-click">mor category <i class="fa fa-angle-down pro-down"></i><i class="fa fa-angle-up pro-up"></i></a>
+    </li>
+</ul>

@@ -1,0 +1,301 @@
+﻿@model Domain.IndexViewModel
+
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<input type="hidden" id="hdnPath" value="~/Assets/Images/ProductImage/" />
+
+<section class="section-big-pt-space ratio_asos b-g-light">
+    <div class="collection-wrapper">
+        <div class="custom-container">
+            <div class="row">
+                <div class="col-sm-3 collection-filter category-page-side">
+                    <!-- side-bar colleps block stat -->
+                    <div class="collection-filter-block creative-card creative-inner category-side">
+                        <!-- brand filter start -->
+                        <div class="collection-mobile-back">
+                            <span class="filter-back"><i class="fa fa-angle-left" aria-hidden="true"></i> back</span>
+                        </div>
+                        <div class="collection-collapse-block open">
+                            <h3 class="collapse-block-title mt-0">brand</h3>
+                            <div class="collection-collapse-block-content">
+                                <div class="collection-brand-filter">
+                                    @foreach (var brand in ViewBag.Brands)
+                                    {
+                                        <div class="custom-control custom-checkbox  form-check collection-filter-checkbox">
+                                            <input type="checkbox" class="custom-control-input form-check-input brandCheckbox" value="@brand.BrandId">
+                                            <label class="custom-control-label form-check-label" for="zara">@brand.BrandName</label>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- color filter start here -->
+                        <div class="collection-collapse-block open">
+                            <h3 class="collapse-block-title">colors</h3>
+                            <div class="collection-collapse-block-content">
+                                <div class="color-selector">
+                                    <ul>
+                                        <li>
+                                            <div class="color-1 active"></div> white (14)
+                                        </li>
+                                        <li>
+                                            <div class="color-2"></div> brown(24)
+                                        </li>
+                                        <li>
+                                            <div class="color-3"></div> red(18)
+                                        </li>
+                                        <li>
+                                            <div class="color-4"></div> purple(10)
+                                        </li>
+                                        <li>
+                                            <div class="color-5"></div> teal(9)
+                                        </li>
+                                        <li>
+                                            <div class="color-6"></div> pink(11)
+                                        </li>
+                                        <li>
+                                            <div class="color-7"></div> coral(15)
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- size filter start here -->
+                        <div class="collection-collapse-block open">
+                            <h3 class="collapse-block-title">size</h3>
+                            <div class="collection-collapse-block-content">
+                                <div class="size-selector">
+                                    <div class="collection-brand-filter">
+                                        <div class="custom-control custom-checkbox  form-check collection-filter-checkbox">
+                                            <input type="checkbox" class="custom-control-input form-check-input" id="small">
+                                            <label class="custom-control-label form-check-label" for="small">s</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox  form-check collection-filter-checkbox">
+                                            <input type="checkbox" class="custom-control-input form-check-input" id="mediam">
+                                            <label class="custom-control-label form-check-label" for="mediam">m</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox  form-check collection-filter-checkbox">
+                                            <input type="checkbox" class="custom-control-input form-check-input" id="large">
+                                            <label class="custom-control-label form-check-label" for="large">l</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox  form-check collection-filter-checkbox">
+                                            <input type="checkbox" class="custom-control-input form-check-input" id="extralarge">
+                                            <label class="custom-control-label form-check-label" for="extralarge">xl</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- price filter start here -->
+                        <div class="collection-collapse-block border-0 open">
+                            <h3 class="collapse-block-title">price</h3>
+                            <div class="collection-collapse-block-content">
+                                <div class="filter-slide">
+                                    <input class="js-range-slider" type="text" name="my_range" value="" data-type="double" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="collection-sidebar-banner">
+                        <a href="javascript:void(0)"><img src="../assets/images/category/side-banner.png" class="img-fluid " alt=""></a>
+                    </div>
+                    <!-- side-bar banner end here -->
+
+                </div>
+
+                <div class="collection-content col" id="grid-list">
+                    @Html.Action("GetProductList", "Product", new { catId = @ViewBag.CatId })
+
+                </div>
+                <input type="hidden" value="@ViewBag.CatId" id="hdnCatId" />
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+<script src="~/Assets/JS/jquery-3.3.1.min.js"></script>
+<script src="~/Assets/JS/feather-icon.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var record = $("#drpRecord :selected").val();
+        var ShortBy = "";
+        var CatId = $("#hdnCatId").val();
+        var currentPageIndex = "";
+        var checkedValues = [];
+
+        $("#drpRecord").change(function () {
+
+            record = $('option:selected', this).val();
+            fnGetProducts(ShortBy, currentPageIndex, CatId, record);
+        });
+
+        $("#drpShort").change(function () {
+            ShortBy = $('option:selected', this).text();
+            fnGetProducts(ShortBy, currentPageIndex, CatId, record);
+        });
+
+        $(".page-link").click(function () {
+            currentPageIndex = $(this).val();
+            fnGetProducts(ShortBy, currentPageIndex, CatId, record);
+        });
+
+        $(".brandCheckbox").change(function () {
+            var checked = $(this).is(':checked');
+            if (checked) {
+                checkedValues.push(this.value)
+
+            } else {
+                var removeItemIndex = checkedValues.indexOf(this.value);
+                if (removeItemIndex != -1) checkedValues.splice(removeItemIndex, 1);  //remove at this index - remove 1
+            }
+            fnGetProducts(ShortBy, currentPageIndex, CatId, record, checkedValues);
+        });
+
+    });
+
+    function fnGetProducts(ShortBy, currentPageIndex, CatId, record, checkedValues) {
+        var passdata = {
+            catId: CatId,
+            record1: record,
+            ShortBy: ShortBy,
+            page: currentPageIndex,
+            checkedValues: checkedValues
+        };
+        $.ajax({
+            url: '/Product/GetProductList',
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            data: JSON.stringify(passdata),
+            success: function (response) {
+                var returnedData = JSON.parse(JSON.stringify(response));
+                $("#grid-list").empty();
+                console.log(returnedData);
+                $("#grid-list").html(returnedData);
+            },
+
+        });
+
+    }
+
+    function fnAddToCart(id, price) {
+        $.ajax({
+            url: '/Product/AddToCart',
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: '{prodId: "' + id + '" , price: "' + price + '"}',
+            success: function (response) {
+                if (response) {
+                    $.notify({
+                        icon: 'fa fa-check',
+                        title: 'Success!',
+                        message: 'Item Successfully added to your cart'
+                    }, {
+                        element: 'body',
+                        position: null,
+                        type: "success",
+                        allow_dismiss: true,
+                        newest_on_top: false,
+                        showProgressbar: true,
+                        placement: {
+                            from: "top",
+                            align: "right"
+                        },
+                        offset: 20,
+                        spacing: 10,
+                        z_index: 1031,
+                        delay: 5000,
+                        animate: {
+                            enter: 'animated fadeInDown',
+                            exit: 'animated fadeOutUp'
+                        },
+                        icon_type: 'class',
+                        template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="btn-close" data-notify="dismiss"></button>' +
+                            '<span data-notify="icon"></span> ' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span data-notify="message">{2}</span>' +
+                            '<div class="progress" data-notify="progressbar">' +
+                            '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+                            '</div>' +
+                            '<a href="{3}" target="{4}" data-notify="url"></a>' +
+                            '</div>'
+                    });
+                    window.location.reload();
+                }
+            },
+
+        });
+
+    }
+
+    function fnAddToWishList(id, price) {
+        $.ajax({
+            url: '/Product/AddToWishList',
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: '{prodId: "' + id + '" , price: "' + price + '"}',
+            success: function (response) {
+                if (response) {
+                    $.notify({
+                        icon: 'fa fa-check',
+                        title: 'Success!',
+                        message: 'Item Successfully added to your WishList'
+                    }, {
+                        element: 'body',
+                        position: null,
+                        type: "success",
+                        allow_dismiss: true,
+                        newest_on_top: false,
+                        showProgressbar: true,
+                        placement: {
+                            from: "top",
+                            align: "right"
+                        },
+                        offset: 20,
+                        spacing: 10,
+                        z_index: 1031,
+                        delay: 5000,
+                        animate: {
+                            enter: 'animated fadeInDown',
+                            exit: 'animated fadeOutUp'
+                        },
+                        icon_type: 'class',
+                        template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="btn-close" data-notify="dismiss"></button>' +
+                            '<span data-notify="icon"></span> ' +
+                            '<span data-notify="title">{1}</span> ' +
+                            '<span data-notify="message">{2}</span>' +
+                            '<div class="progress" data-notify="progressbar">' +
+                            '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+                            '</div>' +
+                            '<a href="{3}" target="{4}" data-notify="url"></a>' +
+                            '</div>'
+                    });
+                    window.location.reload();
+                }
+            },
+
+        });
+
+    }
+
+</script>

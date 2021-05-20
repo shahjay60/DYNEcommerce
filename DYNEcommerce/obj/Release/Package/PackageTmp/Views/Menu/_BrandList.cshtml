@@ -1,0 +1,22 @@
+﻿@model List<Domain.BrandmasterDomain>
+
+<section class="brand-panel">
+    <div class="brand-panel-box">
+        <div class="brand-panel-contain ">
+            <ul>
+                @if (Model.Count() > 0)
+                {
+                    <li><a href="javascript:void(0)">top brand</a></li>
+                    <li><a>:</a></li>
+                    foreach (var item in Model)
+                    {
+                        <li><a href="@Url.Action("Index", "Category", new { brandId = @item.BrandId })">@item.BrandName</a></li>
+
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</section>
+
+
