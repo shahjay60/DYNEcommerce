@@ -1,0 +1,155 @@
+﻿@model Domain.IndexViewModel
+
+    <div class="page-main-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="collection-product-wrapper">
+                    <div class="product-top-filter">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="filter-main-btn"><span class="filter-btn  "><i class="fa fa-filter" aria-hidden="true"></i> Filter</span></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="product-filter-content">
+                                    @*<div class="search-count">
+                                        <h5 id="totalText">Showing Products 1-@ViewBag.RecordPerPage of @ViewBag.TotalRecord Result</h5>
+                                    </div>*@
+                                    <div class="collection-view">
+                                        <ul>
+                                            <li><i class="fa fa-th grid-layout-view"></i></li>
+                                            <li><i class="fa fa-list-ul list-layout-view"></i></li>
+                                        </ul>
+                                    </div>
+                                    <div class="collection-grid-view">
+                                        <ul>
+                                            <li><img src="~/Assets/Images/icon/2.png" alt="" class="product-2-layout-view"></li>
+                                            <li><img src="~/Assets/Images/icon/3.png" alt="" class="product-3-layout-view"></li>
+                                            <li><img src="~/Assets/Images/icon/4.png" alt="" class="product-4-layout-view"></li>
+                                            <li><img src="~/Assets/Images/icon/6.png" alt="" class="product-6-layout-view"></li>
+                                        </ul>
+                                    </div>
+                                        <div class="product-page-per-view">
+                                            <select id="drpRecord">
+                                                <option value="10">10 Products Par Page</option>
+                                                <option value="24">24 Products Par Page</option>
+                                                <option value="50">50 Products Par Page</option>
+                                                <option value="100">100 Products Par Page</option>
+                                            </select>
+                                        </div>
+                                    <div class="product-page-filter">
+                                        <select id="drpShort">
+                                            <option value="High to low">Sorting items</option>
+                                            <option value="Low to High">Low to High</option>
+                                            <option value="High to Low">High to Low</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-wrapper-grid product">
+                        <div class="row" id="grid-list">
+                            @if (Model.Items.Count() > 0)
+                            {
+                                foreach (var item in Model.Items)
+                                {
+                                    <div class="col-xl-3 col-md-4 col-6  col-grid-box">
+
+                                        <div class="product-box">
+                                            <div class="product-imgbox">
+                                                <div class="product-front">
+                                                    <a href="@Url.Action("ProductDetail","Product",new {ProdId=@item.Item_CD,catId=@item.GRP_CD }) "> <img src="~/Assets/Images/ProductImage/1.jpg" class="img-fluid  " alt="product"> </a>
+                                                </div>
+                                                <div class="product-back">
+                                                    <a  href="@Url.Action("ProductDetail","Product",new {ProdId=@item.Item_CD,catId=@item.GRP_CD }) "> <img src="~/Assets/Images/ProductImage/a1.jpg" class="img-fluid  " alt="product"> </a>
+                                                </div>
+                                            </div>
+                                            <div class="product-detail detail-center detail-inverse">
+                                                <div class="detail-title">
+                                                    <div class="detail-left">
+                                                        <div class="rating-star"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
+                                                        <p>@item.DetailDesc</p>
+                                                        <a href="product-page(left-sidebar).html">
+                                                            <h6 class="price-title">
+                                                                @item.Item_Desc
+                                                            </h6>
+                                                        </a>
+                                                    </div>
+                                                    <div class="detail-right">
+                                                        <div class="check-price"> $@item.Sale_Price </div>
+                                                        <div class="price">
+                                                            <div class="price"> $@item.Sale_Price </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*<div class="icon-detail">
+                                                    <button class="tooltip-top" data-tippy-content="Add to cart"> <i data-feather="shopping-cart" onclick="fnAddToCart('@item.Item_CD',@item.Sale_Price)"></i> </button>
+                                                    <a href="javascript:void(0)" class="add-to-wish tooltip-top" data-tippy-content="Add to Wishlist"> <i data-feather="heart"></i> </a>
+                                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#quick-view" class="tooltip-top" data-tippy-content="Quick View"> <i data-feather="eye"></i> </a>
+                                                    <a href="compare.html" class="tooltip-top" data-tippy-content="Compare"> <i data-feather="refresh-cw"></i> </a>
+                                                </div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                            }
+                            else
+                            {
+                                <div class="col-xl-3 col-md-4 col-6  col-grid-box">
+                                    <p>No Record Found</p>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="pagination-box">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <nav aria-label="Page navigation example">
+                                    <!-- pager -->
+                                    @if (Model.Pager.EndPage > 1)
+                                    {
+                                        <ul class="pagination">
+                                            @if (Model.Pager.CurrentPage > 1)
+                                            {
+                                                <li class="page-item">
+                                                    <a class="page-link" href='~/Product/Index?catId= @Model.Pager.catId '>First</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href='~/Product/Index?catId= @Model.Pager.catId &page=@(Model.Pager.CurrentPage - 1)'>Previous</a>
+                                                </li>
+                                            }
+
+                                            @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+                                            {
+                                                <li class="@(page == Model.Pager.CurrentPage ? "active page-item" : "page-item")">
+                                                    <a class="page-link" href='~/Product/Index?catId= @Model.Pager.catId &page=@page'>@page</a>
+                                                </li>
+                                            }
+
+                                            @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+                                            {
+                                                <li class="page-item">
+
+                                                    <a class="page-link" href='~/Product/Index?catId= @Model.Pager.catId &page=@(Model.Pager.CurrentPage + 1)'>Next</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href='~/Product/Index?catId= @Model.Pager.catId &page=@(Model.Pager.TotalPages)'>Last</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                        @Html.Hidden("CatId", @Model.Pager.catId, new { @id = "hdCatID" })
+
+                                    }
+
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

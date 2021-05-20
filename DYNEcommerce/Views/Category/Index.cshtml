@@ -1,0 +1,146 @@
+﻿@model List<Domain.GRP_MASTERDomain>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- breadcrumb start -->
+<div class="breadcrumb-main ">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="breadcrumb-contain">
+                    <div>
+                        <h2>category</h2>
+                        <ul>
+                            <li><a href="index.html">home</a></li>
+                            <li><i class="fa fa-angle-double-right"></i></li>
+                            <li><a href="javascript:void(0)">category</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb End -->
+<!-- section start -->
+<section class="section-big-pt-space ratio_asos b-g-light">
+    <div class="collection-wrapper">
+        <div class="custom-container">
+            <div class="row">
+                <div class="col-sm-3 collection-filter category-page-side">
+                    <!-- side-bar colleps block stat -->
+                    <div class="collection-filter-block creative-card creative-inner category-side">
+                        <!-- brand filter start -->
+                        <div class="collection-mobile-back">
+                            <span class="filter-back"><i class="fa fa-angle-left" aria-hidden="true"></i> back</span>
+                        </div>
+                        <div class="collection-collapse-block open">
+                            <h3 class="collapse-block-title mt-0">brand</h3>
+                            <div class="collection-collapse-block-content">
+                                <div class="collection-brand-filter">
+                                    @foreach (var brand in ViewBag.Brands)
+                                    {
+                                        <div class="custom-control custom-checkbox  form-check collection-filter-checkbox">
+                                            <input type="checkbox" class="custom-control-input form-check-input brandCheckbox" value="@brand.BrandId">
+                                            <label class="custom-control-label form-check-label" for="zara">@brand.BrandName</label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- silde-bar colleps block end here -->
+                    <!-- side-bar single product slider start -->
+                    <!-- side-bar single product slider end -->
+                    <!-- side-bar banner start here -->
+                    <div class="collection-sidebar-banner">
+                        <a href="javascript:void(0)"><img src="../assets/images/category/side-banner.png" class="img-fluid " alt=""></a>
+                    </div>
+                    <!-- side-bar banner end here -->
+
+                </div>
+                <input type="hidden" value="@ViewBag.BrandId" id="hdnCatId" />
+
+                <div class="collection-content col" id="grid-list">
+                    @Html.Action("GetCategoryList", "Category", new { brandId = @ViewBag.BrandId })
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- section End -->
+
+<script src="~/Assets/JS/jquery-3.3.1.min.js"></script>
+<script src="~/Assets/JS/feather-icon.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var record = $("#drpRecord :selected").val();
+        var ShortBy = "";
+        var CatId = $("#hdnCatId").val();
+        var currentPageIndex = "";
+        var checkedValues = [];
+
+        $("#drpRecord").change(function () {
+
+            record = $('option:selected', this).val();
+            fnGetCategories(ShortBy, currentPageIndex, CatId, record);
+        });
+
+        $("#drpShort").change(function () {
+            ShortBy = $('option:selected', this).text();
+            fnGetCategories(ShortBy, currentPageIndex, CatId, record);
+        });
+
+        $(".page-link").click(function () {
+            currentPageIndex = $(this).val();
+            fnGetCategories(ShortBy, currentPageIndex, CatId, record);
+        });
+
+        $(".brandCheckbox").change(function () {
+            var checked = $(this).is(':checked');
+            if (checked) {
+                checkedValues.push(this.value)
+
+            } else {
+                var removeItemIndex = checkedValues.indexOf(this.value);
+                if (removeItemIndex != -1) checkedValues.splice(removeItemIndex, 1);  //remove at this index - remove 1
+            }
+            fnGetCategories(ShortBy, currentPageIndex, CatId, record, checkedValues);
+        });
+
+    });
+
+    function fnGetCategories(ShortBy, currentPageIndex, brandId, record, checkedValues) {
+        var passdata = {
+            brandId: brandId,
+            record1: record,
+            ShortBy: ShortBy,
+            page: currentPageIndex,
+            checkedValues: checkedValues
+        };
+        $.ajax({
+            url: '/Category/GetCategoryList',
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            data: JSON.stringify(passdata),
+            success: function (response) {
+                var returnedData = JSON.parse(JSON.stringify(response));
+                $("#grid-list").empty();
+                console.log(returnedData);
+                $("#grid-list").html(returnedData);
+            },
+
+        });
+
+    }
+
+    
+</script>

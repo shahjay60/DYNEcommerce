@@ -1,0 +1,247 @@
+﻿@model Domain.CustomerDomain
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- breadcrumb start -->
+<div class="breadcrumb-main ">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="breadcrumb-contain">
+                    <div>
+                        <h2>register</h2>
+                        <ul>
+                            <li><a href="index.html">home</a></li>
+                            <li><i class="fa fa-angle-double-right"></i></li>
+                            <li><a href="javascript:void(0)">register</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb End -->
+<!--section start-->
+@using (Html.BeginForm("Register", "Customer"))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <section class="login-page section-big-py-space b-g-light">
+        <div class="custom-container">
+            <div class="row">
+                <div class="theme-card">
+                    <h3 class="text-center">Create account</h3>
+                    <div class="theme-form">
+                        <div class="row check-out ">
+
+                            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                <label>First Name</label>
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(x => x.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                <label>Last Name</label>
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(x => x.LastName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                <label class="field-label">Phone</label>
+                                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(x => x.Phone, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                <label class="field-label">Email Address</label>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" , @id = "txtEmail" })
+
+                                @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                <label class="field-label">Password</label>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "txtpwd" })
+                                <p>
+                                    8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character
+                                </p>
+                                <span id="spnPassError"></span>
+                                @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                <label class="field-label">Country</label>
+                                @Html.DropDownListFor(x=>x.Country, new List<SelectListItem>
+ {
+    new SelectListItem{ Text="India", Value = "1" },
+    new SelectListItem{ Text="Dubai", Value = "2" },
+
+ }, "Select Country", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Country, "", new { @class = "text-danger" })
+
+                            </div>
+
+                            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                <label class="field-label">Town/City</label>
+                                @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(x => x.City, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                <label class="field-label">State</label>
+                                @Html.TextBoxFor(m => m.State, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(x => x.State, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-12 col-sm-6 col-xs-12">
+                                <label class="field-label">Postal Code</label>
+                                @Html.TextBoxFor(m => m.Pincode, new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(x => x.Pincode, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                <label class="field-label">Billing Address</label>
+                                @Html.TextAreaFor(m => m.BillingAddress, new { @class = "form-control",@id="billingAddress" })
+
+                                @Html.ValidationMessageFor(x => x.BillingAddress, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                <input type="checkbox" id="chkSameAddress" name="subscribe" value="newsletter">
+                                <label for="subscribeNews">Same As Above</label>
+                            </div>
+
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                <label class="field-label">Shipping Address</label>
+                                @Html.TextAreaFor(m => m.ShippingAddress, new { @class = "form-control", @id = "ShippingAddress" })
+
+                                @Html.ValidationMessageFor(x => x.ShippingAddress, "", new { @class = "text-danger" })
+                            </div>                            <div class="col-md-4 form-group">
+                                <input type="submit" class="btn btn-solid btn-md btn-block " value="Create Account" id="btnSubmit" />
+                                <p>Have you already account? <a href="@Url.Action("Login", "Customer")" class="txt-default">click</a> here to &nbsp;<a href="@Url.Action("Login", "Customer")" class="txt-default">Login</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="row g-3">
+                            <div class="col-md-12 form-group">
+                                <label for="email">First Name</label>
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="review">Last Name</label>
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                            </div>
+
+                        </div>*@
+
+                    @*<div class="row g-3">
+                            <div class="col-md-12 form-group">
+                                <label>email</label>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "txtEmail" })
+                                <span id="spnError"></span>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label>Password</label>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "txtpwd" })
+                                <p>
+                                    8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character
+                                </p>
+                                <span id="spnPassError"></span>
+
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="submit" class="btn btn-solid btn-md btn-block " value="Create Account" id="btnSubmit" />
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-md-12 ">
+                                </div>
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    </section>
+
+}
+<!--Section ends-->
+<script src="~/Assets/JS/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var emailReg = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+        jQuery("#txtEmail").blur(function () {
+            var emailaddressVal = $("#txtEmail").val();
+            if (emailaddressVal == '') {
+                $("#txtEmail").css('border-color', 'red');
+                $("#spnError").text("Please enter your email address.").css('color', 'red');
+                $("#btnSubmit").prop('disabled', true);
+
+            }
+            else if (!emailReg.test(emailaddressVal)) {
+                $("#txtEmail").css('border-color', 'red');
+                $("#spnError").text("Enter a valid email address.").css('color', 'red');
+                $("#btnSubmit").prop('disabled', true);
+            }
+            else {
+                $("#txtEmail").css('border-color', 'black');
+                $("#spnError").empty();
+                $("#btnSubmit").prop('disabled', false);
+
+
+                $.ajax({
+                    url: '/Customer/ChkEmailExistsOrNot',
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: '{emailId: "' + emailaddressVal + '"}',
+                    success: function (response) {
+                        if (response > 0) {
+                            alert("Email address is already register.");
+                            $("#btnSubmit").prop('disabled', true);
+                        }
+                    },
+
+                });
+
+            }
+        });
+
+
+        jQuery("#txtpwd").blur(function () {
+            var pass = $("#txtpwd").val();
+            var passReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+
+            if (pass == '') {
+                $("#txtpwd").css('border-color', 'red');
+                $("#spnPassError").text("Please enter Password.").css('color', 'red');
+                $("#btnSubmit").prop('disabled', true);
+
+            }
+            else if (!passReg.test(pass)) {
+                $("#txtpwd").css('border-color', 'red');
+                $("#spnPassError").text("Enter a valid Password.").css('color', 'red');
+                $("#btnSubmit").prop('disabled', true);
+            }
+            else {
+                $("#txtpwd").css('border-color', 'black');
+                $("#spnPassError").empty();
+                $("#btnSubmit").prop('disabled', false);
+            }
+        });
+
+        $('input[type="checkbox"]').click(function () {
+            if ($(this).prop("checked") == true) {
+                var BillingAddress = $("#billingAddress").val()
+                $("#ShippingAddress").val(BillingAddress)
+            }
+            else if ($(this).prop("checked") == false) {
+                $("#ShippingAddress").val("");
+            }
+        });
+
+    });
+
+</script>

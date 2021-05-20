@@ -1,0 +1,915 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CFCF6545-E6BB-407C-B08A-4AB63A73BD20}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DYNEcommerce</RootNamespace>
+    <AssemblyName>DYNEcommerce</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CheckoutController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\grp_masterController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\WishListController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\grp_masterTbl.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\CSS\animate.css" />
+    <Content Include="Assets\CSS\bootstrap.css" />
+    <Content Include="Assets\CSS\color2.css" />
+    <Content Include="Assets\CSS\font-awesome.css" />
+    <Content Include="Assets\CSS\slick-theme.css" />
+    <Content Include="Assets\CSS\slick.css" />
+    <Content Include="Assets\CSS\themify.css" />
+    <Content Include="Assets\fonts\feather\activity.svg" />
+    <Content Include="Assets\fonts\feather\airplay.svg" />
+    <Content Include="Assets\fonts\feather\alert-circle.svg" />
+    <Content Include="Assets\fonts\feather\alert-octagon.svg" />
+    <Content Include="Assets\fonts\feather\alert-triangle.svg" />
+    <Content Include="Assets\fonts\feather\align-center.svg" />
+    <Content Include="Assets\fonts\feather\align-justify.svg" />
+    <Content Include="Assets\fonts\feather\align-left.svg" />
+    <Content Include="Assets\fonts\feather\align-right.svg" />
+    <Content Include="Assets\fonts\feather\anchor.svg" />
+    <Content Include="Assets\fonts\feather\aperture.svg" />
+    <Content Include="Assets\fonts\feather\archive.svg" />
+    <Content Include="Assets\fonts\feather\arrow-down-circle.svg" />
+    <Content Include="Assets\fonts\feather\arrow-down-left.svg" />
+    <Content Include="Assets\fonts\feather\arrow-down-right.svg" />
+    <Content Include="Assets\fonts\feather\arrow-down.svg" />
+    <Content Include="Assets\fonts\feather\arrow-left-circle.svg" />
+    <Content Include="Assets\fonts\feather\arrow-left.svg" />
+    <Content Include="Assets\fonts\feather\arrow-right-circle.svg" />
+    <Content Include="Assets\fonts\feather\arrow-right.svg" />
+    <Content Include="Assets\fonts\feather\arrow-up-circle.svg" />
+    <Content Include="Assets\fonts\feather\arrow-up-left.svg" />
+    <Content Include="Assets\fonts\feather\arrow-up-right.svg" />
+    <Content Include="Assets\fonts\feather\arrow-up.svg" />
+    <Content Include="Assets\fonts\feather\at-sign.svg" />
+    <Content Include="Assets\fonts\feather\award.svg" />
+    <Content Include="Assets\fonts\feather\bar-chart-2.svg" />
+    <Content Include="Assets\fonts\feather\bar-chart.svg" />
+    <Content Include="Assets\fonts\feather\battery-charging.svg" />
+    <Content Include="Assets\fonts\feather\battery.svg" />
+    <Content Include="Assets\fonts\feather\bell-off.svg" />
+    <Content Include="Assets\fonts\feather\bell.svg" />
+    <Content Include="Assets\fonts\feather\bluetooth.svg" />
+    <Content Include="Assets\fonts\feather\bold.svg" />
+    <Content Include="Assets\fonts\feather\book-open.svg" />
+    <Content Include="Assets\fonts\feather\book.svg" />
+    <Content Include="Assets\fonts\feather\bookmark.svg" />
+    <Content Include="Assets\fonts\feather\box.svg" />
+    <Content Include="Assets\fonts\feather\briefcase.svg" />
+    <Content Include="Assets\fonts\feather\calendar.svg" />
+    <Content Include="Assets\fonts\feather\camera-off.svg" />
+    <Content Include="Assets\fonts\feather\camera.svg" />
+    <Content Include="Assets\fonts\feather\cast.svg" />
+    <Content Include="Assets\fonts\feather\check-circle.svg" />
+    <Content Include="Assets\fonts\feather\check-square.svg" />
+    <Content Include="Assets\fonts\feather\check.svg" />
+    <Content Include="Assets\fonts\feather\chevron-down.svg" />
+    <Content Include="Assets\fonts\feather\chevron-left.svg" />
+    <Content Include="Assets\fonts\feather\chevron-right.svg" />
+    <Content Include="Assets\fonts\feather\chevron-up.svg" />
+    <Content Include="Assets\fonts\feather\chevrons-down.svg" />
+    <Content Include="Assets\fonts\feather\chevrons-left.svg" />
+    <Content Include="Assets\fonts\feather\chevrons-right.svg" />
+    <Content Include="Assets\fonts\feather\chevrons-up.svg" />
+    <Content Include="Assets\fonts\feather\chrome.svg" />
+    <Content Include="Assets\fonts\feather\circle.svg" />
+    <Content Include="Assets\fonts\feather\clipboard.svg" />
+    <Content Include="Assets\fonts\feather\clock.svg" />
+    <Content Include="Assets\fonts\feather\cloud-drizzle.svg" />
+    <Content Include="Assets\fonts\feather\cloud-lightning.svg" />
+    <Content Include="Assets\fonts\feather\cloud-off.svg" />
+    <Content Include="Assets\fonts\feather\cloud-rain.svg" />
+    <Content Include="Assets\fonts\feather\cloud-snow.svg" />
+    <Content Include="Assets\fonts\feather\cloud.svg" />
+    <Content Include="Assets\fonts\feather\code.svg" />
+    <Content Include="Assets\fonts\feather\codepen.svg" />
+    <Content Include="Assets\fonts\feather\command.svg" />
+    <Content Include="Assets\fonts\feather\compass.svg" />
+    <Content Include="Assets\fonts\feather\copy.svg" />
+    <Content Include="Assets\fonts\feather\corner-down-left.svg" />
+    <Content Include="Assets\fonts\feather\corner-down-right.svg" />
+    <Content Include="Assets\fonts\feather\corner-left-down.svg" />
+    <Content Include="Assets\fonts\feather\corner-left-up.svg" />
+    <Content Include="Assets\fonts\feather\corner-right-down.svg" />
+    <Content Include="Assets\fonts\feather\corner-right-up.svg" />
+    <Content Include="Assets\fonts\feather\corner-up-left.svg" />
+    <Content Include="Assets\fonts\feather\corner-up-right.svg" />
+    <Content Include="Assets\fonts\feather\cpu.svg" />
+    <Content Include="Assets\fonts\feather\credit-card.svg" />
+    <Content Include="Assets\fonts\feather\crop.svg" />
+    <Content Include="Assets\fonts\feather\crosshair.svg" />
+    <Content Include="Assets\fonts\feather\database.svg" />
+    <Content Include="Assets\fonts\feather\delete.svg" />
+    <Content Include="Assets\fonts\feather\disc.svg" />
+    <Content Include="Assets\fonts\feather\dollar-sign.svg" />
+    <Content Include="Assets\fonts\feather\download-cloud.svg" />
+    <Content Include="Assets\fonts\feather\download.svg" />
+    <Content Include="Assets\fonts\feather\droplet.svg" />
+    <Content Include="Assets\fonts\feather\edit-2.svg" />
+    <Content Include="Assets\fonts\feather\edit-3.svg" />
+    <Content Include="Assets\fonts\feather\edit.svg" />
+    <Content Include="Assets\fonts\feather\external-link.svg" />
+    <Content Include="Assets\fonts\feather\eye-off.svg" />
+    <Content Include="Assets\fonts\feather\eye.svg" />
+    <Content Include="Assets\fonts\feather\facebook.svg" />
+    <Content Include="Assets\fonts\feather\fast-forward.svg" />
+    <Content Include="Assets\fonts\feather\feather.svg" />
+    <Content Include="Assets\fonts\feather\file-minus.svg" />
+    <Content Include="Assets\fonts\feather\file-plus.svg" />
+    <Content Include="Assets\fonts\feather\file-text.svg" />
+    <Content Include="Assets\fonts\feather\file.svg" />
+    <Content Include="Assets\fonts\feather\film.svg" />
+    <Content Include="Assets\fonts\feather\filter.svg" />
+    <Content Include="Assets\fonts\feather\flag.svg" />
+    <Content Include="Assets\fonts\feather\folder-minus.svg" />
+    <Content Include="Assets\fonts\feather\folder-plus.svg" />
+    <Content Include="Assets\fonts\feather\folder.svg" />
+    <Content Include="Assets\fonts\feather\gift.svg" />
+    <Content Include="Assets\fonts\feather\git-branch.svg" />
+    <Content Include="Assets\fonts\feather\git-commit.svg" />
+    <Content Include="Assets\fonts\feather\git-merge.svg" />
+    <Content Include="Assets\fonts\feather\git-pull-request.svg" />
+    <Content Include="Assets\fonts\feather\github.svg" />
+    <Content Include="Assets\fonts\feather\gitlab.svg" />
+    <Content Include="Assets\fonts\feather\globe.svg" />
+    <Content Include="Assets\fonts\feather\grid.svg" />
+    <Content Include="Assets\fonts\feather\hard-drive.svg" />
+    <Content Include="Assets\fonts\feather\hash.svg" />
+    <Content Include="Assets\fonts\feather\headphones.svg" />
+    <Content Include="Assets\fonts\feather\heart.svg" />
+    <Content Include="Assets\fonts\feather\help-circle.svg" />
+    <Content Include="Assets\fonts\feather\home.svg" />
+    <Content Include="Assets\fonts\feather\image.svg" />
+    <Content Include="Assets\fonts\feather\inbox.svg" />
+    <Content Include="Assets\fonts\feather\info.svg" />
+    <Content Include="Assets\fonts\feather\instagram.svg" />
+    <Content Include="Assets\fonts\feather\italic.svg" />
+    <Content Include="Assets\fonts\feather\layers.svg" />
+    <Content Include="Assets\fonts\feather\layout.svg" />
+    <Content Include="Assets\fonts\feather\life-buoy.svg" />
+    <Content Include="Assets\fonts\feather\link-2.svg" />
+    <Content Include="Assets\fonts\feather\link.svg" />
+    <Content Include="Assets\fonts\feather\linkedin.svg" />
+    <Content Include="Assets\fonts\feather\list.svg" />
+    <Content Include="Assets\fonts\feather\loader.svg" />
+    <Content Include="Assets\fonts\feather\lock.svg" />
+    <Content Include="Assets\fonts\feather\log-in.svg" />
+    <Content Include="Assets\fonts\feather\log-out.svg" />
+    <Content Include="Assets\fonts\feather\mail.svg" />
+    <Content Include="Assets\fonts\feather\map-pin.svg" />
+    <Content Include="Assets\fonts\feather\map.svg" />
+    <Content Include="Assets\fonts\feather\maximize-2.svg" />
+    <Content Include="Assets\fonts\feather\maximize.svg" />
+    <Content Include="Assets\fonts\feather\menu.svg" />
+    <Content Include="Assets\fonts\feather\message-circle.svg" />
+    <Content Include="Assets\fonts\feather\message-square.svg" />
+    <Content Include="Assets\fonts\feather\mic-off.svg" />
+    <Content Include="Assets\fonts\feather\mic.svg" />
+    <Content Include="Assets\fonts\feather\minimize-2.svg" />
+    <Content Include="Assets\fonts\feather\minimize.svg" />
+    <Content Include="Assets\fonts\feather\minus-circle.svg" />
+    <Content Include="Assets\fonts\feather\minus-square.svg" />
+    <Content Include="Assets\fonts\feather\minus.svg" />
+    <Content Include="Assets\fonts\feather\monitor.svg" />
+    <Content Include="Assets\fonts\feather\moon.svg" />
+    <Content Include="Assets\fonts\feather\more-horizontal.svg" />
+    <Content Include="Assets\fonts\feather\more-vertical.svg" />
+    <Content Include="Assets\fonts\feather\move.svg" />
+    <Content Include="Assets\fonts\feather\music.svg" />
+    <Content Include="Assets\fonts\feather\navigation-2.svg" />
+    <Content Include="Assets\fonts\feather\navigation.svg" />
+    <Content Include="Assets\fonts\feather\octagon.svg" />
+    <Content Include="Assets\fonts\feather\package.svg" />
+    <Content Include="Assets\fonts\feather\paperclip.svg" />
+    <Content Include="Assets\fonts\feather\pause-circle.svg" />
+    <Content Include="Assets\fonts\feather\pause.svg" />
+    <Content Include="Assets\fonts\feather\percent.svg" />
+    <Content Include="Assets\fonts\feather\phone-call.svg" />
+    <Content Include="Assets\fonts\feather\phone-forwarded.svg" />
+    <Content Include="Assets\fonts\feather\phone-incoming.svg" />
+    <Content Include="Assets\fonts\feather\phone-missed.svg" />
+    <Content Include="Assets\fonts\feather\phone-off.svg" />
+    <Content Include="Assets\fonts\feather\phone-outgoing.svg" />
+    <Content Include="Assets\fonts\feather\phone.svg" />
+    <Content Include="Assets\fonts\feather\pie-chart.svg" />
+    <Content Include="Assets\fonts\feather\play-circle.svg" />
+    <Content Include="Assets\fonts\feather\play.svg" />
+    <Content Include="Assets\fonts\feather\plus-circle.svg" />
+    <Content Include="Assets\fonts\feather\plus-square.svg" />
+    <Content Include="Assets\fonts\feather\plus.svg" />
+    <Content Include="Assets\fonts\feather\pocket.svg" />
+    <Content Include="Assets\fonts\feather\power.svg" />
+    <Content Include="Assets\fonts\feather\printer.svg" />
+    <Content Include="Assets\fonts\feather\radio.svg" />
+    <Content Include="Assets\fonts\feather\refresh-ccw.svg" />
+    <Content Include="Assets\fonts\feather\refresh-cw.svg" />
+    <Content Include="Assets\fonts\feather\repeat.svg" />
+    <Content Include="Assets\fonts\feather\rewind.svg" />
+    <Content Include="Assets\fonts\feather\rotate-ccw.svg" />
+    <Content Include="Assets\fonts\feather\rotate-cw.svg" />
+    <Content Include="Assets\fonts\feather\rss.svg" />
+    <Content Include="Assets\fonts\feather\save.svg" />
+    <Content Include="Assets\fonts\feather\scissors.svg" />
+    <Content Include="Assets\fonts\feather\search.svg" />
+    <Content Include="Assets\fonts\feather\send.svg" />
+    <Content Include="Assets\fonts\feather\server.svg" />
+    <Content Include="Assets\fonts\feather\settings.svg" />
+    <Content Include="Assets\fonts\feather\share-2.svg" />
+    <Content Include="Assets\fonts\feather\share.svg" />
+    <Content Include="Assets\fonts\feather\shield-off.svg" />
+    <Content Include="Assets\fonts\feather\shield.svg" />
+    <Content Include="Assets\fonts\feather\shopping-bag.svg" />
+    <Content Include="Assets\fonts\feather\shopping-cart.svg" />
+    <Content Include="Assets\fonts\feather\shuffle.svg" />
+    <Content Include="Assets\fonts\feather\sidebar.svg" />
+    <Content Include="Assets\fonts\feather\skip-back.svg" />
+    <Content Include="Assets\fonts\feather\skip-forward.svg" />
+    <Content Include="Assets\fonts\feather\slack.svg" />
+    <Content Include="Assets\fonts\feather\slash.svg" />
+    <Content Include="Assets\fonts\feather\sliders.svg" />
+    <Content Include="Assets\fonts\feather\smartphone.svg" />
+    <Content Include="Assets\fonts\feather\speaker.svg" />
+    <Content Include="Assets\fonts\feather\square.svg" />
+    <Content Include="Assets\fonts\feather\star.svg" />
+    <Content Include="Assets\fonts\feather\stop-circle.svg" />
+    <Content Include="Assets\fonts\feather\sun.svg" />
+    <Content Include="Assets\fonts\feather\sunrise.svg" />
+    <Content Include="Assets\fonts\feather\sunset.svg" />
+    <Content Include="Assets\fonts\feather\tablet.svg" />
+    <Content Include="Assets\fonts\feather\tag.svg" />
+    <Content Include="Assets\fonts\feather\target.svg" />
+    <Content Include="Assets\fonts\feather\terminal.svg" />
+    <Content Include="Assets\fonts\feather\thermometer.svg" />
+    <Content Include="Assets\fonts\feather\thumbs-down.svg" />
+    <Content Include="Assets\fonts\feather\thumbs-up.svg" />
+    <Content Include="Assets\fonts\feather\toggle-left.svg" />
+    <Content Include="Assets\fonts\feather\toggle-right.svg" />
+    <Content Include="Assets\fonts\feather\trash-2.svg" />
+    <Content Include="Assets\fonts\feather\trash.svg" />
+    <Content Include="Assets\fonts\feather\trending-down.svg" />
+    <Content Include="Assets\fonts\feather\trending-up.svg" />
+    <Content Include="Assets\fonts\feather\triangle.svg" />
+    <Content Include="Assets\fonts\feather\truck.svg" />
+    <Content Include="Assets\fonts\feather\tv.svg" />
+    <Content Include="Assets\fonts\feather\twitter.svg" />
+    <Content Include="Assets\fonts\feather\type.svg" />
+    <Content Include="Assets\fonts\feather\umbrella.svg" />
+    <Content Include="Assets\fonts\feather\underline.svg" />
+    <Content Include="Assets\fonts\feather\unlock.svg" />
+    <Content Include="Assets\fonts\feather\upload-cloud.svg" />
+    <Content Include="Assets\fonts\feather\upload.svg" />
+    <Content Include="Assets\fonts\feather\user-check.svg" />
+    <Content Include="Assets\fonts\feather\user-minus.svg" />
+    <Content Include="Assets\fonts\feather\user-plus.svg" />
+    <Content Include="Assets\fonts\feather\user-x.svg" />
+    <Content Include="Assets\fonts\feather\user.svg" />
+    <Content Include="Assets\fonts\feather\users.svg" />
+    <Content Include="Assets\fonts\feather\video-off.svg" />
+    <Content Include="Assets\fonts\feather\video.svg" />
+    <Content Include="Assets\fonts\feather\voicemail.svg" />
+    <Content Include="Assets\fonts\feather\volume-1.svg" />
+    <Content Include="Assets\fonts\feather\volume-2.svg" />
+    <Content Include="Assets\fonts\feather\volume-x.svg" />
+    <Content Include="Assets\fonts\feather\volume.svg" />
+    <Content Include="Assets\fonts\feather\watch.svg" />
+    <Content Include="Assets\fonts\feather\wifi-off.svg" />
+    <Content Include="Assets\fonts\feather\wifi.svg" />
+    <Content Include="Assets\fonts\feather\wind.svg" />
+    <Content Include="Assets\fonts\feather\x-circle.svg" />
+    <Content Include="Assets\fonts\feather\x-square.svg" />
+    <Content Include="Assets\fonts\feather\x.svg" />
+    <Content Include="Assets\fonts\feather\youtube.svg" />
+    <Content Include="Assets\fonts\feather\zap-off.svg" />
+    <Content Include="Assets\fonts\feather\zap.svg" />
+    <Content Include="Assets\fonts\feather\zoom-in.svg" />
+    <Content Include="Assets\fonts\feather\zoom-out.svg" />
+    <Content Include="Assets\fonts\flag-icon\ad.svg" />
+    <Content Include="Assets\fonts\flag-icon\ae.svg" />
+    <Content Include="Assets\fonts\flag-icon\af.svg" />
+    <Content Include="Assets\fonts\flag-icon\ag.svg" />
+    <Content Include="Assets\fonts\flag-icon\ai.svg" />
+    <Content Include="Assets\fonts\flag-icon\al.svg" />
+    <Content Include="Assets\fonts\flag-icon\am.svg" />
+    <Content Include="Assets\fonts\flag-icon\ao.svg" />
+    <Content Include="Assets\fonts\flag-icon\aq.svg" />
+    <Content Include="Assets\fonts\flag-icon\ar.svg" />
+    <Content Include="Assets\fonts\flag-icon\as.svg" />
+    <Content Include="Assets\fonts\flag-icon\at.svg" />
+    <Content Include="Assets\fonts\flag-icon\au.svg" />
+    <Content Include="Assets\fonts\flag-icon\aw.svg" />
+    <Content Include="Assets\fonts\flag-icon\ax.svg" />
+    <Content Include="Assets\fonts\flag-icon\az.svg" />
+    <Content Include="Assets\fonts\flag-icon\ba.svg" />
+    <Content Include="Assets\fonts\flag-icon\bb.svg" />
+    <Content Include="Assets\fonts\flag-icon\bd.svg" />
+    <Content Include="Assets\fonts\flag-icon\be.svg" />
+    <Content Include="Assets\fonts\flag-icon\bf.svg" />
+    <Content Include="Assets\fonts\flag-icon\bg.svg" />
+    <Content Include="Assets\fonts\flag-icon\bh.svg" />
+    <Content Include="Assets\fonts\flag-icon\bi.svg" />
+    <Content Include="Assets\fonts\flag-icon\bj.svg" />
+    <Content Include="Assets\fonts\flag-icon\bl.svg" />
+    <Content Include="Assets\fonts\flag-icon\bm.svg" />
+    <Content Include="Assets\fonts\flag-icon\bn.svg" />
+    <Content Include="Assets\fonts\flag-icon\bo.svg" />
+    <Content Include="Assets\fonts\flag-icon\bq.svg" />
+    <Content Include="Assets\fonts\flag-icon\br.svg" />
+    <Content Include="Assets\fonts\flag-icon\bs.svg" />
+    <Content Include="Assets\fonts\flag-icon\bt.svg" />
+    <Content Include="Assets\fonts\flag-icon\bv.svg" />
+    <Content Include="Assets\fonts\flag-icon\bw.svg" />
+    <Content Include="Assets\fonts\flag-icon\by.svg" />
+    <Content Include="Assets\fonts\flag-icon\bz.svg" />
+    <Content Include="Assets\fonts\flag-icon\ca.svg" />
+    <Content Include="Assets\fonts\flag-icon\cc.svg" />
+    <Content Include="Assets\fonts\flag-icon\cd.svg" />
+    <Content Include="Assets\fonts\flag-icon\cf.svg" />
+    <Content Include="Assets\fonts\flag-icon\cg.svg" />
+    <Content Include="Assets\fonts\flag-icon\ch.svg" />
+    <Content Include="Assets\fonts\flag-icon\ci.svg" />
+    <Content Include="Assets\fonts\flag-icon\ck.svg" />
+    <Content Include="Assets\fonts\flag-icon\cl.svg" />
+    <Content Include="Assets\fonts\flag-icon\cm.svg" />
+    <Content Include="Assets\fonts\flag-icon\cn.svg" />
+    <Content Include="Assets\fonts\flag-icon\co.svg" />
+    <Content Include="Assets\fonts\flag-icon\cr.svg" />
+    <Content Include="Assets\fonts\flag-icon\cu.svg" />
+    <Content Include="Assets\fonts\flag-icon\cv.svg" />
+    <Content Include="Assets\fonts\flag-icon\cw.svg" />
+    <Content Include="Assets\fonts\flag-icon\cx.svg" />
+    <Content Include="Assets\fonts\flag-icon\cy.svg" />
+    <Content Include="Assets\fonts\flag-icon\cz.svg" />
+    <Content Include="Assets\fonts\flag-icon\de.svg" />
+    <Content Include="Assets\fonts\flag-icon\dj.svg" />
+    <Content Include="Assets\fonts\flag-icon\dk.svg" />
+    <Content Include="Assets\fonts\flag-icon\dm.svg" />
+    <Content Include="Assets\fonts\flag-icon\do.svg" />
+    <Content Include="Assets\fonts\flag-icon\dz.svg" />
+    <Content Include="Assets\fonts\flag-icon\ec.svg" />
+    <Content Include="Assets\fonts\flag-icon\ee.svg" />
+    <Content Include="Assets\fonts\flag-icon\eg.svg" />
+    <Content Include="Assets\fonts\flag-icon\eh.svg" />
+    <Content Include="Assets\fonts\flag-icon\er.svg" />
+    <Content Include="Assets\fonts\flag-icon\es-ct.svg" />
+    <Content Include="Assets\fonts\flag-icon\es.svg" />
+    <Content Include="Assets\fonts\flag-icon\et.svg" />
+    <Content Include="Assets\fonts\flag-icon\eu.svg" />
+    <Content Include="Assets\fonts\flag-icon\fi.svg" />
+    <Content Include="Assets\fonts\flag-icon\fj.svg" />
+    <Content Include="Assets\fonts\flag-icon\fk.svg" />
+    <Content Include="Assets\fonts\flag-icon\fm.svg" />
+    <Content Include="Assets\fonts\flag-icon\fo.svg" />
+    <Content Include="Assets\fonts\flag-icon\fr.svg" />
+    <Content Include="Assets\fonts\flag-icon\ga.svg" />
+    <Content Include="Assets\fonts\flag-icon\gb-eng.svg" />
+    <Content Include="Assets\fonts\flag-icon\gb-nir.svg" />
+    <Content Include="Assets\fonts\flag-icon\gb-sct.svg" />
+    <Content Include="Assets\fonts\flag-icon\gb-wls.svg" />
+    <Content Include="Assets\fonts\flag-icon\gb.svg" />
+    <Content Include="Assets\fonts\flag-icon\gd.svg" />
+    <Content Include="Assets\fonts\flag-icon\ge.svg" />
+    <Content Include="Assets\fonts\flag-icon\gf.svg" />
+    <Content Include="Assets\fonts\flag-icon\gg.svg" />
+    <Content Include="Assets\fonts\flag-icon\gh.svg" />
+    <Content Include="Assets\fonts\flag-icon\gi.svg" />
+    <Content Include="Assets\fonts\flag-icon\gl.svg" />
+    <Content Include="Assets\fonts\flag-icon\gm.svg" />
+    <Content Include="Assets\fonts\flag-icon\gn.svg" />
+    <Content Include="Assets\fonts\flag-icon\gp.svg" />
+    <Content Include="Assets\fonts\flag-icon\gq.svg" />
+    <Content Include="Assets\fonts\flag-icon\gr.svg" />
+    <Content Include="Assets\fonts\flag-icon\gs.svg" />
+    <Content Include="Assets\fonts\flag-icon\gt.svg" />
+    <Content Include="Assets\fonts\flag-icon\gu.svg" />
+    <Content Include="Assets\fonts\flag-icon\gw.svg" />
+    <Content Include="Assets\fonts\flag-icon\gy.svg" />
+    <Content Include="Assets\fonts\flag-icon\hk.svg" />
+    <Content Include="Assets\fonts\flag-icon\hm.svg" />
+    <Content Include="Assets\fonts\flag-icon\hn.svg" />
+    <Content Include="Assets\fonts\flag-icon\hr.svg" />
+    <Content Include="Assets\fonts\flag-icon\ht.svg" />
+    <Content Include="Assets\fonts\flag-icon\hu.svg" />
+    <Content Include="Assets\fonts\flag-icon\id.svg" />
+    <Content Include="Assets\fonts\flag-icon\ie.svg" />
+    <Content Include="Assets\fonts\flag-icon\il.svg" />
+    <Content Include="Assets\fonts\flag-icon\im.svg" />
+    <Content Include="Assets\fonts\flag-icon\in.svg" />
+    <Content Include="Assets\fonts\flag-icon\io.svg" />
+    <Content Include="Assets\fonts\flag-icon\iq.svg" />
+    <Content Include="Assets\fonts\flag-icon\ir.svg" />
+    <Content Include="Assets\fonts\flag-icon\is.svg" />
+    <Content Include="Assets\fonts\flag-icon\it.svg" />
+    <Content Include="Assets\fonts\flag-icon\je.svg" />
+    <Content Include="Assets\fonts\flag-icon\jm.svg" />
+    <Content Include="Assets\fonts\flag-icon\jo.svg" />
+    <Content Include="Assets\fonts\flag-icon\jp.svg" />
+    <Content Include="Assets\fonts\flag-icon\ke.svg" />
+    <Content Include="Assets\fonts\flag-icon\kg.svg" />
+    <Content Include="Assets\fonts\flag-icon\kh.svg" />
+    <Content Include="Assets\fonts\flag-icon\ki.svg" />
+    <Content Include="Assets\fonts\flag-icon\km.svg" />
+    <Content Include="Assets\fonts\flag-icon\kn.svg" />
+    <Content Include="Assets\fonts\flag-icon\kp.svg" />
+    <Content Include="Assets\fonts\flag-icon\kr.svg" />
+    <Content Include="Assets\fonts\flag-icon\kw.svg" />
+    <Content Include="Assets\fonts\flag-icon\ky.svg" />
+    <Content Include="Assets\fonts\flag-icon\kz.svg" />
+    <Content Include="Assets\fonts\flag-icon\la.svg" />
+    <Content Include="Assets\fonts\flag-icon\lb.svg" />
+    <Content Include="Assets\fonts\flag-icon\lc.svg" />
+    <Content Include="Assets\fonts\flag-icon\li.svg" />
+    <Content Include="Assets\fonts\flag-icon\lk.svg" />
+    <Content Include="Assets\fonts\flag-icon\lr.svg" />
+    <Content Include="Assets\fonts\flag-icon\ls.svg" />
+    <Content Include="Assets\fonts\flag-icon\lt.svg" />
+    <Content Include="Assets\fonts\flag-icon\lu.svg" />
+    <Content Include="Assets\fonts\flag-icon\lv.svg" />
+    <Content Include="Assets\fonts\flag-icon\ly.svg" />
+    <Content Include="Assets\fonts\flag-icon\ma.svg" />
+    <Content Include="Assets\fonts\flag-icon\mc.svg" />
+    <Content Include="Assets\fonts\flag-icon\md.svg" />
+    <Content Include="Assets\fonts\flag-icon\me.svg" />
+    <Content Include="Assets\fonts\flag-icon\mf.svg" />
+    <Content Include="Assets\fonts\flag-icon\mg.svg" />
+    <Content Include="Assets\fonts\flag-icon\mh.svg" />
+    <Content Include="Assets\fonts\flag-icon\mk.svg" />
+    <Content Include="Assets\fonts\flag-icon\ml.svg" />
+    <Content Include="Assets\fonts\flag-icon\mm.svg" />
+    <Content Include="Assets\fonts\flag-icon\mn.svg" />
+    <Content Include="Assets\fonts\flag-icon\mo.svg" />
+    <Content Include="Assets\fonts\flag-icon\mp.svg" />
+    <Content Include="Assets\fonts\flag-icon\mq.svg" />
+    <Content Include="Assets\fonts\flag-icon\mr.svg" />
+    <Content Include="Assets\fonts\flag-icon\ms.svg" />
+    <Content Include="Assets\fonts\flag-icon\mt.svg" />
+    <Content Include="Assets\fonts\flag-icon\mu.svg" />
+    <Content Include="Assets\fonts\flag-icon\mv.svg" />
+    <Content Include="Assets\fonts\flag-icon\mw.svg" />
+    <Content Include="Assets\fonts\flag-icon\mx.svg" />
+    <Content Include="Assets\fonts\flag-icon\my.svg" />
+    <Content Include="Assets\fonts\flag-icon\mz.svg" />
+    <Content Include="Assets\fonts\flag-icon\na.svg" />
+    <Content Include="Assets\fonts\flag-icon\nc.svg" />
+    <Content Include="Assets\fonts\flag-icon\ne.svg" />
+    <Content Include="Assets\fonts\flag-icon\nf.svg" />
+    <Content Include="Assets\fonts\flag-icon\ng.svg" />
+    <Content Include="Assets\fonts\flag-icon\ni.svg" />
+    <Content Include="Assets\fonts\flag-icon\nl.svg" />
+    <Content Include="Assets\fonts\flag-icon\no.svg" />
+    <Content Include="Assets\fonts\flag-icon\np.svg" />
+    <Content Include="Assets\fonts\flag-icon\nr.svg" />
+    <Content Include="Assets\fonts\flag-icon\nu.svg" />
+    <Content Include="Assets\fonts\flag-icon\nz.svg" />
+    <Content Include="Assets\fonts\flag-icon\om.svg" />
+    <Content Include="Assets\fonts\flag-icon\pa.svg" />
+    <Content Include="Assets\fonts\flag-icon\pe.svg" />
+    <Content Include="Assets\fonts\flag-icon\pf.svg" />
+    <Content Include="Assets\fonts\flag-icon\pg.svg" />
+    <Content Include="Assets\fonts\flag-icon\ph.svg" />
+    <Content Include="Assets\fonts\flag-icon\pk.svg" />
+    <Content Include="Assets\fonts\flag-icon\pl.svg" />
+    <Content Include="Assets\fonts\flag-icon\pm.svg" />
+    <Content Include="Assets\fonts\flag-icon\pn.svg" />
+    <Content Include="Assets\fonts\flag-icon\pr.svg" />
+    <Content Include="Assets\fonts\flag-icon\ps.svg" />
+    <Content Include="Assets\fonts\flag-icon\pt.svg" />
+    <Content Include="Assets\fonts\flag-icon\pw.svg" />
+    <Content Include="Assets\fonts\flag-icon\py.svg" />
+    <Content Include="Assets\fonts\flag-icon\qa.svg" />
+    <Content Include="Assets\fonts\flag-icon\re.svg" />
+    <Content Include="Assets\fonts\flag-icon\ro.svg" />
+    <Content Include="Assets\fonts\flag-icon\rs.svg" />
+    <Content Include="Assets\fonts\flag-icon\ru.svg" />
+    <Content Include="Assets\fonts\flag-icon\rw.svg" />
+    <Content Include="Assets\fonts\flag-icon\sa.svg" />
+    <Content Include="Assets\fonts\flag-icon\sb.svg" />
+    <Content Include="Assets\fonts\flag-icon\sc.svg" />
+    <Content Include="Assets\fonts\flag-icon\sd.svg" />
+    <Content Include="Assets\fonts\flag-icon\se.svg" />
+    <Content Include="Assets\fonts\flag-icon\sg.svg" />
+    <Content Include="Assets\fonts\flag-icon\sh.svg" />
+    <Content Include="Assets\fonts\flag-icon\si.svg" />
+    <Content Include="Assets\fonts\flag-icon\sj.svg" />
+    <Content Include="Assets\fonts\flag-icon\sk.svg" />
+    <Content Include="Assets\fonts\flag-icon\sl.svg" />
+    <Content Include="Assets\fonts\flag-icon\sm.svg" />
+    <Content Include="Assets\fonts\flag-icon\sn.svg" />
+    <Content Include="Assets\fonts\flag-icon\so.svg" />
+    <Content Include="Assets\fonts\flag-icon\sr.svg" />
+    <Content Include="Assets\fonts\flag-icon\ss.svg" />
+    <Content Include="Assets\fonts\flag-icon\st.svg" />
+    <Content Include="Assets\fonts\flag-icon\sv.svg" />
+    <Content Include="Assets\fonts\flag-icon\sx.svg" />
+    <Content Include="Assets\fonts\flag-icon\sy.svg" />
+    <Content Include="Assets\fonts\flag-icon\sz.svg" />
+    <Content Include="Assets\fonts\flag-icon\tc.svg" />
+    <Content Include="Assets\fonts\flag-icon\td.svg" />
+    <Content Include="Assets\fonts\flag-icon\tf.svg" />
+    <Content Include="Assets\fonts\flag-icon\tg.svg" />
+    <Content Include="Assets\fonts\flag-icon\th.svg" />
+    <Content Include="Assets\fonts\flag-icon\tj.svg" />
+    <Content Include="Assets\fonts\flag-icon\tk.svg" />
+    <Content Include="Assets\fonts\flag-icon\tl.svg" />
+    <Content Include="Assets\fonts\flag-icon\tm.svg" />
+    <Content Include="Assets\fonts\flag-icon\tn.svg" />
+    <Content Include="Assets\fonts\flag-icon\to.svg" />
+    <Content Include="Assets\fonts\flag-icon\tr.svg" />
+    <Content Include="Assets\fonts\flag-icon\tt.svg" />
+    <Content Include="Assets\fonts\flag-icon\tv.svg" />
+    <Content Include="Assets\fonts\flag-icon\tw.svg" />
+    <Content Include="Assets\fonts\flag-icon\tz.svg" />
+    <Content Include="Assets\fonts\flag-icon\ua.svg" />
+    <Content Include="Assets\fonts\flag-icon\ug.svg" />
+    <Content Include="Assets\fonts\flag-icon\um.svg" />
+    <Content Include="Assets\fonts\flag-icon\un.svg" />
+    <Content Include="Assets\fonts\flag-icon\us.svg" />
+    <Content Include="Assets\fonts\flag-icon\uy.svg" />
+    <Content Include="Assets\fonts\flag-icon\uz.svg" />
+    <Content Include="Assets\fonts\flag-icon\va.svg" />
+    <Content Include="Assets\fonts\flag-icon\vc.svg" />
+    <Content Include="Assets\fonts\flag-icon\ve.svg" />
+    <Content Include="Assets\fonts\flag-icon\vg.svg" />
+    <Content Include="Assets\fonts\flag-icon\vi.svg" />
+    <Content Include="Assets\fonts\flag-icon\vn.svg" />
+    <Content Include="Assets\fonts\flag-icon\vu.svg" />
+    <Content Include="Assets\fonts\flag-icon\wf.svg" />
+    <Content Include="Assets\fonts\flag-icon\ws.svg" />
+    <Content Include="Assets\fonts\flag-icon\ye.svg" />
+    <Content Include="Assets\fonts\flag-icon\yt.svg" />
+    <Content Include="Assets\fonts\flag-icon\za.svg" />
+    <Content Include="Assets\fonts\flag-icon\zm.svg" />
+    <Content Include="Assets\fonts\flag-icon\zw.svg" />
+    <Content Include="Assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="Assets\fonts\ico\icofont.svg" />
+    <Content Include="Assets\fonts\slick.svg" />
+    <Content Include="Assets\fonts\themify.svg" />
+    <Content Include="Assets\Images\01.png" />
+    <Content Include="Assets\Images\02.png" />
+    <Content Include="Assets\Images\03.png" />
+    <Content Include="Assets\Images\04.png" />
+    <Content Include="Assets\Images\05.png" />
+    <Content Include="Assets\Images\06.png" />
+    <Content Include="Assets\Images\07.png" />
+    <Content Include="Assets\Images\08.png" />
+    <Content Include="Assets\Images\09.png" />
+    <Content Include="Assets\Images\1.1.png" />
+    <Content Include="Assets\Images\1.2.png" />
+    <Content Include="Assets\Images\10.png" />
+    <Content Include="Assets\Images\11.png" />
+    <Content Include="Assets\Images\12.png" />
+    <Content Include="Assets\Images\2.1.png" />
+    <Content Include="Assets\Images\2.2.png" />
+    <Content Include="Assets\Images\3.1.png" />
+    <Content Include="Assets\Images\3.2.png" />
+    <Content Include="Assets\Images\collection-banner\1.jpg" />
+    <Content Include="Assets\Images\collection-banner\2.jpg" />
+    <Content Include="Assets\Images\collection-banner\3.jpg" />
+    <Content Include="Assets\Images\collection-banner\4.jpg" />
+    <Content Include="Assets\Images\collection-banner\5.jpg" />
+    <Content Include="Assets\Images\collection-banner\6.jpg" />
+    <Content Include="Assets\Images\collection-banner\7.jpg" />
+    <Content Include="Assets\Images\drop-1.png" />
+    <Content Include="Assets\Images\favicon.png" />
+    <Content Include="Assets\Images\icon\2.png" />
+    <Content Include="Assets\Images\icon\3.png" />
+    <Content Include="Assets\Images\icon\4.png" />
+    <Content Include="Assets\Images\icon\6.png" />
+    <Content Include="Assets\Images\loader.gif" />
+    <Content Include="Assets\Images\logo.png" />
+    <Content Include="Assets\Images\mega-banner.jpg" />
+    <Content Include="Assets\Images\menu-banner1.jpg" />
+    <Content Include="Assets\Images\menu-banner2.jpg" />
+    <Content Include="Assets\Images\paint.png" />
+    <Content Include="Assets\Images\pay\1.png" />
+    <Content Include="Assets\Images\pay\2.png" />
+    <Content Include="Assets\Images\pay\3.png" />
+    <Content Include="Assets\Images\pay\4.png" />
+    <Content Include="Assets\Images\pay\5.png" />
+    <Content Include="Assets\Images\product-sidebar\001.jpg" />
+    <Content Include="Assets\Images\product-sidebar\002.jpg" />
+    <Content Include="Assets\Images\product-sidebar\003.jpg" />
+    <Content Include="Assets\Images\product-sidebar\004.jpg" />
+    <Content Include="Assets\Images\product-sidebar\m-001.jpg" />
+    <Content Include="Assets\Images\product-sidebar\m-002.jpg" />
+    <Content Include="Assets\Images\product-sidebar\m-003.jpg" />
+    <Content Include="Assets\Images\ProductImage\1.jpg" />
+    <Content Include="Assets\Images\ProductImage\a1.jpg" />
+    <Content Include="Assets\JS\bootstrap-notify.min.js" />
+    <Content Include="Assets\JS\bootstrap.js" />
+    <Content Include="Assets\JS\feather-icon.js" />
+    <Content Include="Assets\JS\feather.min.js" />
+    <Content Include="Assets\JS\ion.rangeSlider.js" />
+    <Content Include="Assets\JS\jquery-3.3.1.min.js" />
+    <Content Include="Assets\JS\menu.js" />
+    <Content Include="Assets\JS\modal.js" />
+    <Content Include="Assets\JS\popper.min.js" />
+    <Content Include="Assets\JS\rangeslidermain.js" />
+    <Content Include="Assets\JS\script.js" />
+    <Content Include="Assets\JS\slick.js" />
+    <Content Include="Assets\JS\timer2.js" />
+    <Content Include="Assets\JS\tippy-bundle.iife.min.js" />
+    <Content Include="Assets\JS\tippy-popper.min.js" />
+    <Content Include="bin\Antlr3.Runtime.dll" />
+    <Content Include="bin\EntityFramework.dll" />
+    <Content Include="bin\EntityFramework.SqlServer.dll" />
+    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
+    <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="bin\Newtonsoft.Json.dll" />
+    <Content Include="bin\System.Net.Http.Formatting.dll" />
+    <Content Include="bin\System.Web.Helpers.dll" />
+    <Content Include="bin\System.Web.Mvc.dll" />
+    <Content Include="bin\System.Web.Optimization.dll" />
+    <Content Include="bin\System.Web.Razor.dll" />
+    <Content Include="bin\System.Web.WebPages.Deployment.dll" />
+    <Content Include="bin\System.Web.WebPages.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.dll" />
+    <Content Include="bin\WebGrease.dll" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Assets\fonts\fontawesome-webfont.eot" />
+    <Content Include="Assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="Assets\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Assets\fonts\FontAwesome.otf" />
+    <Content Include="Assets\fonts\ico\icofont.eot" />
+    <Content Include="Assets\fonts\ico\icofont.ttf" />
+    <Content Include="Assets\fonts\ico\icofont.woff" />
+    <Content Include="Assets\fonts\slick.eot" />
+    <Content Include="Assets\fonts\slick.ttf" />
+    <Content Include="Assets\fonts\slick.woff" />
+    <Content Include="Assets\fonts\themify.eot" />
+    <Content Include="Assets\fonts\themify.ttf" />
+    <Content Include="Assets\fonts\themify.woff" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Menu\Menu.cshtml" />
+    <Content Include="Views\Menu\Menu_Submenu.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\_ProductListing.cshtml" />
+    <Content Include="Views\Product\ProductDetail.cshtml" />
+    <Content Include="Views\Menu\_CartMenu.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Customer\Register.cshtml" />
+    <Content Include="Views\Customer\Login.cshtml" />
+    <Content Include="Views\WishList\Index.cshtml" />
+    <Content Include="Views\Menu\_WishListItems.cshtml" />
+    <Content Include="Views\Menu\_TopSearchMenu.cshtml" />
+    <Content Include="Views\Menu\_MyAccount.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Checkout\Index.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Customer\CustomersOrders.cshtml" />
+    <Content Include="Views\Customer\CustomersWishlist.cshtml" />
+    <Content Include="Views\Customer\ChangePassword.cshtml" />
+    <Content Include="Views\Customer\MyAccount.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Menu\_BrandList.cshtml" />
+    <Content Include="Views\Category\_categoryListing.cshtml" />
+    <Content Include="Views\Menu\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="bin\roslyn\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{787f5869-7447-42b5-92c5-2627dde08aad}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{396c0dcf-7c31-4789-a5fa-47e039581d5a}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>52013</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:52013/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>
