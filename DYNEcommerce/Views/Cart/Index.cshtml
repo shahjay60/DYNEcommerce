@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            
+
 
         </div>
     </div>
@@ -44,7 +44,10 @@
                         <thead>
                             <tr class="table-head">
                                 <th scope="col">image</th>
-                                <th scope="col">product name</th>
+                                <th scope="col">
+                                    product name
+
+                                </th>
                                 <th scope="col">price</th>
                                 <th scope="col">quantity</th>
                                 <th scope="col">action</th>
@@ -57,10 +60,11 @@
                                 <tr>
 
                                     <td>
-                                        <a href="javascript:void(0)"><img src="~/Assets/Images/ProductImage/1.jpg" alt="cart" class=" "></a>
+                                        <a href="javascript:void(0)"><img src="../ProductImageUploadfiles/@item.Image" alt="cart" class=" "></a>
                                     </td>
                                     <td>
-                                        <a href="javascript:void(0)">@item.ITEM_DESC</a>
+                                        <a href="javascript:void(0)">@item.ITEM_DESC</a><br />
+                                        <h5>@item.AttributeType:@item.AttributeValue</h5>
                                         <div class="mobile-cart-content">
                                             <div class="col-xs-3">
                                                 <div class="qty-box">

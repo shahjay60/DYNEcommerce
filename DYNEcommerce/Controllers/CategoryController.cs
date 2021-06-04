@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,7 +16,7 @@ namespace DYNEcommerce.Controllers
         {
             ViewBag.BrandId = brandId;
             ViewBag.Brands = BrandmasterCRUD.GetBrandMaster();
-            var categories = GRP_MASTERCRUD.GetCategoryByBrandId(brandId);
+            //var categories = GRP_MASTERCRUD.GetCategoryByBrandId(brandId);
             return View();
         }
 
@@ -25,6 +26,8 @@ namespace DYNEcommerce.Controllers
             try
             {
                 int pageSize = 0;
+                ViewBag.path = Path.Combine(Server.MapPath(@"~/CategoryImageUploadfiles"));
+
                 List<GRP_MASTERDomain> categories = new List<GRP_MASTERDomain>();
                 if (string.IsNullOrEmpty(record1))
                 {
@@ -42,6 +45,7 @@ namespace DYNEcommerce.Controllers
                 }
 
                 else
+                
                 {
                     categories = GRP_MASTERCRUD.GetAllCategory().Where(x => checkedValues.Any(a => a.ToString() == x.BrandId)).ToList();
                 }

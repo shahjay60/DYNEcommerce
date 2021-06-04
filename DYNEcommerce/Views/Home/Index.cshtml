@@ -1,6 +1,8 @@
-﻿@{
+﻿@model Domain.Categorywiseproduct
+@{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int j = 0;
 
 }
 
@@ -13,9 +15,9 @@
                         <div class="slider-banner p-center slide-banner-1">
                             <div class="slider-img">
                                 @*<ul class="layout1-slide-1">
-                                    <li id="img-1"><img src="~/Assets/Images/1.1.png" class="img-fluid" alt="slider"></li>
-                                    <li id="img-2" class="slide-center"><img src="~/Assets/Images/1.2.png" class="img-fluid" alt="slider"></li>
-                                </ul>*@
+                                        <li id="img-1"><img src="~/Assets/Images/1.1.png" class="img-fluid" alt="slider"></li>
+                                        <li id="img-2" class="slide-center"><img src="~/Assets/Images/1.2.png" class="img-fluid" alt="slider"></li>
+                                    </ul>*@
                             </div>
                             <div class="slider-banner-contain">
                                 <div>
@@ -100,14 +102,150 @@
     <div class="tab-product-main">
         <div class="tab-prodcut-contain">
             <ul class="tabs tab-title">
-                <li class="current"><a href="tab-1">fashion</a></li>
-                <li class=""><a href="tab-2">electronic</a></li>
-                <li class=""><a href="tab-3">footware</a></li>
-                <li class=""><a href="tab-4">sports</a></li>
-                <li class=""><a href="tab-5">toys</a></li>
-                <li class=""><a href="tab-6">books</a></li>
+                @for (int i = 0; i < Model.CategoryList.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        <li class="current"><a href="tab-@Model.CategoryList[i].GRP_CD">@Model.CategoryList[i].GRP_NAME</a></li>
+                    }
+                    else
+                    {
+                        <li class=""><a href="tab-@Model.CategoryList[i].GRP_CD">@Model.CategoryList[i].GRP_NAME</a></li>
+                    }
+                }
+
             </ul>
         </div>
     </div>
 </section>
 <!--tab product-->
+<!-- slider tab  -->
+<section class="section-py-space ratio_square product">
+    <div class="custom-container">
+        <div class="row">
+            <div class="col pr-0">
+                <div class="theme-tab product mb--5">
+                    <div class="tab-content-cls ">
+                        @for (int k = 0; k < Model.CategoryList.Count; k++)
+                        {
+                            if (k == 0)
+                            {
+                                <div id="tab-@Model.CategoryList[k].GRP_CD" class="tab-content active default">
+                                    <div class="product-slide-6 product-m no-arrow">
+
+                                        @for (int i = 0; i < Model.ProductList.Count; i++)
+                                        {
+                                            if (@Model.ProductList[i].GRP_CD == @Model.CategoryList[k].GRP_CD)
+                                            {
+                                                <div>
+                                                    <div class="product-box">
+                                                        <div class="product-imgbox">
+                                                            @if (@Model.ProductList[i].Product_Image == "")
+                                                            {
+                                                                <div class="product-front">
+                                                                    <a href="@Url.Action("ProductDetail", "Product", new { ProdId = @Model.ProductList[i].Item_CD, catId = @Model.ProductList[i].GRP_CD }) "> <img src="~/Assets/Images/ProductImage/1.jpg" class="img-fluid  " alt="product"> </a>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="product-front">
+                                                                    <a href="@Url.Action("ProductDetail", "Product", new { ProdId = @Model.ProductList[i].Item_CD, catId = @Model.ProductList[i].GRP_CD }) "> <img src="../ProductImageUploadfiles/@Model.ProductList[i].Product_Image" class="img-fluid  " alt="product"> </a>
+                                                                </div>
+                                                            }
+                                                            <div class="new-label1">
+                                                                <div>new</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-detail detail-inline ">
+                                                            <div class="detail-title">
+                                                                <div class="detail-left">
+                                                                    <a href="product-page(left-sidebar).html">
+                                                                        <h6 class="price-title">
+                                                                            @Model.ProductList[i].Item_Desc
+                                                                        </h6>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="detail-right">
+                                                                    <div class="check-price"> $@Model.ProductList[i].Sale_Price </div>
+                                                                    <div class="price">
+                                                                        <div class="price"> $@Model.ProductList[i].Sale_Price </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            }
+                                       
+                                        }
+                                        @k++;
+                                    </div>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <div id="tab-@Model.CategoryList[k].GRP_CD" class="tab-content">
+                                    <div class="product-slide-6 product-m no-arrow">
+
+                                        @for (int i = 0; i < Model.ProductList.Count; i++)
+                                        {
+                                            if (@Model.ProductList[i].GRP_CD == @Model.CategoryList[k].GRP_CD)
+                                            {
+                                                <div>
+                                                    <div class="product-box">
+                                                        <div class="product-imgbox">
+                                                            @if (@Model.ProductList[i].Product_Image == "")
+                                                            {
+                                                                <div class="product-front">
+                                                                    <a href="@Url.Action("ProductDetail", "Product", new { ProdId = @Model.ProductList[i].Item_CD, catId = @Model.ProductList[i].GRP_CD }) "> <img src="~/Assets/Images/ProductImage/1.jpg" class="img-fluid  " alt="product"> </a>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="product-front">
+                                                                    <a href="@Url.Action("ProductDetail", "Product", new { ProdId = @Model.ProductList[i].Item_CD, catId = @Model.ProductList[i].GRP_CD }) "> <img src="../ProductImageUploadfiles/@Model.ProductList[i].Product_Image" class="img-fluid  " alt="product"> </a>
+                                                                </div>
+                                                            }
+                                                        <div class="new-label1">
+                                                            <div>new</div>
+                                                        </div>
+                                                        </div>
+                                                        <div class="product-detail detail-inline ">
+                                                            <div class="detail-title">
+                                                                <div class="detail-left">
+                                                                    <a href="product-page(left-sidebar).html">
+                                                                        <h6 class="price-title">
+                                                                            @Model.ProductList[i].Item_Desc
+                                                                        </h6>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="detail-right">
+                                                                    <div class="check-price"> $@Model.ProductList[i].Sale_Price </div>
+                                                                    <div class="price">
+                                                                        <div class="price"> $@Model.ProductList[i].Sale_Price </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            }
+                                        }
+                                        @k++;
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- slider tab end -->
+<script src="~/Assets/JS/jquery-3.3.1.min.js"></script>
+<script src="~/Assets/JS/feather-icon.js"></script>

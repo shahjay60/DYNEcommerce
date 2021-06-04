@@ -13,11 +13,17 @@ namespace Domain
         public string FOR_GRP_CD { get; set; }
         public string LEVEL_TEXT { get; set; }
         public string GROUP_YN { get; set; }
-
         public string BrandName { get; set; }
-
-
+        public string ImageName { get; set; }
+        public bool? Isonhomepage { get; set; }
+        public bool? Isonmenu { get; set; }
         public string BrandId { get; set; }
+
+        public string ProductName { get; set; }
+        public string Pid { get; set; }
+        public string ProductImage { get; set; }
+        public string ProductPrice { get; set; }
+
 
     }
 

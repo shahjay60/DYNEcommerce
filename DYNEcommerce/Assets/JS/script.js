@@ -1763,7 +1763,7 @@ $('.feature-slide').slick({
     $(this).parent().parent().find("li").removeClass("current");
     $(this).parent().addClass("current");
     var currunt_href = $(this).attr("href");
-    $('#' + currunt_href).show();
+      $('#' +currunt_href).show();
     $(this).parent().parent().parent().find(".tab-content").not('#' + currunt_href).css("display", "none");
     $(".product-4").slick({
       arrows: true,

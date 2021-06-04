@@ -11,6 +11,11 @@ namespace Domain
 
         public DateTime CreatedDatetime { get; set; }
         public string IsDeleted { get; set; }
+        public string AttributeValue { get; set; }
+        public string AttributeType { get; set; }
+        public string Image { get; set; }
+
+
         public int Quantity { get; set; }
         public decimal Amount { get; set; }
         public bool IsPlace { get; set; }

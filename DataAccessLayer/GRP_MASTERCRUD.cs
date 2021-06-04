@@ -44,13 +44,34 @@ namespace DataAccessLayer
                         GRP_NAME = dr["GRP_NAME"].ToString(),
                         FOR_GRP_CD = dr["FOR_GRP_CD"].ToString(),
                         LEVEL_TEXT = dr["LEVEL_TEXT"].ToString(),
-                        GROUP_YN = dr["GROUP_YN"].ToString()
+                        GROUP_YN = dr["GROUP_YN"].ToString(),
+                        Isonhomepage = dr["Isonhomepage"] == DBNull.Value ? false : Convert.ToBoolean(dr["Isonhomepage"]),
+                        Isonmenu = dr["Isonmenu"] == DBNull.Value ? false : Convert.ToBoolean(dr["Isonmenu"]),
                     });
 
             }
             return grp;
         }
 
+        public static bool UpdateCategoryByBrandId(BrandCategoryDomain model)
+        {
+            string mainconn = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
+            SqlConnection sqlconn = new SqlConnection(mainconn);
+
+            SqlCommand cmd = new SqlCommand("UpdateCategoryByBrandId", sqlconn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@brandId", model.brandId);
+            cmd.Parameters.AddWithValue("@catId", model.GRP_CD);
+
+            sqlconn.Open();
+            int i = cmd.ExecuteNonQuery();
+            sqlconn.Close();
+
+            if (i >= 1)
+                return true;
+            else
+                return false;
+        }
 
         public static List<GRP_MASTERDomain> GetMenuById(string GRP_CDs)
         {
@@ -115,6 +136,7 @@ namespace DataAccessLayer
                         GROUP_YN = dr["GROUP_YN"].ToString(),
                         BrandName = dr["BrandName"].ToString(),
                         BrandId = dr["BrandId"].ToString(),
+                        ImageName = dr["ImageName"].ToString()
 
                     });
 
@@ -140,7 +162,8 @@ namespace DataAccessLayer
 
             foreach (DataRow dr in dt.Rows)
             {
-                grp.Add(
+                
+                    grp.Add(
                     new GRP_MASTERDomain
                     {
                         GRP_CD = dr["GRP_CD"].ToString(),
@@ -150,12 +173,49 @@ namespace DataAccessLayer
                         GROUP_YN = dr["GROUP_YN"].ToString(),
                         BrandName = dr["BrandName"].ToString(),
                         BrandId = dr["BrandId"].ToString(),
+                        Isonhomepage = dr["Isonhomepage"] == DBNull.Value ?false : Convert.ToBoolean(dr["Isonhomepage"]),
+                        Isonmenu = dr["Isonmenu"] == DBNull.Value ? false : Convert.ToBoolean(dr["Isonmenu"]),
+                        ImageName = dr["ImageName"].ToString()
 
+                    });
+            }
+            return grp;
+        }
+
+        public static List<GRP_MASTERDomain> GetProductByCategory()
+        {
+            List<GRP_MASTERDomain> grp = new List<GRP_MASTERDomain>();
+            string mainconn = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
+            SqlConnection sqlconn = new SqlConnection(mainconn);
+
+            SqlCommand cmd = new SqlCommand("GetProductByCategory", sqlconn);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+
+            DataTable dt = new DataTable();
+
+            sqlconn.Open();
+            sd.Fill(dt);
+            sqlconn.Close();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+             
+                grp.Add(
+                    new GRP_MASTERDomain
+                    {
+                        GRP_CD = dr["CategoryId"].ToString().Trim(),
+                        GRP_NAME = dr["GRP_NAME"].ToString(),
+                        ProductName = dr["ITEM_DESC"].ToString(),
+                        Pid = dr["ITEM_CD"].ToString(),
+                        ProductImage = dr["Image"].ToString(),
+                        ProductPrice = dr["sale_Price"].ToString(),
                     });
 
             }
             return grp;
         }
+
 
     }
 }

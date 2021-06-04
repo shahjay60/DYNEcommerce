@@ -1,4 +1,6 @@
 ﻿using DataAccessLayer;
+using DataAccessLayer.Admin;
+using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,34 @@ namespace DYNEcommerce.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.BrandOnHomePage = BrandmasterCRUD.GetBrandMaster().Where(x => x.IsOnHomePage == true);
+            var BrandOnHomePage = BrandmasterCRUD.GetBrandMaster().Where(x => x.IsOnHomePage == true);
+
+            Categorywiseproduct mCategorywiseproduct = new Categorywiseproduct();
+            mCategorywiseproduct.BrandMasterList = new List<BrandmasterDomain>();
+            mCategorywiseproduct.CategoryList = new List<GRP_MASTERDomain>();
+            mCategorywiseproduct.ProductList = new List<ITMMASTDomain>();
+
+            mCategorywiseproduct.BrandMasterList.AddRange(BrandOnHomePage.ToList());
+
+            var CategoryWiseProduct = GRP_MASTERCRUD.GetProductByCategory();
+            var uniqueCategory = CategoryWiseProduct
+                              .GroupBy(o => new { o.GRP_CD, o.GRP_NAME })
+                              .Select(o => o.FirstOrDefault());
+
+            mCategorywiseproduct.CategoryList.AddRange(uniqueCategory.ToList());
+            foreach (var item in CategoryWiseProduct)
+            {
+                ITMMASTDomain mITMMASTDomain = new ITMMASTDomain();
+                mITMMASTDomain.Product_Image = item.ProductImage;
+                mITMMASTDomain.Item_Desc = item.ProductName;
+                mITMMASTDomain.Item_CD = item.Pid;
+                mITMMASTDomain.GRP_CD = item.GRP_CD;
+                mITMMASTDomain.Sale_Price =Convert.ToDouble(item.ProductPrice);
+
+                mCategorywiseproduct.ProductList.Add(mITMMASTDomain);
+            }
+
+            ViewBag.companydetail = CompnayDetailsCRUD.GetCompnayDetailsAll();
             if (Session["idUser"] != null)
             {
                 ViewBag.totalItemsInCart = CustomerCartCRUD.GetCartByCustomerId(Convert.ToInt32(Session["idUser"])).Where(x => x.IsPlace == false).Count();
@@ -22,7 +51,7 @@ namespace DYNEcommerce.Controllers
                 ViewBag.totalItemsInCart = 0;
                 ViewBag.totalItemsInWishList = 0;
             }
-            return View();
+            return View(mCategorywiseproduct);
         }
 
         public ActionResult About()
@@ -38,5 +67,8 @@ namespace DYNEcommerce.Controllers
 
             return View();
         }
+
+    
     }
+
 }

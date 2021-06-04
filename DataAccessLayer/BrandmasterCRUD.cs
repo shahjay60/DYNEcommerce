@@ -109,6 +109,8 @@ namespace DataAccessLayer
 
             SqlCommand cmd = new SqlCommand("GetBrandmasterAll", sqlconn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@mode", "SelectAllBrand");
+
 
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
 

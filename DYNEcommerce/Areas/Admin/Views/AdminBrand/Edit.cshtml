@@ -1,0 +1,168 @@
+﻿@model Domain.BrandmasterDomain
+
+@{
+    ViewBag.Title = "EditBrand";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+
+<div class="page-body">
+
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="page-header-left">
+                        <h3>
+                            Edit Brand
+                            <small>Bigdeal Admin panel</small>
+                        </h3>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <ol class="breadcrumb pull-right">
+                        <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a></li>
+                        <li class="breadcrumb-item">Brand </li>
+                        <li class="breadcrumb-item active">Edit Brand </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card tab2-card">
+                    <div class="card-header">
+                        <h5> Edit Brand</h5>
+                    </div>
+                    <div class="card-body">
+
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <input type="hidden" id="hdnId" value="@Model.BrandId" />
+
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>BrandName</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                @Html.EditorFor(model => model.BrandName, new { htmlAttributes = new { @class = "form-control", @id = "BrandName" } })
+                                @Html.ValidationMessageFor(model => model.BrandName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Display on web</label>
+                            </div>
+                            <div class="col-xl-8 col-md-7">
+
+                                <input type="radio" name="webradio"  value="True" @(Model.ISOnWeb == true ? "checked='true'" : "") /> True
+                                <input type="radio" name="webradio"  value="False" @(Model.ISOnWeb == false ? "checked='true'" : "") />False
+                                <span id="error2"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Display on homepage</label>
+                            </div>
+                            <div class="col-xl-8 col-md-7">
+                                @*@Html.EditorFor(model => model.Display_on_homepage, new { htmlAttributes = new { @class = "form-control" } })*@
+                                <input type="radio" name="homepageradio"  value="True"  @(Model.IsOnHomePage == true ? "checked='true'" : "") /> True
+                                <input type="radio" name="homepageradio"  value="False" @(Model.IsOnHomePage == false ? "checked='true'" : "") />False
+                                <span id="error"></span>
+                            </div>
+                        </div>
+                        <div class="pull-right">
+
+                            @*<button type="button" class="btn btn-primary">Save</button>*@
+                            <input type="submit" class="btn btn-primary" value="Save" id="btnSubmit" />
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Assets/JS/jquery-3.3.1.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $('input[type=radio][name=homepageradio]').change(function () {
+
+            var selectedRadio = $("input[name='homepageradio']:checked").val();
+            alert(selectedRadio);
+        });
+
+    });
+    $("#btnSubmit").click(function () {
+        var result = validation();
+        if (result == true) {
+            var Brand = {};
+            $('input[type=radio][name=homepageradio]').change(function () {
+
+                Brand.IsOnHomePage= $("input[name='homepageradio']:checked").val();
+            });
+
+            $('input[type=radio][name=webradio]').change(function () {
+
+                Brand.ISOnWeb = $("input[name='webradio']:checked").val();
+            });
+            Brand.BrandId = $("#hdnId").val();
+            Brand.BrandName = $("#BrandName").val();
+            Brand.IsOnHomePage = $('input[name="homepageradio"]:checked').val();
+            Brand.ISOnWeb = $('input[name="webradio"]:checked').val();
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url:'@Url.Action("Edit", "AdminBrand")',
+                data: JSON.stringify(Brand),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response == "Success") {
+                        window.location.href = '@Url.Action("Index", "AdminBrand")'
+                    }
+                    else {
+                        alert(response);
+                    }
+                }
+            });
+        }
+        else {
+            alert("Please Fill All The Details");
+        }
+    });
+
+    function validation() {
+
+        var result = true;
+        if ($("#BrandName").val() == '' || $("#BrandName").val() == null) {
+            $("#BrandName").css('border-color', 'red');
+            result = false;
+        }
+        if ($('input[name="homepageradio"]:checked').length == 0) {
+            $("#error").text("Select atleast one").css('color', 'red');
+
+            result = false;
+        }
+
+        if ($('input[name="webradio"]:checked').length == 0) {
+            $("#error2").text("Select atleast one").css('color', 'red');
+
+            result = false;
+        }
+
+        return result;
+
+    }
+
+</script>

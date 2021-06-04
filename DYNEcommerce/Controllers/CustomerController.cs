@@ -31,6 +31,7 @@ namespace DYNEcommerce.Controllers
         [HttpGet]
         public ActionResult Login()
         {
+
             return View();
         }
 
@@ -45,7 +46,13 @@ namespace DYNEcommerce.Controllers
                 {
                     Session["FullName"] = result[0].FirstName + " " + result[0].LastName;
                     Session["idUser"] = result[0].Id;
+                    if (Session["LastURL"] != null)
+                    {
+                        string url = Session["LastURL"].ToString();
+                        string fullURL = Request.Url.Authority + url;
+                        Response.Redirect(url);
 
+                    }
                     return RedirectToAction("Index", "Menu");
 
                 }

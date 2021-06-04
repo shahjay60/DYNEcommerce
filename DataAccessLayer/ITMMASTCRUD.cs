@@ -44,14 +44,15 @@ namespace DataAccessLayer
                         Item_ID = dr["Item_ID"].ToString(),
                         Item_Desc = dr["Item_Desc"].ToString(),
                         BrandId = dr["BrandId"].ToString(),
-                        Sale_Price = Convert.ToDouble( dr["Sale_Price"])
+                        Sale_Price = Convert.ToDouble( dr["Sale_Price"]),
+                        AttributeValue = dr["AttributeValue"].ToString(),
+                        Product_Image = dr["Image"].ToString(),
+                        viewon = dr["Viewon"].ToString(),
                     });
 
             }
             return itmmast;
         }
-
-
 
         public static List<ITMMASTDomain> GetProductById(string ITEM_CD)
         {
@@ -83,15 +84,52 @@ namespace DataAccessLayer
                         Item_ID = dr["Item_ID"].ToString(),
                         Item_Desc = dr["Item_Desc"].ToString(),
                         Qty = dr["Quantity"].ToString(),
-
-                        Sale_Price = Convert.ToDouble(dr["Sale_Price"])
+                        //AttributeValue = dr["AttributeValue"].ToString(),
+                        //AttributeName = dr["AttributeName"].ToString(),
+                        Sale_Price = Convert.ToDouble(dr["Sale_Price"]),
+                        //Product_Image = dr["Image"].ToString(),
+                        //viewon = dr["Viewon"].ToString(),
                     });
 
             }
             return itmmast;
         }
 
+        public static List<ITMMASTDomain> GetAllProducts()
+        {
+            List<ITMMASTDomain> itmmast = new List<ITMMASTDomain>();
+            string mainconn = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
+            SqlConnection sqlconn = new SqlConnection(mainconn);
 
+            SqlCommand cmd = new SqlCommand("Get_ITMMAST", sqlconn);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@mode", "Select");
+            cmd.Parameters.AddWithValue("@GRP_CD", "");
+            cmd.Parameters.AddWithValue("@ITEM_CD", "");
+
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+
+            DataTable dt = new DataTable();
+
+            sqlconn.Open();
+            sd.Fill(dt);
+            sqlconn.Close();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                itmmast.Add(
+                    new ITMMASTDomain
+                    {
+                        GRP_CD = dr["GRP_CD"].ToString(),
+                        Item_CD = dr["Item_CD"].ToString(),
+                        Item_ID = dr["Item_ID"].ToString(),
+                        Item_Desc = dr["Item_Desc"].ToString(),
+                        Sale_Price = Convert.ToDouble(dr["Sale_Price"])
+                    });
+
+            }
+            return itmmast;
+        }
         public static List<GRP_MASTERDomain> GetMenuById(string GRP_CDs)
         {
             List<GRP_MASTERDomain> grp = new List<GRP_MASTERDomain>();

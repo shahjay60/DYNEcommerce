@@ -85,40 +85,11 @@
                                         <!--HOME-->
                                         <li>
                                             <a class="dark-menu-item" href="javascript:void(0)">Home</a>
-                                            <ul>
-                                                <li><a href="index.html">mega store 1</a></li>
-                                                <li><a href="layout-2.html">mega store 2</a></li>
-                                                <li><a href="layout-3.html">mega store 3</a></li>
-                                                <li><a href="layout-4.html">mega store 4</a></li>
-                                                <li><a href="megastore.html">mega store 5</a></li>
-                                                <li><a href="layout-5.html">electronics</a></li>
-                                                <li><a href="layout-6.html">vegetable</a></li>
-                                                <li><a href="furniture.html">furniture</a></li>
-                                                <li><a href="cosmetic.html">cosmetic</a></li>
-                                                <li><a href="kids.html">kids</a></li>
-                                                <li><a href="tools.html">tools</a></li>
-                                                <li><a href="grocery.html">grocery</a></li>
-                                                <li><a href="pets.html">pets</a></li>
-                                                <li><a href="farming.html">farming</a></li>
-                                                <li><a href="digital-marketplace.html">digital marketplace</a></li>
-                                            </ul>
                                         </li>
                                         <!--HOME-END-->
                                         <!--SHOP-->
                                         <li>
                                             <a class="dark-menu-item" href="javascript:void(0)">shop</a>
-                                            <ul>
-                                                <li><a href="category-page(left-sidebar).html">left sidebar</a></li>
-                                                <li><a href="category-page(right-sidebar).html">right sidebar</a></li>
-                                                <li><a href="category-page(no-sidebar).html">no sidebar</a></li>
-                                                <li><a href="category-page(sidebar-popup).html">sidebar popup</a></li>
-                                                <li><a href="category-page(metro).html">metro </a></li>
-                                                <li><a href="category-page(full-width).html">full width </a></li>
-                                                <li><a href="category-page(infinite-scroll).html">infinite scroll</a></li>
-                                                <li><a href=category-page(3-grid).html>3 grid</a></li>
-                                                <li><a href="category-page(6-grid).html">6 grid</a></li>
-                                                <li><a href="category-page(list-view).html">list view</a></li>
-                                            </ul>
                                         </li>
                                         <!--SHOP-END-->
                                         <!--product-meu start-->
@@ -133,13 +104,6 @@
                                         <!--blog-meu start-->
                                         <li>
                                             <a class="dark-menu-item" href="javascript:void(0)">blog</a>
-                                            <ul>
-                                                <li><a href="blog(left-sidebar).html">left sidebar</a></li>
-                                                <li><a href="blog(right-sidebar).html">right sidebar</a></li>
-                                                <li><a href="blog(no-sidebar).html">no sidebar</a></li>
-                                                <li><a href="blog-details.html">blog details</a></li>
-                                                <li><a href="blog-creative(left-sidebar).html">creative left sidebar</a></li>
-                                            </ul>
                                         </li>
                                         <!--blog-meu end-->
                                     </ul>
@@ -319,10 +283,20 @@
                                     </div>
                                     <div class="footer-contant">
                                         <ul class="contact-list">
-                                            <li><i class="fa fa-map-marker"></i>big deal store demo store <br> india-<span>3654123</span></li>
-                                            <li><i class="fa fa-phone"></i>call us: <span>123-456-7898</span></li>
-                                            <li><i class="fa fa-envelope-o"></i>email us: support@bigdeal.com</li>
-                                            <li><i class="fa fa-fax"></i>fax <span>123456</span></li>
+                                            @if (ViewBag.companydetail!=null)
+                                            {
+                                                <li><i class="fa fa-map-marker"></i>@ViewBag.companydetail[0].Name <br> UAE-<span>@ViewBag.companydetail[0].PhoneNumber</span></li>
+                                                <li><i class="fa fa-phone"></i>call us: <span>@ViewBag.companydetail[0].PhoneNumber</span></li>
+                                                <li><i class="fa fa-envelope-o"></i>email us: @ViewBag.companydetail[0].EmailAddress</li>
+                                                <li><i class="fa fa-fax"></i>fax <span> @ViewBag.companydetail[0].FaxNo</span></li>
+                                            }
+                                            else
+                                            {
+                                                <li><i class="fa fa-map-marker"></i>big deal store demo store <br> india-<span>3654123</span></li>
+                                                <li><i class="fa fa-phone"></i>call us: <span>123-456-7898</span></li>
+                                                <li><i class="fa fa-envelope-o"></i>email us: support@bigdeal.com</li>
+                                                <li><i class="fa fa-fax"></i>fax <span>123456</span></li>
+                                            }
                                         </ul>
                                     </div>
                                 </div>

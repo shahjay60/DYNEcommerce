@@ -13,7 +13,7 @@ namespace DataAccessLayer
     public class CustomerCartCRUD
     {
 
-        public static void AddToCart(CustomerCartDomain mCustomerCart)
+        public static int AddToCart(CustomerCartDomain mCustomerCart)
         {
 
             string mainconn = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
@@ -34,9 +34,28 @@ namespace DataAccessLayer
             {
                 sqlconn.Open();
             }
+            //cmd.ExecuteNonQuery();
+            int modified = (int)cmd.ExecuteScalar();
+            sqlconn.Close();
+            return modified;
+        }
+
+
+        public static void AddToCartAttribute(CartAttribute mCartAttribute)
+        {
+            string mainconn = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
+            SqlConnection sqlconn = new SqlConnection(mainconn);
+            SqlCommand cmd = new SqlCommand("[sp_AddcartAttribute]", sqlconn);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@CartId", mCartAttribute.cartId);
+            cmd.Parameters.AddWithValue("@AttributeValueID", mCartAttribute.AttributeValueID);
+
+            if (sqlconn.State == ConnectionState.Closed)
+            {
+                sqlconn.Open();
+            }
             cmd.ExecuteNonQuery();
             sqlconn.Close();
-
         }
 
 
@@ -61,6 +80,7 @@ namespace DataAccessLayer
 
             foreach (DataRow dr in dt.Rows)
             {
+
                 grp.Add(
                     new CustomerCartDomain
                     {
@@ -71,15 +91,17 @@ namespace DataAccessLayer
                         //IsDeleted = dr["IsDeleted"].ToString(),
                         Quantity = Convert.ToInt16(dr["Quantity"]),
                         Amount = Convert.ToDecimal(dr["Amount"]),
-                        IsPlace = Convert.ToBoolean(dr["IsPlaced"]),
-                        ITEM_DESC = dr["ITEM_DESC"].ToString()
+                        IsPlace =Convert.ToBoolean((dr["IsPlaced"])),
+                        ITEM_DESC = dr["ITEM_DESC"].ToString(),
+                        AttributeValue = dr["AttributeValueId"].ToString(),
+                        AttributeType = dr["AttributeName"].ToString(),
+                        Image = dr["Image"].ToString()
 
                     });
 
             }
             return grp;
         }
-
 
         public static List<CustomerCartDomain> GetCartByCartId(int cartId)
         {

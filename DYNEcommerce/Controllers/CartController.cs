@@ -15,9 +15,13 @@ namespace DYNEcommerce.Controllers
         {
             try
             {
+                string url2 = Request.Url.AbsoluteUri;
+                Session["LastURL"] = url2;
                 if (Session["idUser"] != null)
                 {
                     var cartData = CustomerCartCRUD.GetCartByCustomerId(Convert.ToInt32(Session["idUser"]));
+                    List<CustomerDomain> customercartdata = new List<CustomerDomain>();
+
                     cartData = cartData.Where(x => x.IsPlace == false).ToList();
                     ViewBag.totalAmount = cartData.Sum(x => x.Amount).ToString();
 

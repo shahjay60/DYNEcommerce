@@ -4,6 +4,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .visible-item {
+        visibility: visible
+    }
+
+    .hidden-item {
+        visibility: hidden
+    }
+</style>
 
 <!-- breadcrumb start -->
 <div class="breadcrumb-main ">
@@ -38,7 +47,7 @@
                                 back
                             </span>
                         </div>
-                      
+
                     </div>
 
                 </div>
@@ -52,18 +61,21 @@
                         <div class="row ">
                             <div class="col-lg-5">
                                 <div class="product-slick ">
-                                    <div><img src="~/Assets/Images/product-sidebar/001.jpg" alt="" class="img-fluid  image_zoom_cls-0"></div>
-                                    <div><img src="~/Assets/Images/product-sidebar/002.jpg" alt="" class="img-fluid  image_zoom_cls-1"></div>
-                                    <div><img src="~/Assets/Images/product-sidebar/003.jpg" alt="" class="img-fluid  image_zoom_cls-2"></div>
-                                    <div><img src="~/Assets/Images/product-sidebar/004.jpg" alt="" class="img-fluid  image_zoom_cls-3"></div>
+                                    @for (int i = 0; i < @Model.ProductImages.Count(); i++)
+                                    {
+                                        <div><img src="../ProductImageUploadfiles/@Model.ProductImages[i]" alt="" class="img-fluid  image_zoom_cls-@i"></div>
+
+                                    }
                                 </div>
                                 <div class="row">
                                     <div class="col-12 p-0">
                                         <div class="slider-nav">
-                                            <div><img src="~/Assets/Images/product-sidebar/001.jpg" alt="" class="img-fluid"></div>
-                                            <div><img src="~/Assets/Images/product-sidebar/002.jpg" alt="" class="img-fluid"></div>
-                                            <div><img src="~/Assets/Images/product-sidebar/003.jpg" alt="" class="img-fluid"></div>
-                                            <div><img src="~/Assets/Images/product-sidebar/004.jpg" alt="" class="img-fluid"></div>
+                                            @for (int i = 0; i < @Model.ProductImages.Count(); i++)
+                                            {
+                                                <div><img src="../ProductImageUploadfiles/@Model.ProductImages[i]" alt="" class="img-fluid"></div>
+
+                                            }
+
                                         </div>
                                     </div>
                                 </div>
@@ -77,72 +89,43 @@
                                             <li><span>mrp $@Model.Offer_Price</span></li>
                                             <li>50% off</li>
                                         </ul>
-                                        <div class="revieu-box">
-                                            <ul>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star-o"></i></li>
-                                            </ul>
-                                            <a href="review.html"><span>(6 reviews)</span></a>
-                                        </div>
-
                                     </div>
 
                                     <div id="selectSize" class="pro-group addeffect-section product-description border-product">
-                                        <h6 class="product-title size-text">
-                                            select size<span>
-                                                <a href="" data-bs-toggle="modal" data-bs-target="#sizemodal">size chart</a>
-                                            </span>
-                                        </h6>
-                                        <div class="modal fade" id="sizemodal">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Sheer Straight Kurta</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body"><img src="../assets/images/size-chart.jpg" alt="" class="img-fluid "></div>
-                                                </div>
+
+                                        @if (@Model.ProductAttributes.Count()!=0 && @Model.ProductAttributes.Where(x => x.AttributeName.ToLower().Trim() == "size").Select(x => x.AttributeName).FirstOrDefault() != "")
+                                        {
+                                            <h6 class="product-title">please select Size</h6>
+                                            <div class="size-box">
+                                                @for (int i = 0; i < Model.ProductAttributes.Count(); i++)
+                                                {
+                                                    if (Model.ProductAttributes[i].AttributeName.ToLower().Trim() == "size")
+                                                    {
+                                                        <div class="custom-control custom-checkbox  form-check collection-filter-checkbox">
+                                                            <input type="checkbox" class="custom-control-input form-check-input sizeCheckbox" id="small" value="@Model.ProductAttributes[i].AttributeValue" style="height: 25px; width: 25px;">
+                                                            <h4 class="custom-control-label form-check-label" for="small">@Model.ProductAttributes[i].AttributeValue </h4>
+                                                        </div>
+                                                    }
+                                                }
+
                                             </div>
-                                        </div>
-                                        <h6 class="error-message">please select size</h6>
-                                        <div class="size-box">
-                                            <ul>
-                                                <li><a href="javascript:void(0)">s</a></li>
-                                                <li><a href="javascript:void(0)">m</a></li>
-                                                <li><a href="javascript:void(0)">l</a></li>
-                                                <li><a href="javascript:void(0)">xl</a></li>
-                                                <li><a href="javascript:void(0)">2xl</a></li>
-                                            </ul>
-                                        </div>
-                                        <h6 class="product-title">color</h6>
-                                        <div class="color-selector inline">
-                                            <ul>
-                                                <li>
-                                                    <div class="color-1 active"></div>
-                                                </li>
-                                                <li>
-                                                    <div class="color-2"></div>
-                                                </li>
-                                                <li>
-                                                    <div class="color-3"></div>
-                                                </li>
-                                                <li>
-                                                    <div class="color-4"></div>
-                                                </li>
-                                                <li>
-                                                    <div class="color-5"></div>
-                                                </li>
-                                                <li>
-                                                    <div class="color-6"></div>
-                                                </li>
-                                                <li>
-                                                    <div class="color-7"></div>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        }
+                                        @if (@Model.ProductAttributes.Count() != 0 && @Model.ProductAttributes.Where(x => x.AttributeName.ToLower().Trim() == "color").Select(x => x.AttributeName).FirstOrDefault() != "")
+                                        {
+                                            <h6 class="product-title @(Model.ProductAttributes.Where(x => x.AttributeName.ToLower().Trim() == "color").Select(x => x.AttributeName).FirstOrDefault()!=null ?"visible-item":"hidden-item")">color</h6>
+                                            <div class="color-selector inline">
+                                                @for (int i = 0; i < Model.ProductAttributes.Count(); i++)
+                                                {
+                                                    if (Model.ProductAttributes[i].AttributeName.ToLower().Trim() == "color")
+                                                    {
+                                                        <input type="checkbox" class="custom-control-input form-check-input colorCheckbox" id="small"
+                                                               style="background-color: @Model.ProductAttributes[i].AttributeValue;height:25px;width:25px; "
+                                                               value=" @Model.ProductAttributes[i].AttributeValue" title=" @Model.ProductAttributes[i].AttributeValue">
+                                                    }
+                                                }
+                                            </div>
+                                        }
+
                                         <h6 class="product-title">quantity</h6>
                                         <div class="qty-box">
                                             <div class="input-group">
@@ -337,16 +320,18 @@
                         <div>
                             <div class="product-box">
                                 <div class="product-imgbox">
-                                    <div class="product-front">
-                                        <a href="/Product/ProductDetail?ProdId=@product.Item_CD&catId=@product.GRP_CD">
-                                            <img src="~/Assets/Images/ProductImage/1.jpg" class="img-fluid  " alt="product">
-                                        </a>
-                                    </div>
-                                    <div class="product-back">
-                                        <a href="/Product/ProductDetail?ProdId=@product.Item_CD&catId=@product.GRP_CD">
-                                            <img src="~/Assets/Images/ProductImage/a1.jpg" class="img-fluid  " alt="product">
-                                        </a>
-                                    </div>
+                                    @if (@product.Product_Image == "")
+                                    {
+                                        <div class="product-front">
+                                            <a href="@Url.Action("ProductDetail","Product",new {ProdId=@product.Item_CD,catId=@product.GRP_CD }) "> <img src="~/Assets/Images/ProductImage/1.jpg" class="img-fluid  " alt="product"> </a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="product-front">
+                                            <a href="@Url.Action("ProductDetail","Product",new {ProdId=@product.Item_CD,catId=@product.GRP_CD }) "> <img src="../ProductImageUploadfiles/@product.Product_Image" class="img-fluid  " alt="product"> </a>
+                                        </div>
+                                    }
                                 </div>
                                 <div class="product-detail detail-inline ">
                                     <div class="detail-title">
@@ -388,62 +373,101 @@
 <!-- related products -->
 <script src="~/Assets/JS/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+    var checkedcolorValues = [];
+    var checkedsizeValues = [];
 
+    $(document).ready(function () {
+      
+        $(".colorCheckbox").change(function () {
+            var checked = $(this).is(':checked');
+            if (checked) {
+                checkedcolorValues.push(this.value)
+
+            } else {
+                var removeItemIndex = checkedcolorValues.indexOf(this.value);
+                if (removeItemIndex != -1) checkedcolorValues.splice(removeItemIndex, 1);  //remove at this index - remove 1
+            }
+        });
+        $(".sizeCheckbox").change(function () {
+            var checked = $(this).is(':checked');
+            if (checked) {
+                checkedsizeValues.push(this.value)
+
+            } else {
+                var removeItemIndex = checkedsizeValues.indexOf(this.value);
+                if (removeItemIndex != -1) checkedsizeValues.splice(removeItemIndex, 1);  //remove at this index - remove 1
+            }
+        });
+
+    });
     function fnAddToCart(id, price) {
         var qty = $("#qtyChange").val();
 
-        $.ajax({
-            url: '/Product/AddToCart',
-            type: "POST",
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            data: '{prodId: "' + id + '" , price: "' + price + '", qty: "' + qty + '"}',
-            success: function (response) {
-                if (response) {
-                    $.notify({
-                        icon: 'fa fa-check',
-                        title: 'Success!',
-                        message: 'Item Successfully added to your cart'
-                    }, {
-                        element: 'body',
-                        position: null,
-                        type: "success",
-                        allow_dismiss: true,
-                        newest_on_top: false,
-                        showProgressbar: true,
-                        placement: {
-                            from: "top",
-                            align: "right"
-                        },
-                        offset: 20,
-                        spacing: 10,
-                        z_index: 1031,
-                        delay: 5000,
-                        animate: {
-                            enter: 'animated fadeInDown',
-                            exit: 'animated fadeOutUp'
-                        },
-                        icon_type: 'class',
-                        template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
-                            '<button type="button" aria-hidden="true" class="btn-close" data-notify="dismiss"></button>' +
-                            '<span data-notify="icon"></span> ' +
-                            '<span data-notify="title">{1}</span> ' +
-                            '<span data-notify="message">{2}</span>' +
-                            '<div class="progress" data-notify="progressbar">' +
-                            '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
-                            '</div>' +
-                            '<a href="{3}" target="{4}" data-notify="url"></a>' +
-                            '</div>'
-                    });
-                    window.location.reload();
-                }
-                else {
-                    window.location = "http://ecom.stockde.com/Customer/Login";
-                }
-            },
+        if (checkedsizeValues.length == 0 && checkedcolorValues.length == 0) {
+            alert("Please select one attribute color or size");
+        }
+        else {
+            var passdata = {
+                prodId: id,
+                price: price,
+                qty: qty,
+                checkedcolorValues: checkedcolorValues,
+                checkedsizeValues: checkedsizeValues
 
-        });
+            };
 
+            $.ajax({
+                url: '/Product/AddToCart',
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(passdata),
+                success: function (response) {
+                    if (response) {
+                        $.notify({
+                            icon: 'fa fa-check',
+                            title: 'Success!',
+                            message: 'Item Successfully added to your cart'
+                        }, {
+                            element: 'body',
+                            position: null,
+                            type: "success",
+                            allow_dismiss: true,
+                            newest_on_top: false,
+                            showProgressbar: true,
+                            placement: {
+                                from: "top",
+                                align: "right"
+                            },
+                            offset: 20,
+                            spacing: 10,
+                            z_index: 1031,
+                            delay: 5000,
+                            animate: {
+                                enter: 'animated fadeInDown',
+                                exit: 'animated fadeOutUp'
+                            },
+                            icon_type: 'class',
+                            template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="btn-close" data-notify="dismiss"></button>' +
+                                '<span data-notify="icon"></span> ' +
+                                '<span data-notify="title">{1}</span> ' +
+                                '<span data-notify="message">{2}</span>' +
+                                '<div class="progress" data-notify="progressbar">' +
+                                '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+                                '</div>' +
+                                '<a href="{3}" target="{4}" data-notify="url"></a>' +
+                                '</div>'
+                        });
+                        window.location.reload();
+                    }
+                    else {
+                        window.location = "http://localhost:52013/Customer/Login";
+                    }
+                },
+
+            });
+        }
     }
 
 

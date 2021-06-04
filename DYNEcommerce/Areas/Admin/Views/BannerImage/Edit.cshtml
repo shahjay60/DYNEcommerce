@@ -1,0 +1,247 @@
+﻿@model Domain.BannerImageDomain
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="page-body">
+
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="page-header-left">
+                        <h3>
+                            Create BannerImage
+                            <small>Bigdeal Admin panel</small>
+                        </h3>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <ol class="breadcrumb pull-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Dashboard", "Login")"><i data-feather="home"></i></a></li>
+                        <li class="breadcrumb-item"> BannerImage </li>
+                        <li class="breadcrumb-item active">Create  BannerImage </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card tab2-card">
+                    <div class="card-header">
+                        <h5> Update BannerImage</h5>
+                    </div>
+                    <div class="card-body">
+
+                        @Html.HiddenFor(model => model.Id)
+                        <input type="hidden" id="hdnId" value="@Model.Id" />
+
+
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>ImageName</label>
+                            </div>
+                            <div class="col-xl-8 col-md-7">
+                                <input type="file" name="ImageName" onchange="checkFileDetails()" id="UploadImg" />
+                                <label>@Model.ImageName</label>
+                                <img src="../../../BannerImageUploadfiles/@Model.ImageName" height="50" width="50" class="" />
+                                <span id="error"></span>
+                                <input type="hidden" id="imgName" value="@Model.ImageName"/>
+
+                                @Html.ValidationMessageFor(model => model.ImageName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Text1</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                @Html.EditorFor(model => model.text1, new { htmlAttributes = new { @class = "form-control", @id = "txt1" } })
+                                @Html.ValidationMessageFor(model => model.text1, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Text2</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                @Html.EditorFor(model => model.text2, new { htmlAttributes = new { @class = "form-control", @id = "txt2" } })
+                                @Html.ValidationMessageFor(model => model.text2, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Text3</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                @Html.EditorFor(model => model.text3, new { htmlAttributes = new { @class = "form-control", @id = "txt3" } })
+                                @Html.ValidationMessageFor(model => model.text3, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>IsDeleted</label>
+                            </div>
+                            <div class="pull-right">
+                                @*<button type="button" class="btn btn-primary">Save</button>*@
+                                <input type="submit" class="btn btn-primary" value="Save" id="btnSubmit" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/Assets/JS/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+
+    $("#btnSubmit").click(function () {
+        debugger;
+        var result = validation();
+        if (result == true) {
+            var BannerImageDomain = {};
+            BannerImageDomain.Id = $("#hdnId").val();
+            BannerImageDomain.text1 = $("#txt1").val();
+            BannerImageDomain.text2 = $("#txt2").val();
+            BannerImageDomain.text3 = $("#txt3").val();
+
+            BannerImageDomain.ImageName = $("#imgName").val();
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url:'@Url.Action("Edit", "BannerImage")',
+                data: JSON.stringify(BannerImageDomain),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response == "Success") {
+                        window.location.href = '@Url.Action("Index", "BannerImage")'
+                    }
+                    else {
+                        alert(response);
+                    }
+                }
+            });
+        }
+        else {
+            alert("Please Fill All The Details");
+        }
+     });
+    function validation() {
+
+        var result = true;
+        if ($("#txt1").val() == '' || $("#txt1").val() == null) {
+            $("#txt1").css('border-color', 'red');
+            result = false;
+        }
+        if ($("#txt2").val() == '' || $("#txt2").val() == null) {
+            $("#txt2").css('border-color', 'red');
+            result = false;
+        }
+        if ($("#txt3").val() == '' || $("#txt3").val() == null) {
+            $("#txt3").css('border-color', 'red');
+            result = false;
+        }
+        //var files = $("#UploadImg").get(0).files;
+        //if (files.length == 0) {
+        //    $("#error").text("Please Upload Image ").css("color", "red")
+        //    result = false;
+        //}
+
+        return result;
+
+    }
+    $("#UploadImg").change(function () {
+        var data = new FormData();
+        var files = $("#UploadImg").get(0).files;
+        if (files.length > 0) {
+            data.append("MyImages", files[0]);
+        }
+
+        $.ajax({
+            url: "/BannerImage/UploadFile",
+            type: "POST",
+            processData: false,
+            contentType: false,
+            data: data,
+            success: function (response) {
+                $("#imgName").val(response)
+                //code after success
+            },
+            error: function (er) {
+                alert(er);
+            }
+
+        });
+    });
+
+    function checkFileDetails() {
+        var fi = document.getElementById('UploadImg');
+        if (fi.files.length > 0) {      // FIRST CHECK IF ANY FILE IS SELECTED.
+            fi = document.getElementById('UploadImg');
+        }
+        if (fi.files.length > 0) {      // FIRST CHECK IF ANY FILE IS SELECTED.
+
+            for (var i = 0; i <= fi.files.length - 1; i++) {
+                var fileName, fileExtension, fileSize, fileType, dateModified;
+
+                // FILE NAME AND EXTENSION.
+                fileName = fi.files.item(i).name;
+                fileExtension = fileName.replace(/^.*\./, '');
+
+                // CHECK IF ITS AN IMAGE FILE.
+                // TO GET THE IMAGE WIDTH AND HEIGHT, WE'LL USE fileReader().
+                if (fileExtension == 'png' || fileExtension == 'jpg' || fileExtension == 'jpeg') {
+                    readImageFile(fi.files.item(i));
+                    // GET IMAGE INFO USING fileReader().
+                }
+                else {
+                    // IF THE FILE IS NOT AN IMAGE.
+                    alert("Upload only Image ");
+                    $("#btnSubmit").prop('disabled', true);
+
+                }
+            }
+
+            // GET THE IMAGE WIDTH AND HEIGHT USING fileReader() API.
+            function readImageFile(file) {
+                var reader = new FileReader(); // CREATE AN NEW INSTANCE.
+
+                reader.onload = function (e) {
+                    var img = new Image();
+                    img.src = e.target.result;
+
+                    img.onload = function () {
+                        var w = this.width;
+                        var h = this.height;
+                        if (w != "451" || h != "440") {
+                            $("#error").text("Upload Image with 451 width and 440 height..!!").css("color", "red")
+                            $("#btnSubmit").prop('disabled', true);
+
+                        }
+                        else {
+                            $("#error").text("");
+                            $("#btnSubmit").prop('disabled', false);
+                        }
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    }
+    </script>

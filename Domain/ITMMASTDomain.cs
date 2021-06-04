@@ -19,6 +19,11 @@ namespace Domain
         public string Product_Image { get; set; }
         public string Qty { get; set; }
         public string BrandId { get; set; }
+        public string AttributeValue { get; set; }
+        public string AttributeName { get; set; }
+        public string viewon { get; set; }
+        public List<string> ProductImages { get; set; }
+        public List<Product_Attribute> ProductAttributes { get; set; }
 
     }
 
