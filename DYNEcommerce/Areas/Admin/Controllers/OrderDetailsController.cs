@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DataAccessLayer.Admin;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Domain;
-using DataAccessLayer.Admin;
-using DataAccessLayer;
-using System.Web.Security;
 
 namespace DYNEcommerce.Areas.Admin.Controllers
 {
@@ -17,12 +11,15 @@ namespace DYNEcommerce.Areas.Admin.Controllers
             if (Session["Authorized"] != null)
             {
                 var dataProduct = Admin_OrderdataCRUD.Get_OrderDeialsProduct();
+                dataProduct = dataProduct.GroupBy(o => o.OrderId)
+                                   .Select(o => o.FirstOrDefault()).OrderByDescending(x => x.OrderId).ToList();
+
                 ViewBag.OrderDetailsProduct = dataProduct;
                 return View();
             }
             else
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("Index", "AdminLogin");
             }
         }
     }

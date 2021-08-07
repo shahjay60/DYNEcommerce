@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace DYNEcommerce.Models
+﻿namespace DYNEcommerce.Models
 {
     public class grp_masterTbl
     {

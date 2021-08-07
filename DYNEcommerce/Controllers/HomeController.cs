@@ -4,7 +4,6 @@ using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DYNEcommerce.Controllers
@@ -35,12 +34,16 @@ namespace DYNEcommerce.Controllers
                 mITMMASTDomain.Item_Desc = item.ProductName;
                 mITMMASTDomain.Item_CD = item.Pid;
                 mITMMASTDomain.GRP_CD = item.GRP_CD;
-                mITMMASTDomain.Sale_Price =Convert.ToDouble(item.ProductPrice);
+                mITMMASTDomain.Sale_Price = Convert.ToDouble(item.ProductPrice);
 
                 mCategorywiseproduct.ProductList.Add(mITMMASTDomain);
             }
 
             ViewBag.companydetail = CompnayDetailsCRUD.GetCompnayDetailsAll();
+            ViewBag.NewArrialProducts = ITMMASTCRUD.GetAllProducts().Where(x => x.Isnewarriaval == true).ToList();
+            ViewBag.BannerData = BannerImageCRUD.GetBannerImageAll();
+
+
             if (Session["idUser"] != null)
             {
                 ViewBag.totalItemsInCart = CustomerCartCRUD.GetCartByCustomerId(Convert.ToInt32(Session["idUser"])).Where(x => x.IsPlace == false).Count();
@@ -68,7 +71,7 @@ namespace DYNEcommerce.Controllers
             return View();
         }
 
-    
+
     }
 
 }

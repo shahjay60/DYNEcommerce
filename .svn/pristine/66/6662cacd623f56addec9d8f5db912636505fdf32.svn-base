@@ -1,0 +1,251 @@
+﻿@model Domain.Categorywiseproduct
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int j = 0;
+
+}
+
+<section class="theme-slider home-slide b-g-white " id="home-slide" style="display:contents">
+    <div class="custom-container">
+        <div class="row">
+            <div class="col">
+                <div class="slide-1 no-arrow">
+                    <div>
+                        <div class="slider-banner p-center slide-banner-1">
+                            <div class="slider-img">
+                                @*<ul class="layout1-slide-1">
+                                        <li id="img-1"><img src="~/Assets/Images/1.1.png" class="img-fluid" alt="slider"></li>
+                                        <li id="img-2" class="slide-center"><img src="~/Assets/Images/1.2.png" class="img-fluid" alt="slider"></li>
+                                    </ul>*@
+                            </div>
+                            <div class="slider-banner-contain">
+                                <div>
+                                    <h1>mi<span>Mobile</span></h1>
+                                    <h4>fast and light</h4>
+                                    <h2>Pixel Perfect Deal Camera</h2>
+                                    <a href="product-page(left-sidebar).html" class="btn btn-normal">
+                                        Shop Now
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="slider-banner p-center slide-banner-1">
+                            <div class="slider-img">
+                                <ul class="layout1-slide-2">
+                                    <li id="img-3" class="slide-center"><img src="~/Assets/Images/2.1.png" class="img-fluid" alt="slider"></li>
+                                    <li id="img-4" class="slide-center"><img src="~/Assets/Images/2.2.png" class="img-fluid" alt="slider"></li>
+                                </ul>
+                            </div>
+                            <div class="slider-banner-contain">
+                                <div>
+                                    <h1>big<span>Sale</span></h1>
+                                    <h4>now start at $99</h4>
+                                    <h2>50% off</h2>
+                                    <a href="product-page(left-sidebar).html" class="btn btn-normal">
+                                        Shop Now
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="slider-banner p-center slide-banner-1">
+                            <div class="slider-img">
+                                <ul class="layout1-slide-3">
+                                    <li id="img-5"><img src="~/Assets/Images/3.2.png" class="img-fluid" alt="slider"></li>
+                                    <li id="img-6" class="slide-center"><img src="~/Assets/Images/3.1.png" class="img-fluid" alt="slider"></li>
+                                </ul>
+                            </div>
+                            <div class="slider-banner-contain">
+                                <div>
+                                    <h1>camera<span>Sale</span></h1>
+                                    <h4>now start at $79</h4>
+                                    <h2>70% off today</h2>
+                                    <a href="product-page(left-sidebar).html" class="btn btn-normal">
+                                        Shop Now
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--discount banner start-->
+<section class="discount-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="discount-banner-contain">
+                    <h2>Discount on every single item on our site.</h2>
+                    <h1><span>OMG! Just Look at the</span> <span>great Deals!</span></h1>
+                    <div class="rounded-contain rounded-inverse">
+                        <div class="rounded-subcontain">
+                            How does it feel, when you see great discount deals for each product?
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--discount banner end-->
+<!--tab product-->
+<section class="section-pt-space">
+    <div class="tab-product-main">
+        <div class="tab-prodcut-contain">
+            <ul class="tabs tab-title">
+                @for (int i = 0; i < Model.CategoryList.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        <li class="current"><a href="tab-@Model.CategoryList[i].GRP_CD">@Model.CategoryList[i].GRP_NAME</a></li>
+                    }
+                    else
+                    {
+                        <li class=""><a href="tab-@Model.CategoryList[i].GRP_CD">@Model.CategoryList[i].GRP_NAME</a></li>
+                    }
+                }
+
+            </ul>
+        </div>
+    </div>
+</section>
+<!--tab product-->
+<!-- slider tab  -->
+<section class="section-py-space ratio_square product">
+    <div class="custom-container">
+        <div class="row">
+            <div class="col pr-0">
+                <div class="theme-tab product mb--5">
+                    <div class="tab-content-cls ">
+                        @for (int k = 0; k < Model.CategoryList.Count; k++)
+                        {
+                            if (k == 0)
+                            {
+                                <div id="tab-@Model.CategoryList[k].GRP_CD" class="tab-content active default">
+                                    <div class="product-slide-6 product-m no-arrow">
+
+                                        @for (int i = 0; i < Model.ProductList.Count; i++)
+                                        {
+                                            if (@Model.ProductList[i].GRP_CD == @Model.CategoryList[k].GRP_CD)
+                                            {
+                                                <div>
+                                                    <div class="product-box">
+                                                        <div class="product-imgbox">
+                                                            @if (@Model.ProductList[i].Product_Image == "")
+                                                            {
+                                                                <div class="product-front">
+                                                                    <a href="@Url.Action("ProductDetail", "Product", new { ProdId = @Model.ProductList[i].Item_CD, catId = @Model.ProductList[i].GRP_CD }) "> <img src="~/Assets/Images/ProductImage/1.jpg" class="img-fluid  " alt="product"> </a>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="product-front">
+                                                                    <a href="@Url.Action("ProductDetail", "Product", new { ProdId = @Model.ProductList[i].Item_CD, catId = @Model.ProductList[i].GRP_CD }) "> <img src="../ProductImageUploadfiles/@Model.ProductList[i].Product_Image" class="img-fluid  " alt="product"> </a>
+                                                                </div>
+                                                            }
+                                                            <div class="new-label1">
+                                                                <div>new</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-detail detail-inline ">
+                                                            <div class="detail-title">
+                                                                <div class="detail-left">
+                                                                    <a href="product-page(left-sidebar).html">
+                                                                        <h6 class="price-title">
+                                                                            @Model.ProductList[i].Item_Desc
+                                                                        </h6>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="detail-right">
+                                                                    <div class="check-price"> $@Model.ProductList[i].Sale_Price </div>
+                                                                    <div class="price">
+                                                                        <div class="price"> $@Model.ProductList[i].Sale_Price </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            }
+                                       
+                                        }
+                                        @k++;
+                                    </div>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <div id="tab-@Model.CategoryList[k].GRP_CD" class="tab-content">
+                                    <div class="product-slide-6 product-m no-arrow">
+
+                                        @for (int i = 0; i < Model.ProductList.Count; i++)
+                                        {
+                                            if (@Model.ProductList[i].GRP_CD == @Model.CategoryList[k].GRP_CD)
+                                            {
+                                                <div>
+                                                    <div class="product-box">
+                                                        <div class="product-imgbox">
+                                                            @if (@Model.ProductList[i].Product_Image == "")
+                                                            {
+                                                                <div class="product-front">
+                                                                    <a href="@Url.Action("ProductDetail", "Product", new { ProdId = @Model.ProductList[i].Item_CD, catId = @Model.ProductList[i].GRP_CD }) "> <img src="~/Assets/Images/ProductImage/1.jpg" class="img-fluid  " alt="product"> </a>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="product-front">
+                                                                    <a href="@Url.Action("ProductDetail", "Product", new { ProdId = @Model.ProductList[i].Item_CD, catId = @Model.ProductList[i].GRP_CD }) "> <img src="../ProductImageUploadfiles/@Model.ProductList[i].Product_Image" class="img-fluid  " alt="product"> </a>
+                                                                </div>
+                                                            }
+                                                        <div class="new-label1">
+                                                            <div>new</div>
+                                                        </div>
+                                                        </div>
+                                                        <div class="product-detail detail-inline ">
+                                                            <div class="detail-title">
+                                                                <div class="detail-left">
+                                                                    <a href="product-page(left-sidebar).html">
+                                                                        <h6 class="price-title">
+                                                                            @Model.ProductList[i].Item_Desc
+                                                                        </h6>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="detail-right">
+                                                                    <div class="check-price"> $@Model.ProductList[i].Sale_Price </div>
+                                                                    <div class="price">
+                                                                        <div class="price"> $@Model.ProductList[i].Sale_Price </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            }
+                                        }
+                                        @k++;
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- slider tab end -->
+<script src="~/Assets/JS/jquery-3.3.1.min.js"></script>
+<script src="~/Assets/JS/feather-icon.js"></script>

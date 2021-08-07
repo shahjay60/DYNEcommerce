@@ -1,9 +1,10 @@
 ﻿using DataAccessLayer;
 using Domain;
 using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
-using System.Web;
+using System.Net;
+using System.Net.Mail;
 using System.Web.Mvc;
 
 namespace DYNEcommerce.Controllers
@@ -12,6 +13,10 @@ namespace DYNEcommerce.Controllers
     {
         // GET: CustomerDashbord
 
+        private string Host = ConfigurationManager.AppSettings["Host"];
+        private string Port = ConfigurationManager.AppSettings["Port"];
+        private string Email = ConfigurationManager.AppSettings["Email"];
+        private string Password = ConfigurationManager.AppSettings["Password"];
 
         public ActionResult Index()
         {
@@ -53,7 +58,7 @@ namespace DYNEcommerce.Controllers
                         Response.Redirect(url);
 
                     }
-                    return RedirectToAction("Index", "Menu");
+                    return RedirectToAction("Index", "Home");
 
                 }
                 else
@@ -94,9 +99,65 @@ namespace DYNEcommerce.Controllers
                 {
                     // TO DO
                     CustomerCRUD.AddToCustomer(model);
-                    return View();
+
+                    #region Send Email to new customer
+                    MailMessage msgs = new MailMessage();
+                    msgs.To.Add(model.Email);
+                    MailAddress address = new MailAddress(Email);
+                    msgs.From = address;
+                    msgs.Subject = "Welcome to Buynoor";
+                    //   msgs.BodyEncoding = System.Text.Encoding.GetEncoding("utf-8");
+                    string htmlBody = msgs.Subject = "Welcome to Think software! Take a tour of your Amazon account features here: http://buynoor.stockde.com/";
+                    msgs.Body = htmlBody;
+                    msgs.IsBodyHtml = true;
+                    SmtpClient client = new SmtpClient();
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+                    client.EnableSsl = false;
+
+                    //client.Host = "smtp.gmail.com";
+                    //client.Port = 587;
+                    client.Host = Host;
+                    client.Port = Convert.ToInt32(Port);
+
+                    // client.Credentials = new System.Net.NetworkCredential("email@gmail.com", "pass@");
+                    NetworkCredential credentials = new NetworkCredential(Email, Password);
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = credentials;
+                    //Send the msgs  
+                    client.Send(msgs);
+                    #endregion
+
+                    #region Send Email to Admin
+                    msgs = new MailMessage();
+                    msgs.To.Add(Email);
+                    address = new MailAddress(model.Email);
+                    msgs.From = address;
+                    msgs.Subject = "New customer Register";
+                    //   msgs.BodyEncoding = System.Text.Encoding.GetEncoding("utf-8");
+                    htmlBody = msgs.Subject = "There is one new customer " + model.FirstName + " " + model.LastName + " register on " + DateTime.Now + "";
+                    msgs.Body = htmlBody;
+                    msgs.IsBodyHtml = true;
+                    client = new SmtpClient();
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+                    client.EnableSsl = false;
+
+                    //client.Host = "smtp.gmail.com";
+                    //client.Port = 587;
+                    client.Host = Host;
+                    client.Port = Convert.ToInt32(Port);
+
+                    // client.Credentials = new System.Net.NetworkCredential("email@gmail.com", "pass@");
+                    credentials = new NetworkCredential(Email, Password);
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = credentials;
+                    //Send the msgs  
+                    client.Send(msgs);
+                    #endregion
+
                 }
-                return View("Registered");
+                return RedirectToAction("Login");
             }
             catch (Exception ex)
             {
@@ -135,6 +196,8 @@ namespace DYNEcommerce.Controllers
 
         public ActionResult Logout()
         {
+            Session.Timeout = 60;
+            Session.RemoveAll();
             Session.Clear();//remove session
             return RedirectToAction("Login");
         }

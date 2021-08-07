@@ -65,13 +65,69 @@
                 </div>
                 <input type="hidden" value="@ViewBag.BrandId" id="hdnCatId" />
 
-                <div class="collection-content col" id="grid-list">
-                    @Html.Action("GetCategoryList", "Category", new { brandId = @ViewBag.BrandId })
+                <div class="collection-content col">
+                    <div class="page-main-content">
+                        <div class="row">
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+                                        <input type="text" class="form-control" placeholder="Search Category" id="txtSearchCat">
+                                    </div>
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+                                        <input type="submit" value="Search" class="btn btn-success" id="CatSearch" />
+                                    </div>
+                                <br />
+                            <div class="collection-product-wrapper">
+                                <div class="product-top-filter">
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <div class="filter-main-btn"><span class="filter-btn  "><i class="fa fa-filter" aria-hidden="true"></i> Filter</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
 
+                                            <div class="product-filter-content">
+
+                                                <div class="collection-view">
+                                                    <ul>
+                                                        <li><i class="fa fa-th grid-layout-view"></i></li>
+                                                        <li><i class="fa fa-list-ul list-layout-view"></i></li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="product-page-per-view">
+                                                    <select id="drpRecord">
+                                                        <option value="10">10 Products Par Page</option>
+                                                        <option value="24">24 Products Par Page</option>
+                                                        <option value="50">50 Products Par Page</option>
+                                                        <option value="100">100 Products Par Page</option>
+                                                    </select>
+                                                </div>
+                                                <div class="product-page-filter">
+                                                    <select>
+                                                        <option value="High to low">Sorting items</option>
+                                                        <option value="Low to High">50 Products</option>
+                                                        <option value="Low to High">100 Products</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div id="grid-list">
+
+                                    @Html.Action("GetCategoryList", "Category", new { brandId = @ViewBag.BrandId })
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
+
         </div>
+    </div>
     </div>
 </section>
 <!-- section End -->
@@ -87,21 +143,26 @@
         var CatId = $("#hdnCatId").val();
         var currentPageIndex = "";
         var checkedValues = [];
+        var categorySearch = "";
+        $("#CatSearch").click(function () {
+            categorySearch = $("#txtSearchCat").val();
+            fnGetCategories(ShortBy, currentPageIndex, CatId, record, checkedValues, categorySearch);
+        });
 
         $("#drpRecord").change(function () {
 
             record = $('option:selected', this).val();
-            fnGetCategories(ShortBy, currentPageIndex, CatId, record);
+            fnGetCategories(ShortBy, currentPageIndex, CatId, record, checkedValues, categorySearch);
         });
 
         $("#drpShort").change(function () {
             ShortBy = $('option:selected', this).text();
-            fnGetCategories(ShortBy, currentPageIndex, CatId, record);
+            fnGetCategories(ShortBy, currentPageIndex, CatId, record, checkedValues, categorySearch);
         });
 
         $(".page-link").click(function () {
             currentPageIndex = $(this).val();
-            fnGetCategories(ShortBy, currentPageIndex, CatId, record);
+            fnGetCategories(ShortBy, currentPageIndex, CatId, record, checkedValues, categorySearch);
         });
 
         $(".brandCheckbox").change(function () {
@@ -113,18 +174,20 @@
                 var removeItemIndex = checkedValues.indexOf(this.value);
                 if (removeItemIndex != -1) checkedValues.splice(removeItemIndex, 1);  //remove at this index - remove 1
             }
-            fnGetCategories(ShortBy, currentPageIndex, CatId, record, checkedValues);
+            fnGetCategories(ShortBy, currentPageIndex, CatId, record, checkedValues, categorySearch);
         });
-
+       
     });
 
-    function fnGetCategories(ShortBy, currentPageIndex, brandId, record, checkedValues) {
+    function fnGetCategories(ShortBy, currentPageIndex, brandId, record, checkedValues, categorySearch) {
+        debugger;
         var passdata = {
             brandId: brandId,
             record1: record,
             ShortBy: ShortBy,
             page: currentPageIndex,
-            checkedValues: checkedValues
+            checkedValues: checkedValues,
+            SearchString: categorySearch
         };
         $.ajax({
             url: '/Category/GetCategoryList',
@@ -135,7 +198,6 @@
             success: function (response) {
                 var returnedData = JSON.parse(JSON.stringify(response));
                 $("#grid-list").empty();
-                console.log(returnedData);
                 $("#grid-list").html(returnedData);
             },
 
@@ -143,5 +205,5 @@
 
     }
 
-    
+
 </script>

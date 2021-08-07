@@ -1,12 +1,9 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain;
 
 
 namespace DataAccessLayer.Admin
@@ -25,13 +22,13 @@ namespace DataAccessLayer.Admin
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@mode", "Insert");
 
-          
+
             cmd.Parameters.AddWithValue("@UserName", mAdminLogin.UserName);
             cmd.Parameters.AddWithValue("@Password", mAdminLogin.Password);
-          
+
             cmd.Parameters.AddWithValue("@EmailId", mAdminLogin.EmailId);
             cmd.Parameters.AddWithValue("@phoneNo", mAdminLogin.phoneNo);
-           
+
 
 
             cmd.ExecuteNonQuery();
@@ -70,10 +67,10 @@ namespace DataAccessLayer.Admin
                         UserName = dr["UserName"].ToString(),
 
                         Password = dr["Password"].ToString(),
-                       
+
                         EmailId = dr["EmailId"].ToString(),
                         phoneNo = dr["phoneNo"].ToString(),
-                       
+
                     });
 
             }
@@ -108,7 +105,7 @@ namespace DataAccessLayer.Admin
                         Password = dr["Password"].ToString(),
                         EmailId = dr["EmailId"].ToString(),
                         phoneNo = dr["phoneNo"].ToString(),
-                       
+
                     });
 
             }

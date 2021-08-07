@@ -3,7 +3,6 @@ using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DYNEcommerce.Controllers
@@ -31,7 +30,7 @@ namespace DYNEcommerce.Controllers
         {
             try
             {
-                var data = GRP_MASTERCRUD.GetAllMenu();
+                var data = GRP_MASTERCRUD.GetAllMenu().OrderBy(x => x.GRP_NAME).Take(10);
                 ViewBag.totalItemsInWishList = CustmorWishlistCRUD.GetWishlistByCustomerId(Convert.ToInt32(Session["idUser"])).Count();
 
                 return PartialView("Menu", data);
@@ -76,7 +75,7 @@ namespace DYNEcommerce.Controllers
         {
             try
             {
-                var data = GRP_MASTERCRUD.GetAllMenu();
+                var data = GRP_MASTERCRUD.GetAllMenu().OrderBy(x => x.GRP_NAME);
                 return PartialView("Menu_Submenu", data);
             }
             catch (Exception ex)
@@ -100,6 +99,7 @@ namespace DYNEcommerce.Controllers
                 if (Session["idUser"] != null)
                 {
                     var cartData = CustomerCartCRUD.GetCartByCustomerId(Convert.ToInt32(Session["idUser"]));
+                    cartData = cartData.GroupBy(x => x.AttributeValue).Select(x => x.FirstOrDefault()).ToList();
                     cartData = cartData.Where(x => x.IsPlace == false).ToList();
                     ViewBag.totalAmount = cartData.Sum(x => x.Amount).ToString();
                     return PartialView("_CartMenu", cartData);
@@ -132,6 +132,7 @@ namespace DYNEcommerce.Controllers
                 if (Session["idUser"] != null)
                 {
                     var wishListData = CustmorWishlistCRUD.GetWishlistByCustomerId(Convert.ToInt32(Session["idUser"]));
+                    wishListData.GroupBy(x => x.Id).Select(x => x.FirstOrDefault()).ToList();
                     return PartialView("_WishListItems", wishListData);
                 }
                 else
@@ -164,8 +165,13 @@ namespace DYNEcommerce.Controllers
                 //"1" is customerid
                 if (Session["idUser"] != null)
                 {
-                    ViewBag.totalItemsInCart = CustomerCartCRUD.GetCartByCustomerId(Convert.ToInt32(Session["idUser"])).Where(x=>x.IsPlace==false).Count();
-                    ViewBag.totalItemsInWishList = CustmorWishlistCRUD.GetWishlistByCustomerId(Convert.ToInt32(Session["idUser"])).Count();
+                    var data = CustomerCartCRUD.GetCartByCustomerId(Convert.ToInt32(Session["idUser"])).Where(x => x.IsPlace == false).ToList();
+                    data = data.GroupBy(x => x.AttributeValue).Select(x => x.FirstOrDefault()).ToList();
+
+                    ViewBag.totalItemsInCart = data.Count();
+                    var wishListData = CustmorWishlistCRUD.GetWishlistByCustomerId(Convert.ToInt32(Session["idUser"]));
+                    ViewBag.totalItemsInWishList = wishListData.GroupBy(x => x.Id).Select(x => x.FirstOrDefault()).ToList().Count();
+
                 }
                 else
                 {

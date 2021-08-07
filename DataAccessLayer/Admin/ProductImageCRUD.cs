@@ -1,12 +1,9 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain;
 
 namespace DataAccessLayer.Admin
 {
@@ -27,7 +24,10 @@ namespace DataAccessLayer.Admin
             cmd.Parameters.AddWithValue("@Pid", mProductImage.Pid);
             cmd.Parameters.AddWithValue("@Viewon", mProductImage.Viewon);
             cmd.Parameters.AddWithValue("@Image", mProductImage.Image);
-          
+            cmd.Parameters.AddWithValue("@AttributeId", mProductImage.AttributeId);
+
+            cmd.Parameters.AddWithValue("@AttributeValueId", mProductImage.AttributevalueId);
+
 
             cmd.ExecuteNonQuery();
             sqlconn.Close();
@@ -98,7 +98,8 @@ namespace DataAccessLayer.Admin
                         Pid = dr["Pid"].ToString(),
                         Viewon = dr["Viewon"].ToString(),
                         Image = dr["Image"].ToString(),
-                        ProductName = dr["ITEM_DESC"].ToString()
+                        ProductName = dr["ITEM_DESC"].ToString(),
+                        AttrValue = dr["AttValue"].ToString()
                     });
 
             }

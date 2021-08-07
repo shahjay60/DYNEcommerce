@@ -1,18 +1,17 @@
-﻿using System;
+﻿using DataAccessLayer;
+using Domain;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using DataAccessLayer;
-using Domain;
 
 namespace DYNEcommerce.Controllers
 {
     public class CategoryController : Controller
     {
         // GET: Category
-        public ActionResult Index(int brandId)
+        public ActionResult Index(int brandId = 0)
         {
             ViewBag.BrandId = brandId;
             ViewBag.Brands = BrandmasterCRUD.GetBrandMaster();
@@ -21,7 +20,7 @@ namespace DYNEcommerce.Controllers
         }
 
 
-        public ActionResult GetCategoryList(string brandId, int? page, string record1, string ShortBy, string[] checkedValues)
+        public ActionResult GetCategoryList(string brandId, int? page, string record1, string ShortBy, string[] checkedValues, string SearchString)
         {
             try
             {
@@ -29,6 +28,7 @@ namespace DYNEcommerce.Controllers
                 ViewBag.path = Path.Combine(Server.MapPath(@"~/CategoryImageUploadfiles"));
 
                 List<GRP_MASTERDomain> categories = new List<GRP_MASTERDomain>();
+
                 if (string.IsNullOrEmpty(record1))
                 {
                     pageSize = Convert.ToInt32(record1);
@@ -37,19 +37,30 @@ namespace DYNEcommerce.Controllers
                 {
                     pageSize = Convert.ToInt32(record1);
                 }
+                if (brandId == "0" || brandId == null)
+                {
+                    categories = GRP_MASTERCRUD.GetAllCategory().Skip(1).ToList();
+                }
+
+
                 if (checkedValues == null)
                 {
-                    categories = GRP_MASTERCRUD.GetCategoryByBrandId(Convert.ToInt32(brandId));
-                    ViewBag.RecordPerPage = pageSize;
-                    ViewBag.TotalRecord = categories.Count();
+                    if (brandId != "0" || brandId == null)
+                    {
+                        categories = GRP_MASTERCRUD.GetCategoryByBrandId(Convert.ToInt32(brandId));
+                        ViewBag.RecordPerPage = pageSize;
+                        ViewBag.TotalRecord = categories.Count();
+                    }
                 }
 
                 else
-                
                 {
                     categories = GRP_MASTERCRUD.GetAllCategory().Where(x => checkedValues.Any(a => a.ToString() == x.BrandId)).ToList();
                 }
-
+                if (!string.IsNullOrEmpty(SearchString))
+                {
+                    categories = GRP_MASTERCRUD.GetAllCategory().Where(x => x.GRP_NAME.ToLower().Trim().Contains(SearchString.ToLower().Trim())).ToList();
+                }
                 var pager = new Pager(categories.Count(), page, pageSize);
                 pager.catId = brandId;
 

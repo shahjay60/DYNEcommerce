@@ -3,7 +3,6 @@ using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DYNEcommerce.Controllers
@@ -18,6 +17,28 @@ namespace DYNEcommerce.Controllers
                 if (Session["idUser"] != null)
                 {
                     var wishListData = CustmorWishlistCRUD.GetWishlistByCustomerId(Convert.ToInt32(Session["idUser"]));
+                    wishListData = wishListData.GroupBy(x => x.Id).Select(x => x.FirstOrDefault()).ToList();
+
+                    List<Cartattribute> Cartattributeobj = new List<Cartattribute>();
+                    var res = wishListData.SelectMany(
+                                                   art => art.AttributeValues.Split(',').Select(n =>
+                                                   new Cartattribute
+                                                   {
+                                                       AttributeValue = n.Trim()
+                                                   }
+                                                ));
+
+                    foreach (var item in res)
+                    {
+                        Cartattribute mobj = new Cartattribute();
+                        var arrtibuteType = AttributeCRUD.GetAttributesData().Where(x => x.AttributeValue.Contains(item.AttributeValue.ToLower()))
+                                                                             .Select(x => x.AttributeName)
+                                                                             .FirstOrDefault();
+                        mobj.AttributeValue = item.AttributeValue;
+                        mobj.AttributeType = arrtibuteType;
+                        Cartattributeobj.Add(mobj);
+                    }
+                    ViewBag.AttributeValues = Cartattributeobj;
                     return View(wishListData);
                 }
                 else

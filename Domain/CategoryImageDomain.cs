@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace Domain
 {
-   public class CategoryImageDomain
+    public class CategoryImageDomain
     {
         public int Id { get; set; }
         public string GRP_CD { get; set; }

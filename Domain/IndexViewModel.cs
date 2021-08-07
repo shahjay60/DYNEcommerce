@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain
 {
-   public class IndexViewModel
+    public class IndexViewModel
     {
         public List<ITMMASTDomain> Items { get; set; }
         public List<GRP_MASTERDomain> Categories { get; set; }
@@ -18,9 +15,9 @@ namespace Domain
     {
         public Pager(int totalItems, int? page, int pageSize)
         {
-            if(pageSize==0)
+            if (pageSize == 0)
             {
-                pageSize =Convert.ToInt32( ConfigurationManager.AppSettings["PageSize"]);
+                pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["PageSize"]);
             }
             // calculate total, start and end pages
             var totalPages = (int)Math.Ceiling((decimal)totalItems / (decimal)pageSize);

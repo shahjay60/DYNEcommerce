@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!-- Container-fluid starts-->
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="page-header-left">
+                    <h3>
+                        CategoryBrand List
+                        <small>Bigdeal Admin panel</small>
+                    </h3>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <ol class="breadcrumb pull-right">
+                    <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">CategoryBrand</li>
+                    <li class="breadcrumb-item active">Brand List</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid Ends-->
+
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <h5>CategoryBrand Details</h5>
+        </div>
+        <div class="card-body">
+            <div class="btn-popup pull-right">
+                <a href="@Url.Action("Add", "BrandCategory")" class="btn btn-secondary">Create Brand</a>
+            </div>
+            <div id="batchDelete" class="category-table user-list order-table">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Category Name</th>
+                            <th>Brand Name</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.Brand)
+                        {
+                            <tr>
+                                <td>@item.CategoryName</td>
+                                <td>@item.BrandName</td>
+                                <td> <a href="@Url.Action("Edit","BrandCategory",new {Id=@item.GRP_CD }) "><i class="fa fa-edit"></i></a> </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid Ends-->
+<script type="text/javascript">
+    function deleteBrand(id) {
+        if (confirm('Are you sure you want to delete this item ?')) {
+            $.ajax({
+                url: '/AdminBrand/DeleteBrandmasterById',
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: '{id: "' + id + '" }',
+                success: function (response) {
+                    if (response) {
+                        window.location.reload();
+                    }
+                    else {
+                        alert("Somethings goes wrong please try later..!!");
+                    }
+                },
+
+            });
+
+        }
+    }
+
+</script>

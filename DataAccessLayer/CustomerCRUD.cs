@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
@@ -62,7 +59,7 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@Pincode", mCustomer.Pincode);
             cmd.Parameters.AddWithValue("@ShippingAddress", mCustomer.ShippingAddress);
             cmd.Parameters.AddWithValue("@BillingAddress", mCustomer.ShippingAddress);
-            cmd.Parameters.AddWithValue("@RegistrationDatetime",DateTime.Now);
+            cmd.Parameters.AddWithValue("@RegistrationDatetime", DateTime.Now);
             cmd.Parameters.AddWithValue("@Password", mCustomer.Password);
 
             cmd.ExecuteNonQuery();
@@ -99,7 +96,7 @@ namespace DataAccessLayer
 
                         FirstName = dr["FirstName"].ToString(),
                         LastName = dr["LastName"].ToString(),
-                        Id =Convert.ToInt32( dr["id"]),
+                        Id = Convert.ToInt32(dr["id"]),
                         //Password = dr["Password"].ToString()
 
                     });
@@ -116,7 +113,7 @@ namespace DataAccessLayer
             SqlCommand cmd = new SqlCommand("sp_ChkEmailExistsOrNot", sqlconn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Email", email);
-            cmd.Parameters.Add("@RowCount", SqlDbType.Int).Direction = ParameterDirection.Output; 
+            cmd.Parameters.Add("@RowCount", SqlDbType.Int).Direction = ParameterDirection.Output;
 
             SqlDataReader reader;
             reader = cmd.ExecuteReader();
@@ -184,7 +181,7 @@ namespace DataAccessLayer
             }
             return grp;
         }
-        public static bool UpdateCustomerPassword(int id,string password)
+        public static bool UpdateCustomerPassword(int id, string password)
         {
             string mainconn = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
             SqlConnection sqlconn = new SqlConnection(mainconn);

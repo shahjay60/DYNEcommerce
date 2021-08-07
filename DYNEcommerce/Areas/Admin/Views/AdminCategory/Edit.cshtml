@@ -1,0 +1,214 @@
+﻿@model Domain.AdminCategory
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h2>Edit</h2>
+
+
+<div class="page-body">
+
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="page-header-left">
+                        <h3>
+                            Update Category
+                            <small>Bigdeal Admin panel</small>
+                        </h3>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <ol class="breadcrumb pull-right">
+                        <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a></li>
+                        <li class="breadcrumb-item"> Category </li>
+                        <li class="breadcrumb-item active">Update  Category</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-sm-12">
+                <div class="card tab2-card">
+                    <div class="card-header">
+                        <h5> Update CategoryImage</h5>
+                    </div>
+                    <div class="card-body">
+                        <input type="hidden" id="hdnId" value="@Model.GRP_CD" />
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Category</label>
+                            </div>
+                            <div class="col-xl-8 col-md-7">
+                                @Html.DropDownListFor(model => model.FOR_GRP_CD, (IEnumerable<SelectListItem>)Model.CategoryList, "--Select Category--", new { @class = "form-control", @Id = "ddlCategory" })
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Category Name</label>
+                            </div>
+                            <div class="col-xl-8 col-md-7">
+                                @Html.EditorFor(model => model.GRP_NAME, new { htmlAttributes = new { @class = "form-control", @id = "name" } })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Category SName</label>
+                            </div>
+                            <div class="col-xl-8 col-md-7">
+                                @Html.EditorFor(model => model.GRP_SNAME, new { htmlAttributes = new { @class = "form-control", @id = "Sname" } })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>GROUP_YN</label>
+                            </div>
+                            <div class="col-xl-8 col-md-7">
+                                <input type="radio" name="groupradio" value="Y" @(Model.GROUP_YN == "Y" ? "checked=\"checked\"" : null) /> Yes
+                                <input type="radio" name="groupradio" value="N" @(Model.GROUP_YN == "N" ? "checked=\"checked\"" : null) />No
+                                <br />
+                                <span style="color:red"> if you want to add subcategory of the category you have to chose yes from above radio button</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Brand</label>
+                            </div>
+                            <div class="col-xl-8 col-md-7">
+                                @Html.DropDownListFor(model => model.BrandId, (IEnumerable<SelectListItem>)Model.Brands, "--Select Brand--", new { @class = "form-control", @Id = "ddlBrand" })
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Is On Menu</label>
+                            </div>
+                            <div class="col-xl-8 col-md-7">
+                                <input type="radio" name="menuradio" value="True" @(Model.Isonmenu == true ? "checked=\"checked\"" : null) /> True
+                                <input type="radio" name="menuradio" value="False" @(Model.Isonmenu == false ? "checked=\"checked\"" : null) />False
+                                <span id="error"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Is On Home</label>
+                            </div>
+                            <div class="col-xl-8 col-md-7">
+                                <input type="radio" name="homeradio" value="True" @(Model.Isonhomepage == true ? "checked=\"checked\"" : null) /> True
+                                <input type="radio" name="homeradio" value="False" @(Model.Isonhomepage == false ? "checked=\"checked\"" : null) />False
+                                <span id="error2"></span>
+
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <a href="@Url.Action("Index", "AdminCategory")" class="btn btn-success">
+                                Back to List
+                            </a>
+                            @*<button type="button" class="btn btn-primary">Save</button>*@
+                            <input type="submit" class="btn btn-primary" value="Update" id="btnSubmit" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-success" role="alert" style="display:none" id="divSuccess">
+                Category Added Successfully..!!
+            </div>
+            <div class="alert alert-danger" role="alert" style="display:none" id="divError">
+                Category Not Added Successfully..!!
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Assets/JS/jquery-3.3.1.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+    });
+
+
+    $("#btnSubmit").click(function () {
+        var result = validation();
+        if (result == true) {
+            var AdminCategory = {};
+            AdminCategory.Grp_CD = $("#hdnId").val();
+            AdminCategory.GRP_SNAME = $("#Sname").val();
+            AdminCategory.GRP_NAME = $("#name").val();
+            AdminCategory.BrandId = $("#ddlBrand").val();
+            AdminCategory.FOR_GRP_CD = $("#ddlCategory").val();
+            AdminCategory.Isonmenu = $('input[name="menuradio"]:checked').val();
+            AdminCategory.Isonhomepage = $('input[name="homeradio"]:checked').val();
+            AdminCategory.GROUP_YN = $('input[name="groupradio"]:checked').val();
+
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url: "/AdminCategory/Edit",
+                data: JSON.stringify(AdminCategory),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response == true) {
+                         $("#divSuccess").show();
+                        $("#divSuccess").fadeTo(2000, 500).slideUp(500, function () {
+                            $("#divSuccess").slideUp(500);
+                        });
+                    }
+                    if (response == "Error") {
+                        $("#divError").text("Category Name is already exists..").show();
+                        $("#divError").fadeTo(2000, 1500).slideUp(1500, function () {
+                            $("#divError").slideUp(1500);
+                        });
+                    }
+                    else {
+                        $("#divError").show();
+                        $("#divError").fadeTo(2000, 500).slideUp(500, function () {
+                            $("#divError").slideUp(500);
+                        });
+                    }
+                }
+            });
+        }
+        else {
+            alert("Please Fill All The Details");
+        }
+    });
+
+    function validation() {
+        var result = true;
+        if ($("#ddlBrand").val() == "") {
+            $("#ddlBrand").css('border-color', 'red')
+            result = false;
+        }
+        if ($("#name").val() == '' || $("#name").val() == null) {
+            $("#name").css('border-color', 'red');
+            result = false;
+        }
+        if ($("#Sname").val() == '' || $("#Sname").val() == null) {
+            $("#Sname").css('border-color', 'red');
+            result = false;
+        }
+        if ($('input[name="menuradio"]:checked').length == 0) {
+            $("#error").text("Select atleast one").css('color', 'red');
+
+            result = false;
+        }
+
+        if ($('input[name="homeradio"]:checked').length == 0) {
+            $("#error2").text("Select atleast one").css('color', 'red');
+
+            result = false;
+        }
+        return result;
+
+    }
+</script>

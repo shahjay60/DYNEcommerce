@@ -1,0 +1,279 @@
+﻿@model Domain.CompnayDetailsDomain
+
+@{
+    ViewBag.Title = "AddCompnayDetails";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+
+
+<div class="page-body">
+
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="page-header-left">
+                        <h3>
+                            Create CompanyDetails
+                            <small>Bigdeal Admin panel</small>
+                        </h3>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <ol class="breadcrumb pull-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Dashboard", "Login")"><i data-feather="home"></i></a></li>
+                        <li class="breadcrumb-item"> CompanyDetails </li>
+                        <li class="breadcrumb-item active">Create  CompanyDetails </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card tab2-card">
+                    <div class="card-header">
+                        <h5> Add CompanyDetails</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Company Name</label>
+                            </div>
+                            <div class="col-xl-8 col-md-7">
+                                <input type="text" class="form-control" id="name">
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Company Address</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                <input type="text" class="form-control" id="Address">
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Company PhoneNumber</label>
+                            </div>
+                            <div class="col-xl-8 col-md-7">
+                                <input type="text" class="form-control" id="Phoneno">
+                                <span id="spnPhoneError"></span>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span></span>Company PhoneNumber2</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                <input type="text" class="form-control" id="Phone2">
+
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Company EmailAddress</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                <input type="text" class="form-control" id="email">
+                                <span id="spnError"></span>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>CompanyLogo</label>
+                            </div>
+                            <input type="hidden" id="imgName"/>
+                            <div class="col-xl-8 col-md-7">
+                                <input type="file" name="ImageName" onchange="readURL(this);" id="UploadImg" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span></span>FacebookLink</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                <input type="text" class="form-control" id="fb">
+
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span></span>InstagramLink</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                <input type="text" class="form-control" id="ig">
+
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span></span>FaxNo</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                <input type="text" class="form-control" id="faxno">
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <input type="submit" class="btn btn-primary" value="Save" id="btnSubmit" />
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Assets/JS/jquery-3.3.1.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var emailReg = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+        var phonenovalidat = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        jQuery("#email").blur(function () {
+            var emailaddressVal = $("#email").val();
+            if (emailaddressVal == '') {
+                $("#email").css('border-color', 'red');
+                $("#spnError").text("Please enter your email address.").css('color', 'red');
+                $("#btnSubmit").prop('disabled', true);
+
+            }
+            else if (!emailReg.test(emailaddressVal)) {
+                $("#email").css('border-color', 'red');
+                $("#spnError").text("Enter a valid email address.").css('color', 'red');
+                $("#btnSubmit").prop('disabled', true);
+            }
+            else {
+                $("#email").css('border-color', 'black');
+                $("#spnError").empty();
+                $("#btnSubmit").prop('disabled', false);
+            }
+        });
+
+        jQuery("#Phoneno").blur(function () {
+            var Phoneno = $("#Phoneno").val();
+            if (Phoneno == '') {
+                $("#Phoneno").css('border-color', 'red');
+                $("#spnPhoneError").text("Please enter your PhoneNo.").css('color', 'red');
+                $("#btnSubmit").prop('disabled', true);
+
+            }
+            else if (!phonenovalidat.test(Phoneno)) {
+                $("#Phoneno").css('border-color', 'red');
+                $("#spnPhoneError").text("Enter a valid PhoneNo").css('color', 'red');
+                $("#btnSubmit").prop('disabled', true);
+            }
+            else {
+                $("#Phoneno").css('border-color', 'black');
+                $("#spnPhoneError").empty();
+                $("#btnSubmit").prop('disabled', false);
+            }
+        });
+
+        $("#UploadImg").change(function () {
+            var data = new FormData();
+            var files = $("#UploadImg").get(0).files;
+            if (files.length > 0) {
+                data.append("MyImages", files[0]);
+            }
+
+            $.ajax({
+                url: "/CompnayDetails/UploadFile",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: data,
+                success: function (response) {
+                    $("#imgName").val(response)
+                    //code after success
+                },
+                error: function (er) {
+                    alert(er);
+                }
+
+            });
+        });
+    });
+
+
+    $("#btnSubmit").click(function () {
+        var result = validation();
+        if (result == true) {
+            var CompanyDetails = {};
+            CompanyDetails.Id = $("#hdnId").val();
+            CompanyDetails.Name = $("#name").val();
+            CompanyDetails.Address = $("#Address").val();
+            CompanyDetails.PhoneNumber = $("#Phoneno").val();
+            CompanyDetails.PhoneNumber2 = $("#Phone2").val();
+            CompanyDetails.EmailAddress = $("#email").val();
+            CompanyDetails.Logo = $("#imgName").val();
+            CompanyDetails.FacebookLink = $("#fb").val();
+            CompanyDetails.InstagramLink = $("#ig").val();
+            CompanyDetails.FaxNo = $("#faxno").val();
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url: "/CompnayDetails/AddCompnayDetails",
+                data: JSON.stringify(CompanyDetails),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response == "Success") {
+                        window.location.href = '@Url.Action("Index", "CompnayDetails")'
+                    }
+                    else {
+                        alert(response);
+                    }
+                }
+            });
+        }
+        else {
+            alert("Please Fill All The Details");
+        }
+    });
+
+    function validation() {
+        debugger;
+        var result = true;
+        var emailReg = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+
+        if ($("#name").val() == '' || $("#name").val() == null) {
+            $("#name").css('border-color', 'red');
+            result = false;
+        }
+        if ($("#Address").val() == '' || $("#Address").val() == null) {
+            $("#Address").css('border-color', 'red');
+            result = false;
+        } if ($("#Phoneno").val() == '' || $("#Phoneno").val() == null) {
+            $("#Phoneno").css('border-color', 'red');
+            result = false;
+        }
+        if ($("#email").val() == '' || $("#email").val() == null) {
+            $("#email").css('border-color', 'red');
+            result = false;
+        }
+        return result;
+
+    }
+</script>

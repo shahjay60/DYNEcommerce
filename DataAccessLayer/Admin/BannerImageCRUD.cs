@@ -1,16 +1,13 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain;
 
 namespace DataAccessLayer.Admin
 {
-   public class BannerImageCRUD
+    public class BannerImageCRUD
     {
         public static void AddToBannerImage(BannerImageDomain mBannerImage)
         {
@@ -53,7 +50,7 @@ namespace DataAccessLayer.Admin
             cmd.Parameters.AddWithValue("@text3", "");
             cmd.Parameters.AddWithValue("@IsDeleted", "");
 
-           
+
 
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
 
@@ -89,7 +86,7 @@ namespace DataAccessLayer.Admin
 
             SqlCommand cmd = new SqlCommand("Get_BanerimageAll", sqlconn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
-         
+
 
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
 
@@ -111,7 +108,7 @@ namespace DataAccessLayer.Admin
                         text1 = dr["text1"].ToString(),
                         text2 = dr["text2"].ToString(),
                         text3 = dr["text3"].ToString(),
-                        IsDeleted =Convert.ToBoolean( dr["IsDeleted"]),
+                        IsDeleted = Convert.ToBoolean(dr["IsDeleted"]),
                     });
 
             }

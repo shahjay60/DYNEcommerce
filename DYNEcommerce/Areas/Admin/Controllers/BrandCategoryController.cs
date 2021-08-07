@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Domain;
+﻿using DataAccessLayer;
 using DataAccessLayer.Admin;
-using DataAccessLayer;
+using Domain;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace DYNEcommerce.Areas.Admin.Controllers
 {
@@ -14,12 +12,19 @@ namespace DYNEcommerce.Areas.Admin.Controllers
         // GET: Admin/BrandCategory
         public ActionResult Index()
         {
-            var data = Admin_BrandCRUD.GetBrandMasterAll("SelctBrandWiseCategory");
-            ViewBag.Brand = data;
-            return View();
+            if (Session["Authorized"] != null)
+            {
+                var data = Admin_BrandCRUD.GetBrandMasterAll("SelctBrandWiseCategory");
+                ViewBag.Brand = data;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "AdminLogin");
+            }
         }
 
-        public ActionResult Add()
+        public ActionResult Add(string res = "")
         {
             BrandCategoryDomain mBrandCategoryDomain = new BrandCategoryDomain();
 
@@ -28,8 +33,6 @@ namespace DYNEcommerce.Areas.Admin.Controllers
                 Text = a.GRP_NAME,
                 Value = a.GRP_CD.ToString()
             });
-
-
             var brandSelectList = Admin_BrandCRUD.GetBrandMasterAll("SelectAllBrand").Select(a => new SelectListItem
             {
                 Text = a.BrandName,
@@ -40,6 +43,9 @@ namespace DYNEcommerce.Areas.Admin.Controllers
                 Categories = new SelectList(countriesSelectList, "Value", "Text"),
                 Brands = new SelectList(brandSelectList, "Value", "Text"),
             };
+
+            if (Session["Message"] != null)
+                ViewBag.Message = Session["Message"];
             return View(viewModel);
         }
 
@@ -48,13 +54,31 @@ namespace DYNEcommerce.Areas.Admin.Controllers
         {
             try
             {
-                var result = GRP_MASTERCRUD.UpdateCategoryByBrandId(model);
-                return RedirectToAction("Index", "BrandCategory");
+                var data = Admin_BrandCRUD.GetBrandMasterAll("SelctBrandWiseCategory");
+                var chkexists = data.Where(x => x.GRP_CD == model.GRP_CD && x.BrandId == model.brandId).FirstOrDefault();
+                if (chkexists != null)
+                {
+                    var result = GRP_MASTERCRUD.UpdateCategoryByBrandId(model);
+                    Session["Message"] = "Success";
+                    return RedirectToAction("Add", "BrandCategory", "Success");
+                }
+                else
+                {
+                    Session["Message"] = "Error";
+                    return RedirectToAction("Add", "BrandCategory", "Error");
+                }
 
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Add", "BrandCategory");
+                ExceptionLogDomain mobj = new ExceptionLogDomain();
+                mobj.ControllerName = "AttributeValues";
+                mobj.MethodName = "Edit Post";
+                mobj.ErrorText = ex.Message;
+                mobj.StackTrace = ex.StackTrace;
+                TempData["ExceptionLogDomain"] = mobj;
+
+                return RedirectToAction("Index", "AdminError");
             }
         }
 
@@ -75,6 +99,8 @@ namespace DYNEcommerce.Areas.Admin.Controllers
             mBrandmasterDomain.GRP_CD = data[0].GRP_CD;
             mBrandmasterDomain.CategoryName = data[0].CategoryName;
             mBrandmasterDomain.Brands = new SelectList(brandSelectList, "Value", "Text");
+            if (Session["Message"] != null)
+                ViewBag.Message = Session["Message"];
             return View(mBrandmasterDomain);
         }
 
@@ -86,15 +112,38 @@ namespace DYNEcommerce.Areas.Admin.Controllers
                 BrandCategoryDomain mBrandCategoryDomain = new BrandCategoryDomain();
                 mBrandCategoryDomain.brandId = model.BrandId;
                 mBrandCategoryDomain.GRP_CD = model.GRP_CD;
-
-                var result = GRP_MASTERCRUD.UpdateCategoryByBrandId(mBrandCategoryDomain);
-                return RedirectToAction("Index", "BrandCategory");
+                var data = Admin_BrandCRUD.GetBrandMasterAll("SelctBrandWiseCategory");
+                var chkexists = data.Where(x => x.GRP_CD == model.GRP_CD && x.BrandId == model.BrandId).FirstOrDefault();
+                if (chkexists != null)
+                {
+                    var result = GRP_MASTERCRUD.UpdateCategoryByBrandId(mBrandCategoryDomain);
+                    ViewBag.Success = "Success";
+                    return RedirectToAction("Edit", "BrandCategory", "Success");
+                }
+                else
+                {
+                    Session["Message"] = "Error";
+                    return RedirectToAction("Edit", "BrandCategory", "Error");
+                }
 
             }
             catch (Exception ex)
             {
-                return RedirectToAction("AddBrand", "BrandCategory");
+                ExceptionLogDomain mobj = new ExceptionLogDomain();
+                mobj.ControllerName = "AttributeValues";
+                mobj.MethodName = "Edit Post";
+                mobj.ErrorText = ex.Message;
+                mobj.StackTrace = ex.StackTrace;
+                TempData["ExceptionLogDomain"] = mobj;
+
+                return RedirectToAction("Index", "AdminError");
             }
+        }
+
+        public ActionResult DeleteBrandCategorymasterById(string grp_cd)
+        {
+            var res = GRP_MASTERCRUD.DeleteBrandCategorymasterById(grp_cd);
+            return Json(res);
         }
 
     }

@@ -1,0 +1,228 @@
+﻿@model Domain.ITMMASTDomain
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+
+<link href="~/Assets/CSS/Spinner.css" rel="stylesheet" />
+
+<div class="page-body">
+
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="page-header-left">
+                        <h3>
+                            Create Product
+                        </h3>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <ol class="breadcrumb pull-right">
+                        <li class="breadcrumb-item"> Product Details </li>
+                        <li class="breadcrumb-item active">Create  Product </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-sm-12">
+                <div class="card tab2-card">
+
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Select Category</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                @*ViewBag.CityList is holding all the cities values*@
+                                @Html.DropDownListFor(m => m.GRP_CD, Model.Categories, "--Select Category--", new { @class = "form-control", @Id = "ddlCategory" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Item Cd</label>
+                            </div>
+                            <div class="col-xl-8 col-md-7">
+                                <input type="text" class="form-control" id="itmcd">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Product Name</label>
+                            </div>
+                            <div class="col-xl-8 col-md-7">
+                                <input type="text" class="form-control" id="name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Sale Price</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                <input type="text" class="form-control" id="sp" onkeypress="return isNumberKey(event)">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Offer Price</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                <input type="text" class="form-control" id="op" onkeypress="return isNumberKey(event)">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span></span>Barcode</label>
+                            </div>
+                            <div class="col-xl-8 col-md-7">
+                                <input type="text" class="form-control" id="barcode">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Is New Arriaval</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                <input type="radio" name="homeradio" value="True" /> True
+                                <input type="radio" name="homeradio" value="False" />False
+                                <span id="error2"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Details</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                <textarea id="detail" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <a href="@Url.Action("Index", "AdminProduct")" class="btn btn-success">
+                                Back to List
+                            </a>
+                            @*<button type="button" class="btn btn-primary">Save</button>*@
+                            <input type="submit" class="btn btn-primary" value="Save" id="btnSubmit" />
+                        </div>
+
+
+                    </div>
+
+                    <div id="overlay">
+                        <div class="cv-spinner">
+                            <span class="spinner"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="alert alert-success" role="alert" style="display:none" id="divSuccess">
+                Product Added Successfully..!!
+            </div>
+            <div class="alert alert-danger" role="alert" style="display:none" id="divError">
+                Product Not Added Successfully..!!
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Assets/JS/jquery-3.3.1.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+    });
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode != 46 && charCode > 31
+            && (charCode < 48 || charCode > 57)) {
+            alert("Allow only number");
+            return false;
+        }
+        return true;
+    }
+
+    $("#btnSubmit").click(function () {
+        $("#overlay").fadeIn(300);
+        var result = validation();
+        if (result == true) {
+            var AdminProduct = {};
+            AdminProduct.Sale_Price = $("#sp").val();
+            AdminProduct.Item_Desc = $("#name").val();
+            AdminProduct.Offer_Price = $("#op").val();
+            AdminProduct.GRP_CD = $("#ddlCategory").val();
+            AdminProduct.Bar_Code = $("#barcode").val();
+            AdminProduct.Isnewarriaval = $('input[name="homeradio"]:checked').val();
+            AdminProduct.Item_CD = $("#itmcd").val();
+            AdminProduct.DetailDesc = $("#detail").val();
+
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url: "/AdminProduct/Add",
+                data: JSON.stringify(AdminProduct),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    setTimeout(function () {
+                        $("#overlay").fadeOut(300);
+                    }, 800);
+                    if (response == "Success") {
+                          $("#divSuccess").show();
+                        $("#divSuccess").fadeTo(2000, 500).slideUp(500, function () {
+                            $("#divSuccess").slideUp(500);
+                        });
+                    }
+                    else {
+                        $("#divError").show();
+                        $("#divError").fadeTo(2000, 500).slideUp(500, function () {
+                            $("#divError").slideUp(500);
+                        });
+                    }
+                }
+            });
+        }
+        else {
+            alert("Please Fill All The Details");
+        }
+    });
+
+    function validation() {
+        var result = true;
+        if ($("#ddlCategory").val() == "") {
+            $("#ddlCategory").css('border-color', 'red')
+            result = false;
+        }
+        if ($("#name").val() == '' || $("#name").val() == null) {
+            $("#name").css('border-color', 'red');
+            result = false;
+        }
+        if ($("#op").val() == '' || $("#op").val() == null) {
+            $("#op").css('border-color', 'red');
+            result = false;
+        }
+        if ($("#sp").val() == '' || $("#sp").val() == null) {
+            $("#sp").css('border-color', 'red');
+            result = false;
+        }
+        if ($('input[name="homeradio"]:checked').length == 0) {
+            $("#error2").text("Select atleast one").css('color', 'red');
+            result = false;
+        }
+
+        return result;
+
+    }
+</script>
+

@@ -1,16 +1,13 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain;
 
 namespace DataAccessLayer.Admin
 {
-   public class CategoryImageCRUD
+    public class CategoryImageCRUD
     {
         public static void AddToCategoryImage(CategoryImageDomain mCategoryImage)
         {
@@ -26,7 +23,7 @@ namespace DataAccessLayer.Admin
 
             cmd.Parameters.AddWithValue("@CatId", mCategoryImage.GRP_CD);
             cmd.Parameters.AddWithValue("@ImageName", mCategoryImage.ImageName);
-          
+
 
 
             cmd.ExecuteNonQuery();
@@ -77,7 +74,7 @@ namespace DataAccessLayer.Admin
 
             SqlCommand cmd = new SqlCommand("GetCategoryImageAll", sqlconn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
-           // cmd.Parameters.AddWithValue("@mode", "GetCategoryImageAll");
+            // cmd.Parameters.AddWithValue("@mode", "GetCategoryImageAll");
 
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
 
@@ -141,7 +138,7 @@ namespace DataAccessLayer.Admin
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Id", smodel.Id);
             cmd.Parameters.AddWithValue("@ImageName", smodel.ImageName);
-           
+
             sqlconn.Open();
             int i = cmd.ExecuteNonQuery();
             sqlconn.Close();

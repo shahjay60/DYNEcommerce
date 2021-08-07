@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using DataAccessLayer.Admin;
 using Domain;
-
-using DataAccessLayer.Admin;
-using DataAccessLayer;
+using System.Linq;
+using System.Web.Mvc;
+using System.Web.Security;
 
 namespace DYNEcommerce.Areas.Admin.Controllers
 {
@@ -20,8 +16,12 @@ namespace DYNEcommerce.Areas.Admin.Controllers
         public ActionResult Login(AdminLoginDomain model)
         {
             var userdata = AdminLoginCRUD.GetAdminLoginAll().Where(x => x.UserName == model.UserName && x.Password == model.Password).FirstOrDefault();
+            bool IsValidUser = false;
+            Session["userdata"] = userdata;
+
             if (userdata == null)
             {
+                IsValidUser = true;
                 string Message = "Invalid email or password";
                 return Json(Message, JsonRequestBehavior.AllowGet);
             }
@@ -29,7 +29,11 @@ namespace DYNEcommerce.Areas.Admin.Controllers
             {
                 if (model.RememberMe)
                 {
-
+                    if (IsValidUser)
+                    {
+                        FormsAuthentication.SetAuthCookie(model.UserName, false);
+                        return RedirectToAction("Index", "AdminDashboard");
+                    }
                 }
                 else
                 {
@@ -42,6 +46,7 @@ namespace DYNEcommerce.Areas.Admin.Controllers
         public ActionResult Logout()
         {
             Session.Clear();
+            FormsAuthentication.SignOut();
             return RedirectToAction("Index", "AdminLogin");
         }
     }

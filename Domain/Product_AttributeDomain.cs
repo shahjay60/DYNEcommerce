@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain
+﻿namespace Domain
 {
-   public class Product_AttributeDomain
+    public class Product_AttributeDomain
     {
         public int PaId { get; set; }
         public string ITEM_CD { get; set; }

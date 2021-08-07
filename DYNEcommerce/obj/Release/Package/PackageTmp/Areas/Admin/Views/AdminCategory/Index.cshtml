@@ -1,0 +1,197 @@
+﻿@model List<Domain.GRP_MASTERDomain>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+<style type="text/css">
+    .Grid {
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+        background-color: #fff;
+    }
+
+        .Grid th {
+            background-color: #B8DBFD;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .Grid th, .Grid td {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .Grid img {
+            cursor: pointer;
+        }
+
+    .ChildGrid {
+        width: 100%;
+</style>
+
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="page-header-left">
+                    <h3>
+                        Category List
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="alert alert-success" role="alert" style="display:none" id="divSuccess">
+            Category Delete Successfully..!!
+        </div>
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Category List</h5>
+                </div>
+                <div class="card-body order-datatable">
+                    <div class="btn-popup pull-right">
+                        <a href="@Url.Action("Add", "AdminCategory")" class="btn btn-secondary">Add Category</a>
+                    </div>
+                    @if (Model != null)
+                    {
+                        <div id="batchDelete" class="category-table user-list order-table">
+                            <table cellpadding="0" cellspacing="0" class="Grid display dataTable no-footer" id="basic-1" role="grid" aria-describedby="basic-1_info">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th></th>
+                                        <th>Cat Id</th>
+                                        <th>Category Name</th>
+                                        <th>Category Short Name</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                @foreach (var item in Model.Where(s => s.FOR_GRP_CD.Trim() == "00001").GroupBy(Obj => new { Obj.GRP_CD }).Distinct().ToList())
+                                {
+                                    foreach (var item1 in item)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @if (item1.GROUP_YN == "Y")
+                                                {
+                                                    <img src="~/Areas/Admin/plus.png" />
+
+                                                    <div style="display:none">
+                                                        <table cellpadding="0" cellspacing="0" class="ChildGrid table table-hover">
+                                                            <thead class="thead-dark">
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <th>Cat Id</th>
+                                                                    <th>Sub Category Name</th>
+                                                                    <th>Sub Category Short Name</th>
+                                                                    <th>Edit</th>
+                                                                    <th>Delete</th>
+                                                                </tr>
+                                                            </thead>
+                                                            @foreach (var firstItem in (Model.Where(s => s.FOR_GRP_CD.Trim() == item1.GRP_CD.Trim()).ToList()))
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        <img src="~/Areas/Admin/plus.png" />
+                                                                        <div style="display:none">
+                                                                            <table cellpadding="0" cellspacing="0" class="ChildGrid table table-hover">
+                                                                                <thead class="thead-dark">
+                                                                                    <tr>
+                                                                                        <th>Cat Id</th>
+                                                                                        <th>Sub to Sub Category Name</th>
+                                                                                        <th>Sub to Sub Category Short Name</th>
+                                                                                        <th>Edit</th>
+                                                                                        <th>Delete</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                @foreach (var secondItem in (Model.Where(s => s.FOR_GRP_CD.Trim() == firstItem.GRP_CD.Trim()).ToList()))
+                                                                                {
+                                                                                    <tr>
+                                                                                        <td>@secondItem.GRP_CD</td>
+                                                                                        <td>@secondItem.GRP_NAME</td>
+                                                                                        <td>@secondItem.GRP_SNAME</td>
+                                                                                        <td><a href="@Url.Action("Edit","AdminCategory",new {catId=secondItem.GRP_CD }) "><i class="fa fa-edit"></i></a> </td>
+                                                                                        <td><a href="#" onclick="deletecategory('@secondItem.GRP_CD')"><i class="fa fa-remove"></i></a> </td>
+                                                                                    </tr>
+                                                                                }
+                                                                            </table>
+
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td>@firstItem.GRP_CD</td>
+                                                                    <td>@firstItem.GRP_NAME</td>
+                                                                    <td>@firstItem.GRP_SNAME</td>
+                                                                    <td><a href="@Url.Action("Edit","AdminCategory",new {catId=firstItem.GRP_CD }) "><i class="fa fa-edit"></i></a> </td>
+                                                                    <td><a href="#" onclick="deletecategory('@firstItem.GRP_CD')"><i class="fa fa-remove"></i></a> </td>
+                                                                </tr>
+                                                            }
+                                                        </table>
+                                                    </div>
+                                                }
+                                            </td>
+
+                                            <td>@item1.GRP_CD</td>
+                                            <td>@item1.GRP_NAME</td>
+                                            <td>@item1.GRP_SNAME</td>
+                                            <td><a href="@Url.Action("Edit","AdminCategory",new {catId=item1.GRP_CD }) "><i class="fa fa-edit"></i></a> </td>
+                                            <td><a href="#" onclick="deletecategory('@item1.GRP_CD')"><i class="fa fa-remove"></i></a> </td>
+                                        </tr>
+                                    }
+
+                                }
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Assets/JS/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+    //Assign Click event to Plus Image.
+    $("body").on("click", "img[src*='plus.png']", function () {
+        $(this).closest("tr").after("<tr><td></td><td colspan = '999'>" + $(this).next().html() + "</td></tr>");
+        $(this).attr("src", "../Areas/Admin/minus.png");
+    });
+    //Assign Click event to Minus Image.
+    $("body").on("click", "img[src*='minus.png']", function () {
+        $(this).attr("src", "../Areas/Admin/plus.png");
+        $(this).closest("tr").next().remove();
+    });
+</script>
+
+<script type="text/javascript">
+    function deletecategory(id) {
+        if (confirm('Are you sure you want to delete this item ?')) {
+            $.ajax({
+                url: '/AdminCategory/Delete',
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: '{catId: "' + id + '" }',
+                success: function (response) {
+                    if (response == true) {
+                        $("#divSuccess").show();
+                        $("#divSuccess").fadeTo(2000, 500).slideUp(1000, function () {
+                            $("#divSuccess").slideUp(1000);
+                        });
+                        window.location.reload();
+                    }
+                    else {
+                        alert("Somethings goes wrong please try later..!!");
+                    }
+                },
+
+            });
+
+        }
+    }
+
+</script>

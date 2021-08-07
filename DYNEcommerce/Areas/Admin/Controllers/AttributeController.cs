@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using DataAccessLayer;
 using Domain;
-using DataAccessLayer.Admin;
-using System.IO;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-using System.Web.Security;
-using DataAccessLayer;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace DYNEcommerce.Areas.Admin.Controllers
 {
@@ -26,7 +19,8 @@ namespace DYNEcommerce.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Login");
+
+                return RedirectToAction("Index", "AdminLogin");
             }
         }
         public ActionResult GetAttributeList()
@@ -42,7 +36,7 @@ namespace DYNEcommerce.Areas.Admin.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Login");
+                    return RedirectToAction("Index", "AdminLogin");
                 }
             }
             catch (Exception ex)
@@ -54,60 +48,106 @@ namespace DYNEcommerce.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult AddAttribute()
         {
-
             return View();
         }
 
         [HttpPost]
-        public ActionResult AddAttribute(AttributeDomain model, int? Id)
+        public ActionResult AddAttribute(string attributeName)
         {
-
             try
             {
+                var data = AttributeCRUD.GetAttributeAll()
+                    .Where(x => x.AttributeName.ToLower().Trim() == attributeName.ToLower().Trim())
+                    .Select(x => x.AttributeId).FirstOrDefault();
 
-                AttributeCRUD.AddAttribute(model);
-                ModelState.Clear();
-                return RedirectToAction("Index", "Attribute");
+                if (data == 0)
+                {
+                    AttributeCRUD.AddAttribute(attributeName);
+                    ModelState.Clear();
+                    return Json("Success", JsonRequestBehavior.AllowGet);
+
+                }
+                else
+                {
+                    return Json("Error", JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
-                return RedirectToAction("AddAttribute", "Attribute");
+                ExceptionLogDomain mobj = new ExceptionLogDomain();
+                mobj.ControllerName = "Attribute";
+                mobj.MethodName = "Add Post";
+                mobj.ErrorText = ex.Message;
+                mobj.StackTrace = ex.StackTrace;
+                TempData["ExceptionLogDomain"] = mobj;
+
+                return RedirectToAction("Index", "AdminError");
             }
-
-
 
         }
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var Categorist = AttributeCRUD.GetAttribute(id);
-            AttributeDomain mobj = new AttributeDomain();
-            foreach (var item in Categorist)
+            try
             {
-                mobj.AttributeId = item.AttributeId;
-                mobj.AttributeName = item.AttributeName;
+                var Categorist = AttributeCRUD.GetAttribute(id);
+                AttributeDomain mobj = new AttributeDomain();
+                foreach (var item in Categorist)
+                {
+                    mobj.AttributeId = item.AttributeId;
+                    mobj.AttributeName = item.AttributeName;
 
+                }
+
+                return View(mobj);
             }
-            return View(mobj);
+            catch (Exception ex)
+            {
+                ExceptionLogDomain mobj = new ExceptionLogDomain();
+                mobj.ControllerName = "Attribute";
+                mobj.MethodName = "Edit Get";
+                mobj.ErrorText = ex.Message;
+                mobj.StackTrace = ex.StackTrace;
+                TempData["ExceptionLogDomain"] = mobj;
+
+                return RedirectToAction("Index", "AdminError");
+            }
         }
-
-
 
         [HttpPost]
         public ActionResult Edit(AttributeDomain model, int? Id)
         {
-
             try
             {
+                var data = AttributeCRUD.GetAttributeAll()
+                   .Where(x => x.AttributeName.ToLower().Trim() == model.AttributeName.ToLower().Trim())
+                   .Select(x => x.AttributeId).FirstOrDefault();
 
-                var data = AttributeCRUD.UpdateAttribute(model);
-                ModelState.Clear();
-                return RedirectToAction("Index", "Attribute");
+                if (data == 0)
+                {
+                    var data1 = AttributeCRUD.UpdateAttribute(model);
+                    ModelState.Clear();
+                    return Json("Success", JsonRequestBehavior.AllowGet);
+
+                }
+                else
+                {
+                    return Json("Error", JsonRequestBehavior.AllowGet);
+                }
+
 
             }
             catch (Exception ex)
             {
-                return RedirectToAction("AddAttribute", "Attribute");
+                ExceptionLogDomain mobj = new ExceptionLogDomain();
+                mobj.ControllerName = "Attribute";
+                mobj.MethodName = "Edit Post";
+                mobj.ErrorText = ex.Message;
+                mobj.StackTrace = ex.StackTrace;
+
+                TempData["ExceptionLogDomain"] = mobj;
+
+                return RedirectToAction("Index", "AdminError");
             }
         }
 

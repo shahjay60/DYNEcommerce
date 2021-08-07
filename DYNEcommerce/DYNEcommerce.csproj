@@ -56,6 +56,12 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -132,6 +138,24 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminBrandController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminCategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminDashboardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminErrorController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AttributeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AttributeValuesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BannerImageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BrandCategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategoryImageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminHomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CompnayDetailsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminLoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OrderDetailsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductAttributeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductImageController.cs" />
+    <Compile Include="Areas\Admin\Data\UserRoleProvider.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
@@ -142,21 +166,40 @@
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\WishListController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\grp_masterTbl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\EmailAccount.cs" />
+    <Compile Include="Utility\SmtpContext.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\ajax-loader.gif" />
+    <Content Include="Areas\Admin\loader.gif" />
+    <Content Include="Areas\Admin\minus.png" />
+    <Content Include="Areas\Admin\plus.png" />
+    <Content Include="Assets\CSS\admin.css" />
     <Content Include="Assets\CSS\animate.css" />
     <Content Include="Assets\CSS\bootstrap.css" />
+    <Content Include="Assets\CSS\chartist.css" />
     <Content Include="Assets\CSS\color2.css" />
+    <Content Include="Assets\CSS\data-table.css" />
+    <Content Include="Assets\CSS\datatables.css" />
+    <Content Include="Assets\CSS\date-picker.css" />
+    <Content Include="Assets\CSS\flag-icon.css" />
     <Content Include="Assets\CSS\font-awesome.css" />
+    <Content Include="Assets\CSS\fstdropdown.css" />
+    <Content Include="Assets\CSS\icofont.css" />
+    <Content Include="Assets\CSS\jsgrid.css" />
+    <Content Include="Assets\CSS\prism.css" />
     <Content Include="Assets\CSS\slick-theme.css" />
     <Content Include="Assets\CSS\slick.css" />
+    <Content Include="Assets\CSS\Spinner.css" />
     <Content Include="Assets\CSS\themify.css" />
+    <Content Include="Assets\CSS\vector-map.css" />
     <Content Include="Assets\fonts\feather\activity.svg" />
     <Content Include="Assets\fonts\feather\airplay.svg" />
     <Content Include="Assets\fonts\feather\alert-circle.svg" />
@@ -701,6 +744,8 @@
     <Content Include="Assets\Images\2.2.png" />
     <Content Include="Assets\Images\3.1.png" />
     <Content Include="Assets\Images\3.2.png" />
+    <Content Include="Assets\Images\7SMT.gif" />
+    <Content Include="Assets\Images\ajax loader.gif" />
     <Content Include="Assets\Images\collection-banner\1.jpg" />
     <Content Include="Assets\Images\collection-banner\2.jpg" />
     <Content Include="Assets\Images\collection-banner\3.jpg" />
@@ -710,11 +755,13 @@
     <Content Include="Assets\Images\collection-banner\7.jpg" />
     <Content Include="Assets\Images\drop-1.png" />
     <Content Include="Assets\Images\favicon.png" />
+    <Content Include="Assets\Images\iconfinder_user-alt_285645.png" />
     <Content Include="Assets\Images\icon\2.png" />
     <Content Include="Assets\Images\icon\3.png" />
     <Content Include="Assets\Images\icon\4.png" />
     <Content Include="Assets\Images\icon\6.png" />
     <Content Include="Assets\Images\loader.gif" />
+    <Content Include="Assets\Images\login-bg.png" />
     <Content Include="Assets\Images\logo.png" />
     <Content Include="Assets\Images\mega-banner.jpg" />
     <Content Include="Assets\Images\menu-banner1.jpg" />
@@ -734,21 +781,70 @@
     <Content Include="Assets\Images\product-sidebar\m-003.jpg" />
     <Content Include="Assets\Images\ProductImage\1.jpg" />
     <Content Include="Assets\Images\ProductImage\a1.jpg" />
+    <Content Include="Assets\Images\subscribe\1.jpg" />
+    <Content Include="Assets\Images\subscribe\2.jpg" />
+    <Content Include="Assets\Images\subscribe\3.jpg" />
+    <Content Include="Assets\Images\Think - PNG.png" />
+    <Content Include="Assets\JS\admin-customizer.js" />
+    <Content Include="Assets\JS\admin-script.js" />
     <Content Include="Assets\JS\bootstrap-notify.min.js" />
     <Content Include="Assets\JS\bootstrap.js" />
+    <Content Include="Assets\JS\chart\apex-chart\apex-chart.js" />
+    <Content Include="Assets\JS\chart\apex-chart\moment.min.js" />
+    <Content Include="Assets\JS\chart\apex-chart\stock-prices.js" />
+    <Content Include="Assets\JS\chart\chartist\chartist.js" />
+    <Content Include="Assets\JS\chart\chartjs\chart.min.js" />
+    <Content Include="Assets\JS\chart\flot-chart\excanvas.js" />
+    <Content Include="Assets\JS\chart\flot-chart\excanvas.min.js" />
+    <Content Include="Assets\JS\chart\flot-chart\flot-script.js" />
+    <Content Include="Assets\JS\chart\flot-chart\jquery.flot.canvas.js" />
+    <Content Include="Assets\JS\chart\flot-chart\jquery.flot.categories.js" />
+    <Content Include="Assets\JS\chart\flot-chart\jquery.flot.crosshair.js" />
+    <Content Include="Assets\JS\chart\flot-chart\jquery.flot.errorbars.js" />
+    <Content Include="Assets\JS\chart\flot-chart\jquery.flot.fillbetween.js" />
+    <Content Include="Assets\JS\chart\flot-chart\jquery.flot.image.js" />
+    <Content Include="Assets\JS\chart\flot-chart\jquery.flot.js" />
+    <Content Include="Assets\JS\chart\flot-chart\jquery.flot.navigate.js" />
+    <Content Include="Assets\JS\chart\flot-chart\jquery.flot.pie.js" />
+    <Content Include="Assets\JS\chart\flot-chart\jquery.flot.resize.js" />
+    <Content Include="Assets\JS\chart\flot-chart\jquery.flot.selection.js" />
+    <Content Include="Assets\JS\chart\flot-chart\jquery.flot.stack.js" />
+    <Content Include="Assets\JS\chart\flot-chart\jquery.flot.symbol.js" />
+    <Content Include="Assets\JS\chart\flot-chart\jquery.flot.threshold.js" />
+    <Content Include="Assets\JS\chart\flot-chart\jquery.flot.time.js" />
+    <Content Include="Assets\JS\chart\flot-chart\jquery.js" />
+    <Content Include="Assets\JS\chart\google\google-chart-loader.js" />
+    <Content Include="Assets\JS\chat-menu.js" />
+    <Content Include="Assets\JS\clipboard.min.js" />
+    <Content Include="Assets\JS\clipboard\clipboard.min.js" />
+    <Content Include="Assets\JS\counter\counter-custom.js" />
+    <Content Include="Assets\JS\counter\jquery.counterup.min.js" />
+    <Content Include="Assets\JS\counter\jquery.waypoints.min.js" />
+    <Content Include="Assets\JS\custom-card.js" />
+    <Content Include="Assets\JS\custom-card\custom-card.js" />
+    <Content Include="Assets\JS\datatables\custom-basic.js" />
+    <Content Include="Assets\JS\datatables\jquery.dataTables.min.js" />
+    <Content Include="Assets\JS\equal-height.js" />
     <Content Include="Assets\JS\feather-icon.js" />
     <Content Include="Assets\JS\feather.min.js" />
+    <Content Include="Assets\JS\fstdropdown.min.js" />
     <Content Include="Assets\JS\ion.rangeSlider.js" />
     <Content Include="Assets\JS\jquery-3.3.1.min.js" />
+    <Content Include="Assets\JS\lazysizes.min.js" />
     <Content Include="Assets\JS\menu.js" />
     <Content Include="Assets\JS\modal.js" />
     <Content Include="Assets\JS\popper.min.js" />
+    <Content Include="Assets\JS\prism.min.js" />
+    <Content Include="Assets\JS\prism\prism.min.js" />
     <Content Include="Assets\JS\rangeslidermain.js" />
     <Content Include="Assets\JS\script.js" />
+    <Content Include="Assets\JS\sidebar-menu.js" />
     <Content Include="Assets\JS\slick.js" />
     <Content Include="Assets\JS\timer2.js" />
     <Content Include="Assets\JS\tippy-bundle.iife.min.js" />
     <Content Include="Assets\JS\tippy-popper.min.js" />
+    <Content Include="Assets\JS\vector-map\jquery-jvectormap-2.0.2.min.js" />
+    <Content Include="Assets\JS\vector-map\map\jquery-jvectormap-world-mill-en.js" />
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\EntityFramework.dll" />
     <Content Include="bin\EntityFramework.SqlServer.dll" />
@@ -768,6 +864,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -788,6 +885,55 @@
     <Content Include="Assets\fonts\themify.eot" />
     <Content Include="Assets\fonts\themify.ttf" />
     <Content Include="Assets\fonts\themify.woff" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\AdminBrand\AddBrand.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminBrand\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\BannerImage\AddBannerImage.cshtml" />
+    <Content Include="Areas\Admin\Views\BannerImage\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\CategoryImage\AddCategoryImage.cshtml" />
+    <Content Include="Areas\Admin\Views\CategoryImage\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Login2\Dashboard.cshtml" />
+    <Content Include="Areas\Admin\Views\Login2\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\ProductImage\AddProductImage.cshtml" />
+    <Content Include="Areas\Admin\Views\ProductImage\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutPage.cshtml" />
+    <Content Include="Areas\Admin\Views\CategoryImage\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ProductImage\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Attribute\AddAttribute.cshtml" />
+    <Content Include="Areas\Admin\Views\Attribute\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Attribute\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminBrand\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\BrandCategory\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\BrandCategory\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\BrandCategory\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\ProductAttribute\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ProductAttribute\AddProductAttribute.cshtml" />
+    <Content Include="Areas\Admin\Views\ProductAttribute\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\OrderDetails\OrderDetails.cshtml" />
+    <Content Include="Areas\Admin\Views\CompnayDetails\AddCompnayDetails.cshtml" />
+    <Content Include="Areas\Admin\Views\CompnayDetails\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\CompnayDetails\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\BannerImage\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminHome\Index.cshtml" />
+    <Content Include="Areas\AdminWeb.config" />
+    <Content Include="Areas\Admin\Views\Login2\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminDashboard\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Login\Dashboard.cshtml" />
+    <Content Include="Areas\Admin\Views\Login\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminLogin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminCategory\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminCategory\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminCategory\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminProduct\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminProduct\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminProduct\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ProductImage\ViewImages.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminError\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AttributeValues\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AttributeValues\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\AttributeValues\Edit.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -841,10 +987,16 @@
     <Content Include="Views\Menu\_BrandList.cshtml" />
     <Content Include="Views\Category\_categoryListing.cshtml" />
     <Content Include="Views\Menu\Index.cshtml" />
+    <Content Include="Views\Home\_ProductListing.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="BannerImageUploadfiles\" />
     <Folder Include="bin\roslyn\" />
+    <Folder Include="CategoryImageUploadfiles\" />
+    <Folder Include="LogoUploadfiles\" />
+    <Folder Include="ProductImageUploadfiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

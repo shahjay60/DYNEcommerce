@@ -1,0 +1,356 @@
+﻿@model Domain.ProductImageDomain
+@{
+    ViewBag.Title = "EditProductImage";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="page-body">
+
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="page-header-left">
+                        <h3>
+                            <small>Bigdeal Admin panel</small>
+                        </h3>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <ol class="breadcrumb pull-right">
+                        <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a></li>
+                        <li class="breadcrumb-item"> ProductImage </li>
+                        <li class="breadcrumb-item active">Edit  ProductImage </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card tab2-card">
+                    <div class="card-header">
+                        <h5> Update ProductImage</h5>
+                    </div>
+                    <div class="card-body">
+
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        @Html.HiddenFor(model => model.Id)
+                        @Html.HiddenFor(model => model.Pid)
+
+                        <input type="hidden" id="hdnId" value="@Model.Id" />
+                        <input type="hidden" id="hdnpId" value="@Model.Pid" />
+
+                        <input type="hidden" id="hdnviewon" value="@Model.Viewon" />
+
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Product</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                @*ViewBag.CityList is holding all the cities values*@
+                                @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control", @id = "txtProductName" } })
+                                @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Viewon</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                @*@Html.EditorFor(model => model.Display_on_web, new { htmlAttributes = new { @class = "form-control" } })*@
+
+                                @Html.RadioButtonFor(model => model.Viewon, "List", new { @onchange = "ToggleInfo(this);" })
+                                List&ensp;&ensp;
+
+                                @Html.RadioButtonFor(model => model.Viewon, "Detail", new { @onchange = "ToggleInfo(this);" })
+                                Detail
+
+                                @Html.ValidationMessageFor(model => model.Viewon, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Image</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                <input type="file" name="postedFiles" id="singleImage" onchange="checkFileDetails()" />
+                                <input type='file' multiple id='fileUpload' name="postedFiles" onchange="checkmultipleFileDetails()" />
+                                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                                <img src="../../../ProductImageUploadfiles/@Model.Image" height="50" width="50" class="" id="disImage"/>
+                                <span id="image">@Model.Image</span>
+                                <span id="error"></span>
+                                <input type="hidden" id="imgName" value="@Model.Image" />
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            @*<button type="button" class="btn btn-primary">Save</button>*@
+                            <input type="submit" class="btn btn-primary" value="Save" id="btnSubmit" />
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Assets/JS/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    var imageArray = [];
+    var result = true;
+
+    $(document).ready(function () {
+        result = $("#hdnviewon").val();
+
+        if (result == "List") {
+            $("#fileUpload").hide();
+            $("#singleImage").show();
+          
+        }
+        else {
+            $("#singleImage").hide();
+            $("#fileUpload").show();
+           
+        }
+    });
+    function ToggleInfo(el) {
+        var result = el.value;
+        if (result == "List") {
+            $("#fileUpload").hide();
+            $("#singleImage").show();
+
+        }
+        else {
+            $("#singleImage").hide();
+            $("#fileUpload").show();
+
+        }
+    }
+
+
+    function ToggleInfo(el) {
+        var result = el.value;
+        if (result == "List") {
+            $("#fileUpload").hide();
+            $("#singleImage").show();
+            $("#image").text("");
+            $("#disImage").remove();
+            $("#error").text("Upload Image with 768 width and 988 height..!!").css("color", "red")
+            $("#btnSubmit").prop('disabled', true);
+        }
+        else {
+            $("#singleImage").hide();
+            $("#fileUpload").show();
+            $("#image").text("");
+            $("#disImage").remove();
+            $("#error").text("Upload Image with 775 width and 1000 height..!!").css("color", "red")
+            $("#btnSubmit").prop('disabled', true);
+
+        }
+    }
+
+
+    function checkFileDetails() {
+        var fi = document.getElementById('singleImage');
+        var data = new FormData();
+
+        if (fi.files.length > 0) {      // FIRST CHECK IF ANY FILE IS SELECTED.
+
+            for (var i = 0; i <= fi.files.length - 1; i++) {
+                var fileName, fileExtension, fileSize, fileType, dateModified;
+
+                // FILE NAME AND EXTENSION.
+                fileName = fi.files.item(i).name;
+                fileExtension = fileName.replace(/^.*\./, '');
+                data.append("MyImages", fileName);
+
+                // CHECK IF ITS AN IMAGE FILE.
+                // TO GET THE IMAGE WIDTH AND HEIGHT, WE'LL USE fileReader().
+                if (fileExtension == 'png' || fileExtension == 'jpg' || fileExtension == 'jpeg') {
+                    readImageFile(fi.files.item(i));
+                    // GET IMAGE INFO USING fileReader().
+                }
+                else {
+                    // IF THE FILE IS NOT AN IMAGE.
+                    alert("Upload only Image ");
+                    $("#btnSubmit").prop('disabled', true);
+
+                }
+                // GET THE IMAGE WIDTH AND HEIGHT USING fileReader() API.
+                function readImageFile(file) {
+                    var reader = new FileReader(); // CREATE AN NEW INSTANCE.
+
+                    reader.onload = function (e) {
+                        var img = new Image();
+                        img.src = e.target.result;
+
+                        img.onload = function () {
+                            var w = this.width;
+                            var h = this.height;
+                            if (w != "768" || h != "988") {
+                                $("#error").text("Upload Image with 768 width and 988 height..!!").css("color", "red")
+                                $("#btnSubmit").prop('disabled', true);
+
+                            }
+                            else {
+
+                                var data = new FormData();
+                                var files = $("#singleImage").get(0).files;
+                                if (files.length > 0) {
+                                    data.append("MyImages", files[0]);
+                                }
+                                $("#error").text("");
+                                $.ajax({
+                                    url: "/ProductImage/UploadFile",
+                                    type: "POST",
+                                    processData: false,
+                                    contentType: false,
+                                    data: data,
+                                    success: function (response) {
+                                        imageArray.push(response);
+
+                                        //code after success
+                                    },
+                                    error: function (er) {
+                                        alert(er);
+                                    }
+
+                                });
+                                $("#btnSubmit").prop('disabled', false);
+                            }
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+    }
+
+    function checkmultipleFileDetails() {
+        var fi = document.getElementById('fileUpload');
+        if (fi.files.length > 0) {      // FIRST CHECK IF ANY FILE IS SELECTED.
+            for (var i = 0; i <= fi.files.length - 1; i++)
+            {
+                var fileName, fileExtension, fileSize, fileType, dateModified;
+
+                // FILE NAME AND EXTENSION.
+                fileName = fi.files.item(i).name;
+                fileExtension = fileName.replace(/^.*\./, '');
+
+                // CHECK IF ITS AN IMAGE FILE.
+                // TO GET THE IMAGE WIDTH AND HEIGHT, WE'LL USE fileReader().
+                if (fileExtension == 'png' || fileExtension == 'jpg' || fileExtension == 'jpeg') {
+                    readmultipleImageFile(fi.files.item(i));             // GET IMAGE INFO USING fileReader().
+                }
+
+                // GET THE IMAGE WIDTH AND HEIGHT USING fileReader() API.
+                function readmultipleImageFile(file) {
+                    var reader = new FileReader(); // CREATE AN NEW INSTANCE.
+                    reader.onload = function (e) {
+                        var img = new Image();
+                        img.src = e.target.result;
+
+                        img.onload = function () {
+                            var w = this.width;
+                            var h = this.height;
+                            if (w != "775" || h != "1000") {
+                                $("#error").text(file.name +" "+ "Upload Image with 775 width and 1000 height..!!").css("color", "red")
+                                $("#btnSubmit").prop('disabled', true);
+                            }
+
+                            else {
+                                $("#error").text("");
+
+                                var data = new FormData();
+                                    data.append("MyImages", file);
+
+                                $.ajax({
+                                    url: "/ProductImage/UploadMultipleFile",
+                                    type: "POST",
+                                    processData: false,
+                                    contentType: false,
+                                    data: data,
+                                    success: function (response) {
+                                        imageArray.push(response);
+                                        //code after success
+                                    },
+                                    error: function (er) {
+                                        alert(er);
+                                    }
+
+                                });
+                                $("#btnSubmit").prop('disabled', false);
+                            }
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+    }
+
+     $("#btnSubmit").click(function () {
+         var result = validation();
+        if (result == true) {
+            var ProductImage = {};
+            ProductImage.Id = $("#hdnId").val();
+            ProductImage.Pid = $("#hdnpId").val();
+            ProductImage.ImageNames = imageArray;
+            ProductImage.Viewon = $("input[name='Viewon']:checked").val();
+            console.log(ProductImage);
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url:'@Url.Action("Edit", "ProductImage")',
+                data: JSON.stringify(ProductImage),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response == "Success") {
+                        window.location.href = '@Url.Action("Index", "ProductImage")'
+                    }
+                    else {
+                        alert(response);
+                    }
+                }
+            });
+        }
+        else {
+            alert("Please Fill All The Details");
+        }
+     });
+    function validation() {
+        var result = true;
+        if ($("#ddlProducts").val() == "") {
+            $("#ddlProducts").css('border-color', 'red')
+            result = false;
+        }
+        if (imageArray.length == 0 && $("#imgName").val() == null) {
+            $("#error").text("Please Upload Image ").css("color", "red")
+            result = false;
+        }
+        else if (imageArray.length == 0){
+            imageArray.push($("#imgName").val());
+        }
+        if ($("input[name='Viewon']:checked").val() == null) {
+            result = false;
+        }
+        return result;
+    }
+
+
+</script>
+

@@ -43,6 +43,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\DYNEcommerce\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,9 +54,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminCategory.cs" />
+    <Compile Include="AdminLoginDomain.cs" />
+    <Compile Include="AdminProduct.cs" />
+    <Compile Include="Admin_OrderdataDomain.cs" />
     <Compile Include="AttributeDomain.cs" />
+    <Compile Include="AttributevaluesDomain.cs" />
+    <Compile Include="BannerImageDomain.cs" />
+    <Compile Include="BrandCategoryDomain.cs" />
     <Compile Include="BrandmasterDomain.cs" />
+    <Compile Include="CartAttribute.cs" />
+    <Compile Include="CategoryImageDomain.cs" />
+    <Compile Include="Categorywiseproduct.cs" />
     <Compile Include="CheckoutDomain.cs" />
+    <Compile Include="CompnayDetailsDomain.cs" />
     <Compile Include="CustomerCartDomain.cs" />
     <Compile Include="CustomerCRUDNEWDomain.cs" />
     <Compile Include="CustomerDomain.cs" />
@@ -68,6 +82,8 @@
     <Compile Include="OrderDetailsDomain.cs" />
     <Compile Include="PaymentTypeDomain.cs" />
     <Compile Include="ProductCart.cs" />
+    <Compile Include="ProductImageDomain.cs" />
+    <Compile Include="Product_Attribute.cs" />
     <Compile Include="Product_AttributeDomain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

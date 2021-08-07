@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DataAccessLayer.Admin;
+using Domain;
+using System;
+using System.IO;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
-using Domain;
-using DataAccessLayer.Admin;
-using System.IO;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-using System.Web.Security;
-using DataAccessLayer;
 using System.Web.Helpers;
+using System.Web.Mvc;
 
 namespace DYNEcommerce.Areas.Admin.Controllers
 {
@@ -27,7 +22,7 @@ namespace DYNEcommerce.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("Index", "AdminLogin");
             }
         }
         public ActionResult GetCompnayDetailsList()
@@ -43,7 +38,7 @@ namespace DYNEcommerce.Areas.Admin.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Login");
+                    return RedirectToAction("Index", "AdminLogin");
                 }
             }
             catch (Exception ex)

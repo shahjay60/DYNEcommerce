@@ -14,22 +14,19 @@
                             {
                                 <li>
                                     <a href="/Product/Index?catId=@item.FirstOrDefault().GRP_CD">
-
                                         @firstItem.GRP_NAME
                                     </a>
-                                    <ul>
-                                        @foreach (var secondItem in (Model.Where(s => s.FOR_GRP_CD.Trim() == firstItem.GRP_CD.Trim()).ToList()))
-                                        {
+                                    @foreach (var secondItem in (Model.Where(s => s.FOR_GRP_CD.Trim() == firstItem.GRP_CD.Trim()).ToList()))
+                                    {
+                                        <ul>
                                             <li>
                                                 <a href="/Product/Index?catId=@item.FirstOrDefault().GRP_CD">
-
                                                     @secondItem.GRP_NAME
                                                 </a>
 
                                             </li>
-                                        }
-                                    </ul>
-
+                                        </ul>
+                                    }
                                 </li>
                             }
                         }

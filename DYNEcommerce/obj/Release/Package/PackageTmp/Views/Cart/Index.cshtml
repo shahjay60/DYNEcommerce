@@ -7,6 +7,12 @@
     decimal totalPrice = 0;
 }
 
+<style>
+    .imgheightwidht{
+        height:100px;
+        width:100px;
+    }
+</style>
 
 
 <!-- breadcrumb start -->
@@ -26,7 +32,7 @@
                     </div>
                 </div>
             </div>
-            
+
 
         </div>
     </div>
@@ -44,7 +50,10 @@
                         <thead>
                             <tr class="table-head">
                                 <th scope="col">image</th>
-                                <th scope="col">product name</th>
+                                <th scope="col">
+                                    product name
+
+                                </th>
                                 <th scope="col">price</th>
                                 <th scope="col">quantity</th>
                                 <th scope="col">action</th>
@@ -53,14 +62,31 @@
                         </thead>
                         @foreach (var item in Model)
                         {
+                            var totlAmt = item.Quantity * item.Amount;
                             <tbody id="tbl_@item.Id">
                                 <tr>
 
                                     <td>
-                                        <a href="javascript:void(0)"><img src="~/Assets/Images/ProductImage/1.jpg" alt="cart" class=" "></a>
+                                        @if (item.Image == "")
+                                        {
+                                            <div class="product-front ">
+                                                <img src="~/Assets/Images/ProductImage/1.jpg" class="img-fluid imgheightwidht " alt="product"> 
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="product-front">
+                                                 <img src="../ProductImageUploadfiles/@item.Image" class="img-fluid imgheightwidht " alt="product"> 
+                                            </div>
+                                        }
+
                                     </td>
                                     <td>
-                                        <a href="javascript:void(0)">@item.ITEM_DESC</a>
+                                        <a href="javascript:void(0)">@item.ITEM_DESC</a><br />
+                                        @foreach (var item1 in ViewBag.AttributeValues)
+                                        {
+                                            <h5>@item1.AttributeType:@item1.AttributeValue</h5>
+                                        }
                                         <div class="mobile-cart-content">
                                             <div class="col-xs-3">
                                                 <div class="qty-box">
@@ -91,7 +117,7 @@
                                     </td>
                                     <td><a href="@Url.Action("DeleteCartItem", "cart", new { cartId = item.Id })" class="icon"><i class="ti-close"></i></a></td>
                                     <td>
-                                        <h2 class="td-color">$@item.Amount</h2>
+                                        <h2 class="td-color">$ @totlAmt</h2>
                                     </td>
                                 </tr>
                             </tbody>

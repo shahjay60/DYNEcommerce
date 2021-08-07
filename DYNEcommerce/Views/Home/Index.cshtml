@@ -11,26 +11,31 @@
         <div class="row">
             <div class="col">
                 <div class="slide-1 no-arrow">
-                    <div>
-                        <div class="slider-banner p-center slide-banner-1">
-                            <div class="slider-img">
-                                @*<ul class="layout1-slide-1">
-                                        <li id="img-1"><img src="~/Assets/Images/1.1.png" class="img-fluid" alt="slider"></li>
-                                        <li id="img-2" class="slide-center"><img src="~/Assets/Images/1.2.png" class="img-fluid" alt="slider"></li>
-                                    </ul>*@
-                            </div>
-                            <div class="slider-banner-contain">
-                                <div>
-                                    <h1>mi<span>Mobile</span></h1>
-                                    <h4>fast and light</h4>
-                                    <h2>Pixel Perfect Deal Camera</h2>
-                                    <a href="product-page(left-sidebar).html" class="btn btn-normal">
-                                        Shop Now
-                                    </a>
+                    @if (ViewBag.BannerData != null)
+                    {
+                        foreach (var item in ViewBag.BannerData)
+                        {
+                            <div>
+                                <div class="slider-banner p-center slide-banner-1">
+                                    <div class="slider-img">
+                                        @*<ul class="layout1-slide-1">
+                                <li id="img-1"><img src="~/Assets/Images/1.1.png" class="img-fluid" alt="slider"></li>
+                                <li id="img-2" class="slide-center"><img src="~/Assets/Images/1.2.png" class="img-fluid" alt="slider"></li>
+                            </ul>*@
+                                    </div>
+                                    <div class="slider-banner-contain">
+                                        <div>
+                                            <h1>@item.text1</h1>
+                                            <h4>@item.text2</h4>
+                                            <h2>@item.text3</h2>
+                                          
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        }
+
+                    }
                     <div>
                         <div class="slider-banner p-center slide-banner-1">
                             <div class="slider-img">
@@ -177,7 +182,7 @@
                                                 </div>
 
                                             }
-                                       
+
                                         }
                                         @k++;
                                     </div>
@@ -208,9 +213,9 @@
                                                                     <a href="@Url.Action("ProductDetail", "Product", new { ProdId = @Model.ProductList[i].Item_CD, catId = @Model.ProductList[i].GRP_CD }) "> <img src="../ProductImageUploadfiles/@Model.ProductList[i].Product_Image" class="img-fluid  " alt="product"> </a>
                                                                 </div>
                                                             }
-                                                        <div class="new-label1">
-                                                            <div>new</div>
-                                                        </div>
+                                                            <div class="new-label1">
+                                                                <div>new</div>
+                                                            </div>
                                                         </div>
                                                         <div class="product-detail detail-inline ">
                                                             <div class="detail-title">
@@ -246,6 +251,130 @@
         </div>
     </div>
 </section>
-<!-- slider tab end -->
-<script src="~/Assets/JS/jquery-3.3.1.min.js"></script>
-<script src="~/Assets/JS/feather-icon.js"></script>
+
+<!--deal banner start-->
+<section class="deal-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-8">
+                <div class="deal-banner-containe">
+                    <h2>
+                        save up to  30% to 40% off
+                    </h2>
+                    <h1>
+                        omg! just look at the great deals!
+                    </h1>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-4 ">
+                <div class="deal-banner-containe">
+                    <diV class="deal-btn">
+                        <a href="#" class="btn-white">
+                            View more
+                        </a>
+                    </diV>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--deal banner end-->
+<!--rounded category start-->
+<!--rounded category end-->
+<!--title start-->
+<div class="title1 section-my-space">
+    <h4>New Arriaval</h4>
+</div>
+<!--title end-->
+<!--product start-->
+<section class="product section-pb-space mb--5">
+    <div class="custom-container">
+        <div class="row">
+            <div class="col pr-0">
+                <div class="product-slide-6 no-arrow">
+                    @if (ViewBag.NewArrialProducts.Count > 0)
+                    {
+                        foreach (var item in ViewBag.NewArrialProducts)
+                        {
+                            <div>
+                                <div class="product-box">
+                                    <div class="product-imgbox">
+                                        @if (@item.Product_Image == "" || @item.Product_Image == null)
+                                        {
+                                            <div class="product-front">
+                                                <a href="@Url.Action("ProductDetail", "Product", new { ProdId = @item.Item_CD, catId = @item.GRP_CD }) ">
+                                                    <img src="~/Assets/Images/ProductImage/1.jpg" class="img-fluid  " alt="product">
+                                                </a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="product-front">
+                                                <a href="@Url.Action("ProductDetail", "Product", new { ProdId = @item.Item_CD, catId = @item.GRP_CD }) ">
+                                                    <img src="../ProductImageUploadfiles/@item.Product_Image" class="img-fluid  " alt="product">
+                                                </a>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="product-detail detail-inline ">
+                                        <div class="detail-title">
+                                            <a href="product-page(left-sidebar).html">
+                                                <h6 class="price-title">
+                                                    @item.Item_Desc
+                                                </h6>
+                                            </a>
+                                        </div>
+                                        <div class="detail-right">
+                                            <div class="check-price">
+                                                $ @item.Sale_Price
+                                            </div>
+                                            <div class="price">
+                                                <div class="price">
+                                                    $ @item.Offer_Price
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--product end-->
+<!--Newsletter modal popup start-->
+@*<div class="modal fade bd-example-modal-lg theme-modal" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="news-latter">
+                        <div class="modal-bg">
+                            <div class="newslatter-main">
+                                <div class="offer-content">
+                                    <div>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <h2>newsletter</h2>
+                                        <p>Subscribe to our website mailling list <br> and get a Offer, Just for you!</p>
+                                        <form action="https://pixelstrap.us19.list-manage.com/subscribe/post?u=5a128856334b598b395f1fc9b&amp;id=082f74cbda" class="auth-form needs-validation" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank">
+                                            <div class="form-group mx-sm-3">
+                                                <input type="email" class="form-control" name="EMAIL" id="mce-EMAIL" placeholder="Enter your email" required="required">
+                                                <button type="submit" class="btn btn-theme btn-normal btn-sm " id="mc-submit">subscribe</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="imd-wrraper">
+                                    <img src="~/Assets/Images/subscribe/1.jpg" alt="newsletterimg" class="img-fluid bg-img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+<!--Newsletter Modal popup end-->

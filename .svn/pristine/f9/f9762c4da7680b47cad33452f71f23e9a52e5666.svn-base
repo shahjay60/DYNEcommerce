@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "OrderDetails";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="page-header-left">
+                    <h3>
+                        Orders
+                        <small>Bigdeal Admin panel</small>
+                    </h3>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <ol class="breadcrumb pull-right">
+                    <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">Sales</li>
+                    <li class="breadcrumb-item active">Orders</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Manage Order</h5>
+                </div>
+                <div class="card-body order-datatable">
+                    <div id="basic-1_wrapper" class="dataTables_wrapper no-footer">
+
+                        <table class="display dataTable no-footer" id="basic-1" role="grid" aria-describedby="basic-1_info">
+                            <thead>
+                                <tr role="row">
+                                    <th class="sorting_asc" tabindex="0" aria-controls="basic-1" rowspan="1" colspan="1" aria-label="Order Id: activate to sort column descending" style="width: 121px;" aria-sort="ascending">
+                                        Order Id
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="basic-1" rowspan="1" colspan="1" aria-label="Payment Status: activate to sort column ascending" style="width: 145px;">Product </th>
+                                    <th class="sorting" tabindex="0" aria-controls="basic-1" rowspan="1" colspan="1" aria-label="Product: activate to sort column ascending" style="width: 150px;">Transaction Number </th>
+                                    <th class="sorting" tabindex="0" aria-controls="basic-1" rowspan="1" colspan="1" aria-label="Payment Method: activate to sort column ascending" style="width: 121px;">PaymentType </th>
+                                    @*<th class="sorting" tabindex="0" aria-controls="basic-1" rowspan="1" colspan="1" aria-label="Payment Method: activate to sort column ascending" style="width: 121px;">PaymentMethod </th>*@
+                                    <th class="sorting" tabindex="0" aria-controls="basic-1" rowspan="1" colspan="1" aria-label="Order Status: activate to sort column ascending" style="width: 121px;">Order Status</th>
+                                    <th class="sorting" tabindex="0" aria-controls="basic-1" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 121px;">Date</th>
+                                    <th class="sorting" tabindex="0" aria-controls="basic-1" rowspan="1" colspan="1" aria-label="Total: activate to sort column ascending" style="width: 121px;">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.OrderDetailsProduct)
+                                {
+                                    <tr role="row" class="odd">
+                                        <td>@item.OrderId</td>
+
+                                        <td>
+                                            @item.Item_desc
+                                        </td>
+
+                                        <td>@item.TransactionId</td>
+                                        <td><span class="badge badge-secondary">@item.PaymentType</span></td>
+                                        <td><span class="badge badge-success">@item.IsPlaced</span></td>
+                                        <td>@item.OrderDate</td>
+                                        <td>@item.OrderAmount</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

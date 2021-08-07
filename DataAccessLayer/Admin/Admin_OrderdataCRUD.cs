@@ -1,16 +1,13 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain;
 
 namespace DataAccessLayer.Admin
 {
-   public class Admin_OrderdataCRUD
+    public class Admin_OrderdataCRUD
     {
         public static List<Admin_OrderdataDomain> Get_OrderDeialsProduct()
         {
@@ -34,7 +31,7 @@ namespace DataAccessLayer.Admin
 
             foreach (DataRow dr in dt.Rows)
             {
-              
+
                 grp.Add(
                     new Admin_OrderdataDomain
                     {
@@ -45,10 +42,8 @@ namespace DataAccessLayer.Admin
                         IsPlaced = (dr["IsPlaced"]).ToString(),
                         OrderDate = Convert.ToDateTime(dr["OrderDate"]),
                         PaymentType = (dr["PaymentType"]).ToString(),
-                        OrderAmount = Convert.ToInt16(dr["OrderAmount"]),
+                        OrderAmount = dr["OrderAmount"].ToString(),
                         TransactionId = dr["TransactionId"].ToString(),
-
-
                     }); ;
 
             }

@@ -1,0 +1,77 @@
+﻿@model List<Domain.CustomerCartDomain>
+<!-- Add to cart bar -->
+    <a href="javascript:void(0)" class="overlay" onclick="closeCart()"></a>
+    <div class="cart-inner">
+        <div class="cart_top">
+            <h3>my cart</h3>
+            <div class="close-cart">
+                <a href="javascript:void(0)" onclick="closeCart()">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+        <div class="cart_media">
+            @if (Model.Count() > 0)
+            {
+            <ul class="cart_product">
+                @foreach (var item in Model)
+                {
+
+                    <li>
+                        <div class="media">
+                            <a href="product-page(left-sidebar).html">
+                                <img alt="megastore1" class="me-3" src="~/Assets/Images/ProductImage/1.jpg">
+                            </a>
+                            <div class="media-body">
+                                <a href="product-page(left-sidebar).html">
+                                    <h4>@item.ITEM_DESC</h4>
+                                </a>
+                                <h6>
+                                    $@item.Amount
+                                </h6>
+                                @*<div class="addit-box">
+                                    <div class="qty-box">
+                                        <div class="input-group">
+                                            <button class="qty-minus"></button>
+                                            <input class="qty-adj form-control" type="number" value="@item.Quantity" />
+                                            <button class="qty-plus"></button>
+                                        </div>
+                                    </div>
+                                    
+                                </div>*@
+                            </div>
+                        </div>
+                    </li>
+                }
+
+            </ul>
+            <ul class="cart_total">
+                <li>
+                    subtotal : <span>$@ViewBag.totalAmount</span>
+                </li>
+                <li>
+                    shpping <span>free</span>
+                </li>
+                <li>
+                    taxes <span>$0.00</span>
+                </li>
+                <li>
+                    <div class="total">
+                        total<span>$@ViewBag.totalAmount</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="buttons">
+                        <a href=@Url.Action("Index", "Cart") class="btn btn-solid btn-sm">view cart</a>
+                        <a href="@Url.Action("Index", "Checkout")"  class="btn btn-solid btn-sm ">checkout</a>
+                    </div>
+                </li>
+            </ul>
+            }
+            else
+            {
+                <h2>Your Cart is empty</h2>
+            }
+        </div>
+    </div>
+<!-- Add to cart bar end-->

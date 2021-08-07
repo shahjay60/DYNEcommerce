@@ -1,18 +1,15 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain;
 
 namespace DataAccessLayer
 {
     public class CustomerOrderCRUD
     {
-        public static void AddToCustomerOrder(CustomerOrderDomain mCustomerOrder)
+        public static string AddToCustomerOrder(CustomerOrderDomain mCustomerOrder)
         {
 
             string mainconn = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
@@ -41,11 +38,12 @@ namespace DataAccessLayer
 
             cmd.Parameters.AddWithValue("@TransactionId", mCustomerOrder.TransactionId);
             cmd.Parameters.AddWithValue("@OrderAmount", mCustomerOrder.OrderAmount);
+            cmd.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
 
             cmd.ExecuteNonQuery();
+            string id = cmd.Parameters["@id"].Value.ToString();
             sqlconn.Close();
-
-
+            return id;
         }
 
         public static List<CustomerOrderDomain> GetCustomerOrderByCustomerId(int CustomerId)

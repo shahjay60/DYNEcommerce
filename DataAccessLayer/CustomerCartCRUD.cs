@@ -1,12 +1,9 @@
 ﻿using Domain;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace DataAccessLayer
 {
@@ -91,10 +88,10 @@ namespace DataAccessLayer
                         //IsDeleted = dr["IsDeleted"].ToString(),
                         Quantity = Convert.ToInt16(dr["Quantity"]),
                         Amount = Convert.ToDecimal(dr["Amount"]),
-                        IsPlace =Convert.ToBoolean((dr["IsPlaced"])),
+                        IsPlace = Convert.ToBoolean((dr["IsPlaced"])),
                         ITEM_DESC = dr["ITEM_DESC"].ToString(),
                         AttributeValue = dr["AttributeValueId"].ToString(),
-                        AttributeType = dr["AttributeName"].ToString(),
+                        //AttributeType = dr["AttributeName"].ToString(),
                         Image = dr["Image"].ToString()
 
                     });

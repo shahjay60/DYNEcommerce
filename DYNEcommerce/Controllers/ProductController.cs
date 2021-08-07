@@ -4,7 +4,6 @@ using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DYNEcommerce.Controllers
@@ -17,14 +16,20 @@ namespace DYNEcommerce.Controllers
         {
             ViewBag.CatId = catId;
             ViewBag.Brands = BrandmasterCRUD.GetBrandByCatId(catId);
-            ViewBag.Attributes = AttributeCRUD.GetAttributesData();
+            var data = AttributeCRUD.GetAttributesData();
+            ViewBag.Attributes = data;
             return View();
             //return PartialView("_ProductListing", viewModel);
         }
-        public ActionResult GetProductList(string catId, int? page, string record1, string ShortBy, string[] checkedValues, string[] checkedcolorValues, string[] checkedsizeValues)
+        public ActionResult GetProductList(string catId, int? page, string record1, string ShortBy, string[] checkedValues, string[] checkedAttributeValues)
         {
             try
             {
+                List<ITMMASTDomain> colorProducts = new List<ITMMASTDomain>();
+                List<ITMMASTDomain> sizeProducts = new List<ITMMASTDomain>();
+                List<ITMMASTDomain> finalProducts = new List<ITMMASTDomain>();
+
+
                 int pageSize = 0;
                 if (string.IsNullOrEmpty(record1))
                 {
@@ -34,31 +39,48 @@ namespace DYNEcommerce.Controllers
                 {
                     pageSize = Convert.ToInt32(record1);
                 }
-                var Products = ITMMASTCRUD.GetProductByCatId(catId.Trim());
+                var Products = ITMMASTCRUD.GetProductByCatId(catId.Trim()).OrderByDescending(x => x.Sale_Price).ToList();
+
+                Products = Products.Where(x => x.viewon == "List" || x.viewon == string.Empty).ToList();
 
                 ViewBag.RecordPerPage = pageSize;
                 ViewBag.TotalRecord = Products.Count();
 
                 if (ShortBy == "Low to High")
                 {
-                    Products = Products.OrderBy(x => x.Sale_Price).ToList();
+                    Products = Products.OrderBy(x => x.Sale_Price).OrderBy(x => x.Sale_Price).ToList();
                 }
 
-                else if (checkedValues != null)
+                if (checkedValues != null)
                 {
                     Products = Products.Where(x => checkedValues.Any(a => a.ToString() == x.BrandId)).ToList();
                 }
-                else if (checkedcolorValues != null)
+                if (checkedAttributeValues != null)
                 {
-                    Products = Products.Where(x => checkedcolorValues.Any(a => a.ToString() == x.AttributeValue)).ToList();
+                    foreach (var item in checkedAttributeValues)
+                    {
+                        Products = Products.Where(x => x.AttributeValue != "").ToList();
+                        colorProducts = Products.Where(x => x.AttributeValue.ToLower().Trim() == item.Trim().ToLower()).ToList();
+                        finalProducts.AddRange(colorProducts);
+                    }
+                    Products = finalProducts;
                 }
-                else if (checkedsizeValues != null)
-                {
-                    Products = Products.Where(x => checkedsizeValues.Any(a => a.ToString() == x.AttributeValue)).ToList();
-                }
-                Products = Products.Where(x => x.viewon == "List" || x.viewon == string.Empty).ToList();
+
+                //if (colorProducts.Count > 0 && sizeProducts.Count > 0)
+                //{
+                //    Products = colorProducts.Where(x => sizeProducts.Any(a => a.Item_CD.ToString() == x.Item_CD)).ToList();
+                //}
+                //if (colorProducts.Count > 0 && Products.Count > 0)
+                //{
+                //    Products = colorProducts;
+                //}
+                //if (sizeProducts.Count > 0 && Products.Count > 0)
+                //{
+                //    Products = sizeProducts;
+                //}
+
                 Products = Products.GroupBy(o => o.Item_ID)
-                                   .Select(o => o.FirstOrDefault()).ToList();
+                                    .Select(o => o.FirstOrDefault()).ToList();
 
                 var pager = new Pager(Products.Count(), page, pageSize);
                 pager.catId = catId;
@@ -84,18 +106,13 @@ namespace DYNEcommerce.Controllers
                 return RedirectToAction("Index", "Error");
             }
         }
-        public ActionResult ProductDetail(string ProdId, string catId)
+        public ActionResult ProductDetail(string ProdId, string catId, string attrValue = "")
         {
             try
             {
-                string url2 = Request.Url.AbsoluteUri;
-                Session["LastURL"] = url2;
-
                 var data = ITMMASTCRUD.GetProductById(ProdId);
-
                 var productImageData = ProductImageCRUD.GetProductImageAll().Where(x => x.Pid == ProdId).ToList();
-                var productAttribute = ProductAttributeCRUD.GetProduct_AttributeAll().Where(x => x.ITEM_CD == ProdId).ToList();
-
+                var productAttribute = ProductAttributeCRUD.GetAttributeForProductDetail(ProdId);
                 ITMMASTDomain mITMMASTDomain = new ITMMASTDomain();
                 mITMMASTDomain.ProductImages = new List<string>();
                 mITMMASTDomain.ProductAttributes = new List<Product_Attribute>();
@@ -112,8 +129,32 @@ namespace DYNEcommerce.Controllers
                 mITMMASTDomain.GRP_CD = data[0].GRP_CD;
                 mITMMASTDomain.Item_CD = data[0].Item_CD;
                 mITMMASTDomain.Item_Desc = data[0].Item_Desc;
-                mITMMASTDomain.Offer_Price = data[0].Offer_Price;
-                mITMMASTDomain.Sale_Price = data[0].Sale_Price;
+                if (!string.IsNullOrEmpty(attrValue))
+                {
+                    string price = ProductAttributeCRUD.GetProduct_AttributeAll()
+                                                       .Where(x => x.AttributeValue.Trim().Contains(attrValue.Trim()))
+                                                       .Select(x => x.OfferPrice).FirstOrDefault();
+                    mITMMASTDomain.Offer_Price = Convert.ToDouble(price);
+
+                    //int AttributeValueId= ProductAttributeCRUD.GetProductAttribute
+                }
+                else
+                {
+                    mITMMASTDomain.Offer_Price = data[0].Offer_Price;
+                }
+                if (!string.IsNullOrEmpty(attrValue))
+                {
+                    string price = ProductAttributeCRUD.GetProduct_AttributeAll()
+                                                       .Where(x => x.AttributeValue.Trim().Contains(attrValue.Trim()))
+                                                       .Select(x => x.Price).FirstOrDefault();
+                    mITMMASTDomain.Sale_Price = Convert.ToDouble(price);
+
+                    //int AttributeValueId= ProductAttributeCRUD.GetProductAttribute
+                }
+                else
+                {
+                    mITMMASTDomain.Sale_Price = data[0].Sale_Price;
+                }
                 mITMMASTDomain.AttributeName = data[0].AttributeName;
                 mITMMASTDomain.AttributeValue = data[0].AttributeValue;
 
@@ -122,17 +163,33 @@ namespace DYNEcommerce.Controllers
                 else
                     mITMMASTDomain.Qty = "1";
 
-                foreach (var item in productImageData)
+                if (string.IsNullOrEmpty(attrValue))
                 {
-                    if (item.Viewon == "Detail")
+                    foreach (var item in productImageData)
                     {
-                        mITMMASTDomain.ProductImages.Add(item.Image);
-                    }
+                        if (item.Viewon == "Detail")
+                        {
+                            mITMMASTDomain.ProductImages.Add(item.Image);
+                        }
 
+                    }
                 }
+                else
+                {
+                    foreach (var item in productImageData.Where(x => x.AttrValue.ToLower().Trim() == attrValue.ToLower().Trim()))
+                    {
+                        if (item.Viewon == "Detail")
+                        {
+                            mITMMASTDomain.ProductImages.Add(item.Image);
+                        }
+
+                    }
+                }
+                mITMMASTDomain.SelectedAttributeValue = attrValue;
+
                 var relatedProduct = ITMMASTCRUD.GetProductByCatId(catId.Trim());
 
-                ViewBag.relatedProducts = relatedProduct.SkipWhile(a => a.Item_CD != ProdId).ToList();
+                ViewBag.relatedProducts = relatedProduct.SkipWhile(a => a.Item_CD != ProdId && a.viewon == "List").ToList();
 
                 return View(mITMMASTDomain);
             }
@@ -149,18 +206,19 @@ namespace DYNEcommerce.Controllers
                 return RedirectToAction("Index", "Error");
             }
         }
-        public ActionResult AddToCart(string prodId, string price, string qty, string[] checkedcolorValues, string[] checkedsizeValues)
-        {
 
+
+        public ActionResult AddToCart(string prodId, string price, string qty, string[] checkedAttributeValues)
+        {
 
             try
             {
                 var myList = new List<string>();
+                string joined = string.Empty;
 
-                if (checkedcolorValues != null)
-                    myList.AddRange(checkedcolorValues);
-                if (checkedsizeValues != null)
-                    myList.AddRange(checkedsizeValues);
+                if (checkedAttributeValues != null)
+                    myList.AddRange(checkedAttributeValues);
+
                 if (Session["idUser"] != null)
                 {
                     Session["QTY"] = qty;
@@ -174,14 +232,13 @@ namespace DYNEcommerce.Controllers
                     mcustomerCart.ProductId = prodId;
                     mcustomerCart.IsPlace = false;
                     int LastAddedCartID = CustomerCartCRUD.AddToCart(mcustomerCart);
+                    if (myList.Count > 0)
+                        joined = string.Join(",", myList);
 
-                    foreach (var item in myList)
-                    {
-                        CartAttribute mCartAttribute = new CartAttribute();
-                        mCartAttribute.cartId = LastAddedCartID;
-                        mCartAttribute.AttributeValueID = item;
-                        CustomerCartCRUD.AddToCartAttribute(mCartAttribute);
-                    }
+                    CartAttribute mCartAttribute = new CartAttribute();
+                    mCartAttribute.cartId = LastAddedCartID;
+                    mCartAttribute.AttributeValueID = joined;
+                    CustomerCartCRUD.AddToCartAttribute(mCartAttribute);
 
                     return Json(true);
                 }
@@ -203,10 +260,16 @@ namespace DYNEcommerce.Controllers
                 return RedirectToAction("Index", "Error");
             }
         }
-        public ActionResult AddToWishList(string prodId, string price)
+        public ActionResult AddToWishList(string prodId, string price, string qty, string[] checkedAttributeValues)
         {
             try
             {
+                var myList = new List<string>();
+                string joined = string.Empty;
+
+                if (checkedAttributeValues != null)
+                    myList.AddRange(checkedAttributeValues);
+
                 if (Session["idUser"] != null)
                 {
                     CustomerWishlistDomain mCustomerWishlist = new CustomerWishlistDomain();
@@ -214,16 +277,41 @@ namespace DYNEcommerce.Controllers
                     mCustomerWishlist.Amount = Convert.ToDecimal(price);
                     mCustomerWishlist.CreatedDateTime = DateTime.Now;
                     mCustomerWishlist.CustomerId = Convert.ToInt32(Session["idUser"]);
+                    mCustomerWishlist.qty = Convert.ToInt32(qty);
                     mCustomerWishlist.ProductId = prodId;
-
+                    if (myList.Count > 0)
+                        joined = string.Join(",", myList);
+                    mCustomerWishlist.AttributeValues = joined;
                     CustmorWishlistCRUD.AddToWishlist(mCustomerWishlist);
 
                     return Json(true);
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Customer");
+                    return Json(false);
+
                 }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLogDomain obj = new ExceptionLogDomain();
+                obj.MethodName = "AddToWishList";
+                obj.ControllerName = "Product";
+                obj.ErrorText = ex.Message;
+                obj.StackTrace = ex.StackTrace;
+                obj.Datetime = DateTime.Now;
+
+                ExceptionLogCRUD.AddToExceptionLog(obj);
+                return RedirectToAction("Index", "Error");
+            }
+        }
+
+        public ActionResult GetColorWiseProductImage(string ProductId, string selectedColor)
+        {
+            try
+            {
+                var data = ITMMASTCRUD.GetColorWiseProductImage(ProductId, selectedColor);
+                return Json(data);
             }
             catch (Exception ex)
             {

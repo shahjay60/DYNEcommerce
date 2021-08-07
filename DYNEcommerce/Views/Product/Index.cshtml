@@ -36,8 +36,31 @@
                                 </div>
                             </div>
                         </div>
+                        @foreach (var Attribute in ViewBag.Attributes)
+                        {
+                            <div class="collection-collapse-block open">
+                                <h3 class="collapse-block-title">@Attribute.AttributeName</h3>
+                                <div class="collection-collapse-block-content">
+                                    <div class="size-selector">
+                                        <div class="collection-brand-filter">
+                                            @foreach (var AttributeValue in ((String)Attribute.AttributeValue).Split(','))
+                                            {
+                                                var classname = @Attribute.AttributeName + "" + "checkbox";
+                                                <div class="custom-control custom-checkbox  form-check collection-filter-checkbox">
+                                                    <input type="checkbox" class="custom-control-input chk_@ViewBag.CatId form-check-input  @classname" id="small" value="@AttributeValue">
+                                                    <label class="custom-control-label form-check-label" for="small">@AttributeValue </label>
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
                         <!-- color filter start here -->
-                        <div class="collection-collapse-block open">
+                        <!--<div class="collection-collapse-block open">
                             <h3 class="collapse-block-title">Color</h3>
                             <div class="collection-collapse-block-content">
                                 <div class="size-selector">
@@ -55,9 +78,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <!-- size filter start here -->
-                        <div class="collection-collapse-block open">
+                        <!--<div class="collection-collapse-block open">
                             <h3 class="collapse-block-title">size</h3>
                             <div class="collection-collapse-block-content">
                                 <div class="size-selector">
@@ -75,17 +98,16 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
+                        </div>-->
                         <!-- price filter start here -->
-                        <div class="collection-collapse-block border-0 open">
-                            <h3 class="collapse-block-title">price</h3>
-                            <div class="collection-collapse-block-content">
-                                <div class="filter-slide">
-                                    <input class="js-range-slider" type="text" name="my_range" value="" data-type="double" />
+                        @*<div class="collection-collapse-block border-0 open">
+                                <h3 class="collapse-block-title">price</h3>
+                                <div class="collection-collapse-block-content">
+                                    <div class="filter-slide">
+                                        <input class="js-range-slider" type="text" name="my_range" value="" data-type="double" />
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </div>*@
                     </div>
 
                     <div class="collection-sidebar-banner">
@@ -95,11 +117,62 @@
 
                 </div>
 
-                <div class="collection-content col" id="grid-list">
-                    @Html.Action("GetProductList", "Product", new { catId = @ViewBag.CatId })
+                <div class="collection-content col">
+                    <div class="page-main-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="collection-product-wrapper">
+                                    <div class="product-top-filter">
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="filter-main-btn"><span class="filter-btn  "><i class="fa fa-filter" aria-hidden="true"></i> Filter</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="product-filter-content">
+                                                    @*<div class="search-count">
+                                                            <h5>Showing Products 1-24 of 10 Result</h5>
+                                                        </div>*@
+                                                    <div class="collection-view">
+                                                        <ul>
+                                                            <li><i class="fa fa-th grid-layout-view"></i></li>
+                                                            <li><i class="fa fa-list-ul list-layout-view"></i></li>
+                                                        </ul>
+                                                    </div>
 
+                                                    <div class="product-page-per-view">
+                                                        <select id="drpRecord">
+                                                            <option value="10">10 Products Par Page</option>
+                                                            <option value="24">24 Products Par Page</option>
+                                                            <option value="50">50 Products Par Page</option>
+                                                            <option value="100">100 Products Par Page</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="product-page-filter">
+                                                        <select id="drpShort">
+                                                            <option value="High to low">Sorting items</option>
+                                                            <option value="Low to High">Low to High</option>
+                                                            <option value="High to Low">High to Low</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="grid-list">
+
+                                        @Html.Action("GetProductList", "Product", new { catId = @ViewBag.CatId })
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <input type="hidden" value="@ViewBag.CatId" id="hdnCatId" />
+
             </div>
         </div>
     </div>
@@ -120,6 +193,7 @@
         var checkedValues = [];
         var checkedcolorValues = [];
         var checkedsizeValues = [];
+        var checkedAttributeValues = [];
 
         $("#drpRecord").change(function () {
 
@@ -146,36 +220,48 @@
                 var removeItemIndex = checkedValues.indexOf(this.value);
                 if (removeItemIndex != -1) checkedValues.splice(removeItemIndex, 1);  //remove at this index - remove 1
             }
-            fnGetProducts(ShortBy, currentPageIndex, CatId, record, checkedValues, checkedcolorValues, checkedsizeValues);
+            fnGetProducts(ShortBy, currentPageIndex, CatId, record, checkedValues, checkedAttributeValues);
         });
-
-        $(".colorCheckbox").change(function () {
+        $(':checkbox').on('change', function () {
             var checked = $(this).is(':checked');
-            if (checked) {
-                checkedcolorValues.push(this.value)
-
-            } else {
-                var removeItemIndex = checkedcolorValues.indexOf(this.value);
-                if (removeItemIndex != -1) checkedcolorValues.splice(removeItemIndex, 1);  //remove at this index - remove 1
-            }
-            fnGetProducts(ShortBy, currentPageIndex, CatId, record, checkedValues, checkedcolorValues);
+            checkedAttributeValues.push(this.value);
+            var th = $(this), name = th.prop('name');
+            fnGetProducts(ShortBy, currentPageIndex, CatId, record, checkedValues, checkedAttributeValues);
         });
 
-        $(".sizeCheckbox").change(function () {
-            var checked = $(this).is(':checked');
-            if (checked) {
-                checkedsizeValues.push(this.value)
+        //$(".colorcheckbox").change(function () {
+        //    var checked = $(this).is(':checked');
+        //    if (checked) {
+        //        checkedcolorValues.push(this.value)
 
-            } else {
-                var removeItemIndex = checkedsizeValues.indexOf(this.value);
-                if (removeItemIndex != -1) checkedsizeValues.splice(removeItemIndex, 1);  //remove at this index - remove 1
-            }
-            fnGetProducts(ShortBy, currentPageIndex, CatId, record, checkedValues, checkedcolorValues, checkedsizeValues);
-        });
+        //    } else {
+        //        var removeItemIndex = checkedcolorValues.indexOf(this.value);
+        //        if (removeItemIndex != -1) checkedcolorValues.splice(removeItemIndex, 1);  //remove at this index - remove 1
+        //    }
+        //    fnGetProducts(ShortBy, currentPageIndex, CatId, record, checkedValues, checkedcolorValues, checkedsizeValues);
+        //});
+
+        //$(".sizecheckbox").change(function () {
+        //    var checked = $(this).is(':checked');
+        //    if (checked) {
+        //        var size = this.value;
+        //        debugger;
+        //        checkedsizeValues.push(this.value)
+
+        //    } else {
+        //        var removeItemIndex = checkedsizeValues.indexOf(this.value);
+        //        if (removeItemIndex != -1) checkedsizeValues.splice(removeItemIndex, 1);  //remove at this index - remove 1
+        //    }
+        //    fnGetProducts(ShortBy, currentPageIndex, CatId, record, checkedValues, checkedcolorValues, checkedsizeValues);
+        //});
+
 
     });
 
     function fnGetProducts(ShortBy, currentPageIndex, CatId, record, checkedValues, checkedcolorValues, checkedsizeValues) {
+        var searchIDs = $(".chk_" + CatId + ":checked").map(function () {
+            return $(this).val();
+        }).get();
         var passdata = {
             catId: CatId,
             record1: record,
@@ -183,7 +269,7 @@
             page: currentPageIndex,
             checkedValues: checkedValues,
             checkedcolorValues: checkedcolorValues,
-            checkedsizeValues: checkedsizeValues
+            checkedAttributeValues: searchIDs
 
         };
         $.ajax({

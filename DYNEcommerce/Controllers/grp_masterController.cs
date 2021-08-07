@@ -1,14 +1,10 @@
-﻿using System;
+﻿using DataAccessLayer;
+using Domain;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using DYNEcommerce.Models;
-using System.Data.SqlClient;
-using System.Configuration;
-using DataAccessLayer;
-using Domain;
 namespace DYNEcommerce.Controllers
 {
     public class grp_masterController : ApiController
@@ -37,7 +33,7 @@ namespace DYNEcommerce.Controllers
         //}
         public IHttpActionResult getgrp_masters()
         {
-          
+
             HttpResponseMessage response;
             try
             {

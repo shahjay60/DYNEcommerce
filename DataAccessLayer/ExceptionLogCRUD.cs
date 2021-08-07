@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Domain;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain;
 
 namespace DataAccessLayer
 {
@@ -23,7 +18,7 @@ namespace DataAccessLayer
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@mode", "PostExceptionLog");
 
-         
+
             cmd.Parameters.AddWithValue("@ControllerName", mExceptionLog.ControllerName);
             cmd.Parameters.AddWithValue("@MethodName", mExceptionLog.MethodName);
             cmd.Parameters.AddWithValue("@ErrorText", mExceptionLog.ErrorText);

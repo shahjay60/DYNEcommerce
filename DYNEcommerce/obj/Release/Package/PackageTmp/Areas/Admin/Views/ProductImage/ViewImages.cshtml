@@ -1,0 +1,38 @@
+﻿
+@model List<Domain.ProductImageDomain>
+@{
+    ViewBag.Title = "ViewImages";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<div class="container">
+    <h3>Tabs</h3>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">List</a></li>
+        <li><a data-toggle="tab" href="#menu1">Details</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            @foreach (var item in Model)
+            {
+                if (item.Viewon == "List")
+                {
+                    <img src="../../../ProductImageUploadfiles/@item.Image"  class="" id="disImage" />
+                }
+            }
+        </div>
+        <div id="menu1" class="tab-pane fade">
+            @foreach (var item in Model)
+            {
+                if (item.Viewon == "Detail")
+                {
+                    <img src="../../../ProductImageUploadfiles/@item.Image" class="" id="disImage" />
+                }
+            }
+        </div>
+        
+    </div>
+</div>

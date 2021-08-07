@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using DataAccessLayer.Admin;
 using Domain;
-
-using DataAccessLayer.Admin;
-using DataAccessLayer;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
 
 namespace DYNEcommerce.Areas.Admin.Controllers
@@ -24,7 +20,7 @@ namespace DYNEcommerce.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("Index", "AdminLogin");
             }
         }
 
@@ -40,7 +36,7 @@ namespace DYNEcommerce.Areas.Admin.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Login");
+                    return RedirectToAction("Index", "AdminLogin");
                 }
             }
             catch (Exception ex)
@@ -60,8 +56,19 @@ namespace DYNEcommerce.Areas.Admin.Controllers
         {
             try
             {
-                Admin_BrandCRUD.AddToBrandMaster(model);
-                return Json("Success", JsonRequestBehavior.AllowGet);
+                var data = Admin_BrandCRUD.GetBrandMasterAll("SelectAllBrand");
+
+                var exists = data.Where(x => x.BrandName.ToLower().Trim() == model.BrandName.ToLower().Trim()).Select(x => x.BrandId).FirstOrDefault();
+                if (exists == 0)
+                {
+                    Admin_BrandCRUD.AddToBrandMaster(model);
+                    return Json("Success", JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json("Error", JsonRequestBehavior.AllowGet);
+                }
+
 
             }
             catch (Exception ex)
@@ -86,8 +93,18 @@ namespace DYNEcommerce.Areas.Admin.Controllers
         {
             try
             {
-                Admin_BrandCRUD.UpdateBrandmaster(model);
-                return Json("Success", JsonRequestBehavior.AllowGet);
+                var data = Admin_BrandCRUD.GetBrandMasterAll("SelectAllBrand");
+
+                var exists = data.Where(x => x.BrandName.ToLower().Trim() == model.BrandName.ToLower().Trim()).Select(x => x.BrandId).FirstOrDefault();
+                if (exists == 0)
+                {
+                    Admin_BrandCRUD.UpdateBrandmaster(model);
+                    return Json("Success", JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json("Error", JsonRequestBehavior.AllowGet);
+                }
 
             }
             catch (Exception ex)

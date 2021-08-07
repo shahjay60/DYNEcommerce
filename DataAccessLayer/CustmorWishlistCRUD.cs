@@ -1,23 +1,18 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain;
 
 namespace DataAccessLayer
 {
-   public class CustmorWishlistCRUD
+    public class CustmorWishlistCRUD
     {
         public static void AddToWishlist(CustomerWishlistDomain mCustomerwish)
         {
 
             string mainconn = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
-
-
             SqlConnection sqlconn = new SqlConnection(mainconn);
             sqlconn.Open();
             SqlCommand cmd = new SqlCommand("sp_wishlist", sqlconn);
@@ -26,13 +21,13 @@ namespace DataAccessLayer
 
             cmd.Parameters.AddWithValue("@CustomerId", mCustomerwish.CustomerId);
             cmd.Parameters.AddWithValue("@ProductId", mCustomerwish.ProductId);
-            cmd.Parameters.AddWithValue("@CreatedDatetime", mCustomerwish.CreatedDateTime);         
+            cmd.Parameters.AddWithValue("@CreatedDatetime", mCustomerwish.CreatedDateTime);
             cmd.Parameters.AddWithValue("@Amount", mCustomerwish.Amount);
+            cmd.Parameters.AddWithValue("@Qty", mCustomerwish.qty);
 
+            cmd.Parameters.AddWithValue("@AttributeValues", mCustomerwish.AttributeValues);
             cmd.ExecuteNonQuery();
             sqlconn.Close();
-
-
         }
 
         public static List<CustomerWishlistDomain> GetWishlistByCustomerId(int CustomerId)
@@ -59,13 +54,16 @@ namespace DataAccessLayer
                 grp.Add(
                     new CustomerWishlistDomain
                     {
-
-                        Id=Convert.ToInt16(dr["Id"]),
+                        Id = Convert.ToInt16(dr["Id"]),
                         CustomerId = Convert.ToInt16(dr["CustomerId"]),
                         ProductId = dr["ProductId"].ToString(),
                         CreatedDateTime = Convert.ToDateTime(dr["CreatedDateTime"]),
                         ITEM_DESC = dr["ITEM_DESC"].ToString(),
-                        Amount = Convert.ToDecimal(dr["Amount"])
+                        Amount = Convert.ToDecimal(dr["Amount"]),
+                        AttributeValues = dr["AttributeValues"].ToString(),
+                        qty = dr["qty"] == DBNull.Value ? 0 : Convert.ToInt32(dr["qty"]),
+                        Image = dr["Image"].ToString(),
+
                     });
 
             }
@@ -102,7 +100,10 @@ namespace DataAccessLayer
                         ProductId = dr["ProductId"].ToString(),
                         CreatedDateTime = Convert.ToDateTime(dr["CreatedDateTime"]),
                         ITEM_DESC = dr["ITEM_DESC"].ToString(),
-                        Amount = Convert.ToDecimal(dr["Amount"])
+                        Amount = Convert.ToDecimal(dr["Amount"]),
+                        AttributeValues = dr["AttributeValues"].ToString(),
+                        qty = Convert.ToInt32(dr["qty"])
+
                     });
 
             }

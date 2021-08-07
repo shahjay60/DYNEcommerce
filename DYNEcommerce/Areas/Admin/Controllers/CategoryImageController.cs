@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DataAccessLayer;
+using DataAccessLayer.Admin;
+using Domain;
+using System;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Domain;
-using DataAccessLayer.Admin;
-using System.IO;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-using System.Web.Security;
-using DataAccessLayer;
-using System.Web.Helpers;
 
 namespace DYNEcommerce.Areas.Admin.Controllers
 {
@@ -26,9 +21,9 @@ namespace DYNEcommerce.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("Index", "AdminLogin");
             }
-           
+
         }
         public ActionResult GetCategoryImageList()
         {
@@ -43,7 +38,7 @@ namespace DYNEcommerce.Areas.Admin.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Login");
+                    return RedirectToAction("Index", "AdminLogin");
                 }
 
             }
@@ -75,7 +70,7 @@ namespace DYNEcommerce.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("Index", "AdminLogin");
             }
         }
 
@@ -112,11 +107,11 @@ namespace DYNEcommerce.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Edit(CategoryImageDomain model, int? Id, HttpPostedFileBase ImageName)
         {
-          
+
             try
             {
 
-               var data= CategoryImageCRUD.UpdateCategoryImage(model);
+                var data = CategoryImageCRUD.UpdateCategoryImage(model);
                 ModelState.Clear();
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }

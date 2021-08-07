@@ -1,0 +1,278 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bigdeal admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Bigdeal admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="pixelstrap">
+    <link rel="icon" href="~/Assets/images/favicon/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="~/Assets/images/favicon/favicon.png" type="image/x-icon">
+    <title>Admin Template</title>
+
+    <!-- Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Font Awesome-->
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/font-awesome.css">
+
+    <!-- Flag icon-->
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/flag-icon.css">
+
+    <!-- ico-font-->
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/icofont.css">
+
+    <!-- Prism css-->
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/prism.css">
+
+    <!-- Chartist css -->
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/chartist.css">
+
+    <!-- vector map css -->
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/vector-map.css">
+
+    <!-- Bootstrap css-->
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/bootstrap.css">
+    <link href="~/Assets/CSS/data-table.css" rel="stylesheet" />
+    <link href="~/Assets/CSS/datatables.css" rel="stylesheet" />
+    <!-- App css-->
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/admin.css">
+</head>
+
+<body>
+
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper">
+
+        <!-- Page Header Start-->
+        <div class="page-main-header">
+            <div class="main-header-left">
+                <div class="logo-wrapper">
+                    <a href="index.html">
+                        @*<img class="blur-up lazyloaded" src="~/Assets/images/Think - PNG.png" alt="" height="50px"width="50px"></a>*@
+                </div>
+            </div>
+            <div class="main-header-right ">
+                <div class="mobile-sidebar">
+                    <div class="media-body text-end switch-sm">
+                        <label class="switch">
+                            <input id="sidebar-toggle" type="checkbox" checked="checked"><span class="switch-state"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="nav-right col">
+                    <ul class="nav-menus">
+                        <li class="onhover-dropdown">
+                            <a class="txt-dark" href="javascript:void(0)">
+                                <h6>EN</h6>
+                            </a>
+                        </li>
+                        <li class="onhover-dropdown">
+                            <i data-feather="bell"></i><span class="badge badge-pill badge-primary pull-right notification-badge">3</span><span class="dot"></span>
+                            <ul class="notification-dropdown custom-scrollbar onhover-show-div p-0">
+                               
+                                <li>
+                                    <div class="media">
+                                        <div class="notification-icons bg-success bg-warning me-3">
+                                            <i data-feather="gift"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <h6 class="font-secondary">New Order Recieved</h6>
+                                            <p class="mb-0"> 4 Days Ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                              
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="d-lg-none mobile-toggle pull-right"><i data-feather="more-horizontal"></i></div>
+                </div>
+            </div>
+        </div>
+        <!-- Page Header Ends -->
+        <!-- Page Body Start-->
+        <div class="page-body-wrapper">
+
+            <!-- Page Sidebar Start-->
+            <div class="page-sidebar">
+                <div class="sidebar custom-scrollbar">
+                    <div class="sidebar-user text-center">
+                        <div>
+                            <img class="img-60 rounded-circle lazyloaded blur-up" src="~/Assets/images/iconfinder_user-alt_285645.png" alt="#">
+                        </div>
+                        <h6 class="mt-3 f-14">JOHN</h6>
+                        <p>Admin</p>
+                    </div>
+                    <ul class="sidebar-menu">
+                        <li><a class="sidebar-header" href=@Url.Action("Index","AdminDashboard")><i data-feather="home"></i><span>Dashboard</span></a></li>
+                        <li><a class="sidebar-header" href=@Url.Action("OrderDetails","OrderDetails")><i data-feather="home"></i><span>Order Details</span></a></li>
+
+                        <li>
+                            <a class="sidebar-header" href=""><i data-feather="dollar-sign"></i><span>Banner </span><i class="fa fa-angle-right pull-right"></i></a>
+                            <ul class="sidebar-submenu">
+                                <li><a href=@Url.Action("Index","BannerImage")><i class="fa fa-circle"></i>Banner Details</a></li>
+                                <li><a href=@Url.Action("AddBannerImage","BannerImage")><i class="fa fa-circle"></i>Add Banner Details</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="sidebar-header" href=""><i data-feather="dollar-sign"></i><span>CompnayDetails</span><i class="fa fa-angle-right pull-right"></i></a>
+                            <ul class="sidebar-submenu">
+                                <li><a href=@Url.Action("Index","CompnayDetails")><i class="fa fa-circle"></i>Compnay Details</a></li>
+                                <li><a href=@Url.Action("AddCompnayDetails","CompnayDetails")><i class="fa fa-circle"></i>Add Compnay Details</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="sidebar-header" href=""><i data-feather="dollar-sign"></i><span>AttributeMaster</span><i class="fa fa-angle-right pull-right"></i></a>
+                            <ul class="sidebar-submenu">
+                                <li><a href=@Url.Action("Index","Attribute")><i class="fa fa-circle"></i>List Attribute</a></li>
+                                <li><a href=@Url.Action("AddAttribute","Attribute")><i class="fa fa-circle"></i>Add Attribute</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="sidebar-header" href=""><i data-feather="tag"></i><span>BrandMaster</span><i class="fa fa-angle-right pull-right"></i></a>
+                            <ul class="sidebar-submenu">
+                                <li><a href=@Url.Action("Index","AdminBrand")><i class="fa fa-circle"></i>List Brand</a></li>
+                                <li><a href=@Url.Action("AddBrand","AdminBrand")><i class="fa fa-circle"></i>Create Brand </a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="sidebar-header" href="javascript:void(0)"><i data-feather="clipboard"></i><span>CategoryImageMaster</span><i class="fa fa-angle-right pull-right"></i></a>
+                            <ul class="sidebar-submenu">
+                                <li><a href=@Url.Action("Index","CategoryImage")><i class="fa fa-circle"></i>List CategoryImage</a></li>
+                                <li><a href=@Url.Action("AddCategoryImage","CategoryImage")><i class="fa fa-circle"></i>Create CategoryImage</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="sidebar-header" href="javascript:void(0)"><i data-feather="align-left"></i><span>ProductImageMaster</span><i class="fa fa-angle-right pull-right"></i></a>
+                            <ul class="sidebar-submenu">
+                                <li><a href=@Url.Action("Index","ProductImage")><i class="fa fa-circle"></i>List ProductImage</a></li>
+                                <li><a href=@Url.Action("AddProductImage","ProductImage")><i class="fa fa-circle"></i>Create ProductImage</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="sidebar-header" href=""><i data-feather="user-plus"></i><span>ProductAttributeMaster</span><i class="fa fa-angle-right pull-right"></i></a>
+                            <ul class="sidebar-submenu">
+                                <li><a href=@Url.Action("Index","ProductAttribute")><i class="fa fa-circle"></i>List ProductAttribute</a></li>
+                                <li><a href=@Url.Action("Add","ProductAttribute")><i class="fa fa-circle"></i>Create ProductAttribute</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="sidebar-header" href=""><i data-feather="users"></i><span>BrandCategoryMaster</span><i class="fa fa-angle-right pull-right"></i></a>
+                            <ul class="sidebar-submenu">
+                                <li><a href=@Url.Action("Index","BrandCategory")><i class="fa fa-circle"></i>List BrandCategory</a></li>
+                                <li><a href=@Url.Action("Add","BrandCategory") ><i class="fa fa-circle"></i>Create BrandCategory</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="sidebar-header" href=@Url.Action("Logout","AdminLogin") ><i data-feather="log-in"></i><span>Logout</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Page Sidebar Ends-->
+            <!-- Right sidebar Start-->
+            <div class="right-sidebar custom-scrollbar" id="right_side_bar">
+                <div>
+                    <div class="container p-0">
+                        <div class="modal-header p-l-20 p-r-20">
+                            <div class="col-sm-8 p-0">
+                                <h6 class="modal-title font-weight-bold">FRIEND LIST</h6>
+                            </div>
+                            <div class="col-sm-4 text-end p-0"><i class="me-2" data-feather="settings"></i></div>
+                        </div>
+                    </div>
+                    <div class="friend-list-search mt-0">
+                        <input type="text" placeholder="search friend"><i class="fa fa-search"></i>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Right sidebar Ends-->
+            <div class="page-body">
+                @RenderBody()
+            </div>
+
+            <!-- footer start-->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6 footer-copyright">
+                            <p class="mb-0">Copyright 2019 © Bigdeal All rights reserved.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="pull-right mb-0">Hand crafted & made with<i class="fa fa-heart"></i></p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- footer end-->
+        </div>
+
+    </div>
+
+    <!-- latest jquery-->
+    <script src="~/Assets/js/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap js-->
+    <script src="~/Assets/js/popper.min.js"></script>
+    <script src="~/Assets/js/bootstrap.js"></script>
+
+    <!-- feather icon js-->
+    <script src="~/Assets/js/feather.min.js"></script>
+    <script src="~/Assets/js/feather-icon.js"></script>
+
+    <!-- Sidebar jquery-->
+    <script src="~/Assets/js/sidebar-menu.js"></script>
+
+    <!--chartist js-->
+    <!-- lazyload js-->
+    <script src="~/Assets/js/lazysizes.min.js"></script>
+
+    <!--copycode js-->
+    <script src="~/Assets/js/prism/prism.min.js"></script>
+    <script src="~/Assets/js/clipboard/clipboard.min.js"></script>
+    <script src="~/Assets/js/custom-card/custom-card.js"></script>
+
+    <!--counter js-->
+    <script src="~/Assets/js/counter/jquery.waypoints.min.js"></script>
+    <script src="~/Assets/js/counter/jquery.counterup.min.js"></script>
+    <script src="~/Assets/js/counter/counter-custom.js"></script>
+
+    <!--Customizer admin-->
+    <script src="~/Assets/js/admin-customizer.js"></script>
+
+    <!--map js-->
+    <script src="~/Assets/js/vector-map/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="~/Assets/js/vector-map/map/jquery-jvectormap-world-mill-en.js"></script>
+
+    <!--apex chart js-->
+    <script src="~/Assets/js/chart/apex-chart/apex-chart.js"></script>
+    <script src="~/Assets/js/chart/apex-chart/stock-prices.js"></script>
+
+    <!--chartjs js-->
+    @*<script src="~/Assets/js/chart/flot-chart/excanvas.js"></script>
+        <script src="~/Assets/js/chart/flot-chart/jquery.flot.js"></script>
+        <script src="~/Assets/js/chart/flot-chart/jquery.flot.time.js"></script>
+        <script src="~/Assets/js/chart/flot-chart/jquery.flot.categories.js"></script>
+        <script src=".~/Assets/js/chart/flot-chart/jquery.flot.stack.js"></script>
+        <script src="~/Assets/js/chart/flot-chart/jquery.flot.pie.js"></script>*@
+    <!--dashboard custom js-->
+    <script src="~/Assets/JS/datatables/custom-basic.js"></script>
+    <script src="~/Assets/JS/datatables/jquery.dataTables.min.js"></script>
+    <!--right sidebar js-->
+    <script src="~/Assets/js/chat-menu.js"></script>
+
+    <!--height equal js-->
+    <script src="~/Assets/js/equal-height.js"></script>
+
+    <!-- lazyload js-->
+    <script src="~/Assets/js/lazysizes.min.js"></script>
+
+    <!--script admin-->
+    <script src="~/Assets/js/admin-script.js"></script>
+
+</body>
+</html>

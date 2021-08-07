@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Domain
 {
@@ -10,6 +6,7 @@ namespace Domain
     {
         public string GRP_CD { get; set; }
         public string GRP_NAME { get; set; }
+        public string GRP_SNAME { get; set; }
         public string FOR_GRP_CD { get; set; }
         public string LEVEL_TEXT { get; set; }
         public string GROUP_YN { get; set; }
@@ -27,4 +24,15 @@ namespace Domain
 
     }
 
+    public class SubCategory
+    {
+        public int Grp_Id { get; set; }
+        public string SubCategoryName { get; set; }
+    }
+
+    public class OrderVM
+    {
+        public GRP_MASTERDomain order { get; set; }
+        public List<GRP_MASTERDomain> orderDetails { get; set; }
+    }
 }

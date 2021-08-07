@@ -1,0 +1,95 @@
+﻿
+@model IEnumerable<Domain.CustomerWishlistDomain>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    decimal totalAmount = 0;
+    decimal totalPrice = 0;
+}
+
+
+
+<!-- breadcrumb start -->
+<div class="breadcrumb-main ">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="breadcrumb-contain">
+                    <div>
+                        <h2>wishlist</h2>
+                        <ul>
+                            <li><a href="index.html">home</a></li>
+                            <li><i class="fa fa-angle-double-right"></i></li>
+                            <li><a href="javascript:void(0)">wishlist</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb End -->
+<!--section start-->
+<section class="wishlist-section section-big-py-space b-g-light">
+    <div class="custom-container">
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table cart-table table-responsive-xs">
+                    <thead>
+                        <tr class="table-head">
+                            <th scope="col">image</th>
+                            <th scope="col">product name</th>
+                            <th scope="col">price</th>
+                            <th scope="col">availability</th>
+                            <th scope="col">action</th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a href="javascript:void(0)"><img src="~/Assets/Images/ProductImage/1.jpg" alt="cart" class=" "></a>
+
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)">@item.ITEM_DESC</a>
+
+                                    <div class="mobile-cart-content">
+                                        <div class="col-xs-3">
+                                            <p>in stock</p>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <h2 class="td-color">$@item.Amount</h2>
+
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <h2 class="td-color">
+                                                <a href="/WishList/DeleteWishListItem/@item.Id" class="icon"><i class="ti-close"></i></a>
+
+                                                <a href="javascript:void(0)" class="cart"><i class="ti-shopping-cart"></i></a>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h2>$63.00</h2>
+                                </td>
+                                <td>
+                                    <p>in stock</p>
+                                </td>
+                                <td><a href="/WishList/DeleteWishListItem/@item.Id" class="icon me-3"><i class="ti-close"></i> </a>
+                                <a href="javascript:void(0)" class="cart"><i class="ti-shopping-cart"></i></a></td>
+                            </tr>
+                        </tbody>
+                    }
+                    </table>
+            </div>
+        </div>
+        <div class="row wishlist-buttons">
+            <div class="col-12"><a href="javascript:void(0)" class="btn btn-normal">continue shopping</a> <a href="javascript:void(0)" class="btn btn-normal">check out</a></div>
+        </div>
+    </div>
+</section>
+<!--section end-->

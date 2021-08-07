@@ -1,0 +1,655 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TMATS00012020Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CustomerCart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProductId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDatetime" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomerRegistration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="Pincode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShippingAddress" Type="nvarchar(max)" />
+          <Property Name="BillingAddress" Type="nvarchar(max)" />
+          <Property Name="RegistrationDatetime" Type="datetime" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomerWishlist">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreatedDatetime" Type="datetime" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="GRP_MASTER">
+          <Key>
+            <PropertyRef Name="GRP_CD" />
+          </Key>
+          <Property Name="GRP_CD" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="GRP_SNAME" Type="char" MaxLength="40" />
+          <Property Name="GRP_NAME" Type="varchar" MaxLength="60" />
+          <Property Name="GROUP_YN" Type="varchar" MaxLength="1" />
+          <Property Name="FOR_GRP_CD" Type="varchar" MaxLength="15" />
+          <Property Name="LEVEL_TEXT" Type="varchar" MaxLength="200" />
+          <Property Name="Number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="smalldatetime" />
+          <Property Name="Customer_Profit_Percentage" Type="float" />
+          <Property Name="Delear_Profit_Percentage" Type="float" />
+          <Property Name="Export_To_Zen_Cart" Type="nchar" MaxLength="1" />
+          <Property Name="DateModified" Type="smalldatetime" />
+          <Property Name="Notes" Type="varchar" MaxLength="100" />
+          <Property Name="GRP_sname_SL" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ITMMAST">
+          <Key>
+            <PropertyRef Name="ITEM_CD" />
+          </Key>
+          <Property Name="ITEM_CD" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="ITEM_DESC" Type="varchar" MaxLength="80" />
+          <Property Name="GRP_CD" Type="varchar" MaxLength="10" />
+          <Property Name="UNIT" Type="varchar" MaxLength="15" />
+          <Property Name="RATE" Type="float" />
+          <Property Name="Packing_Qty" Type="int" />
+          <Property Name="SALE_PRICE" Type="float" />
+          <Property Name="AVG_COST" Type="float" />
+          <Property Name="USER_AVG_COST" Type="float" />
+          <Property Name="OP_STK" Type="float" />
+          <Property Name="OP_RATE" Type="float" />
+          <Property Name="OP_VAL" Type="float" />
+          <Property Name="MIN_STK_LEVEL" Type="int" />
+          <Property Name="MAX_STK_LEVEL" Type="int" />
+          <Property Name="REORDER_LEVEL" Type="int" />
+          <Property Name="ABC" Type="nvarchar" MaxLength="1" />
+          <Property Name="XYZ" Type="nvarchar" MaxLength="1" />
+          <Property Name="GI_QTY_MM" Type="float" />
+          <Property Name="GI_VAL_MM" Type="float" />
+          <Property Name="IS_QTY_MM" Type="float" />
+          <Property Name="IS_VAL_MM" Type="float" />
+          <Property Name="CL_STK" Type="float" />
+          <Property Name="CL_VAL" Type="float" />
+          <Property Name="LOCATION" Type="nvarchar" MaxLength="30" />
+          <Property Name="OP_DATE" Type="smalldatetime" />
+          <Property Name="USER_NAME" Type="varchar" MaxLength="40" />
+          <Property Name="Active_InActive" Type="varchar" MaxLength="1" />
+          <Property Name="Inv_NonInv" Type="varchar" MaxLength="2" />
+          <Property Name="Subtitution" Type="varchar" MaxLength="35" />
+          <Property Name="Model_No" Type="varchar" MaxLength="40" />
+          <Property Name="CostADdPer" Type="float" />
+          <Property Name="unit_dec_After_Conv" Type="float" />
+          <Property Name="Temp_GI_QTY_MM" Type="float" />
+          <Property Name="TEMP_IS_QTY_MM" Type="float" />
+          <Property Name="TEMP_CL_QTY_MM" Type="float" />
+          <Property Name="TEMP_AVG_COST" Type="float" />
+          <Property Name="Super_session_to" Type="varchar" MaxLength="100" />
+          <Property Name="Brand_Name" Type="varchar" MaxLength="50" />
+          <Property Name="Made_in" Type="varchar" MaxLength="50" />
+          <Property Name="Vehical_Name" Type="varchar" MaxLength="50" />
+          <Property Name="Material" Type="varchar" MaxLength="50" />
+          <Property Name="Size" Type="varchar" MaxLength="50" />
+          <Property Name="Type_Of_Item" Type="varchar" MaxLength="1" />
+          <Property Name="Alias_01" Type="varchar" MaxLength="70" />
+          <Property Name="Alias_02" Type="varchar" MaxLength="70" />
+          <Property Name="Last_Cost" Type="float" />
+          <Property Name="Last_Cost_Date" Type="smalldatetime" />
+          <Property Name="Per_Add_at_Cost_For_Display" Type="float" />
+          <Property Name="Created_Date" Type="smalldatetime" />
+          <Property Name="User_Avg_Cost_Taken_In_Inv_Value_Y_N" Type="varchar" MaxLength="1" />
+          <Property Name="Packing_Unit" Type="varchar" MaxLength="50" />
+          <Property Name="Collection_code" Type="varchar" MaxLength="10" />
+          <Property Name="Last_Purchase_Qty" Type="float" />
+          <Property Name="SALE_PRICE2" Type="float" />
+          <Property Name="SALE_PRICE3" Type="float" />
+          <Property Name="Bar_Code" Type="varchar" MaxLength="40" />
+          <Property Name="Batch_Req_Y_N" Type="varchar" MaxLength="1" />
+          <Property Name="Remark_Memo_Itmmast" Type="ntext" />
+          <Property Name="Updated_Y_N" Type="nchar" MaxLength="1" />
+          <Property Name="Updated_Date_Time" Type="smalldatetime" />
+          <Property Name="Expiry_Days" Type="float" />
+          <Property Name="Rate_Change_Allow" Type="varchar" MaxLength="3" />
+          <Property Name="Trasnfer_To_POS_Location" Type="varchar" MaxLength="3" />
+          <Property Name="Restaurant_Stock_Calc_To_Item_Cd" Type="varchar" MaxLength="30" />
+          <Property Name="Restaurant_Item_Cd_Conv" Type="float" />
+          <Property Name="Restaurant_Change_Rate_Allowed" Type="varchar" MaxLength="1" />
+          <Property Name="Type_Of_Item_F_B_T_G" Type="varchar" MaxLength="10" />
+          <Property Name="C_001" Type="int" />
+          <Property Name="C_002" Type="int" />
+          <Property Name="C_003" Type="int" />
+          <Property Name="C_004" Type="int" />
+          <Property Name="C_005" Type="int" />
+          <Property Name="C_006" Type="int" />
+          <Property Name="C_007" Type="int" />
+          <Property Name="C_008" Type="int" />
+          <Property Name="C_009" Type="int" />
+          <Property Name="C_010" Type="int" />
+          <Property Name="C_011" Type="int" />
+          <Property Name="C_012" Type="int" />
+          <Property Name="C_013" Type="int" />
+          <Property Name="C_014" Type="int" />
+          <Property Name="C_015" Type="int" />
+          <Property Name="Export_To_Zen_Cart" Type="nchar" MaxLength="1" />
+          <Property Name="DateModified" Type="datetime" />
+          <Property Name="Item_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tax01" Type="float" />
+          <Property Name="tax02" Type="float" />
+          <Property Name="POS_Disc_Per" Type="float" />
+          <Property Name="POS_Disc_Dt_From" Type="smalldatetime" />
+          <Property Name="POS_Disc_Dt_To" Type="smalldatetime" />
+          <Property Name="Alias_03" Type="varchar" MaxLength="70" />
+          <Property Name="Alias_04" Type="varchar" MaxLength="70" />
+          <Property Name="Alias_05" Type="varchar" MaxLength="70" />
+          <Property Name="Alias_06" Type="varchar" MaxLength="70" />
+          <Property Name="Alias_07" Type="varchar" MaxLength="70" />
+          <Property Name="Alias_08" Type="varchar" MaxLength="70" />
+          <Property Name="Alias_09" Type="varchar" MaxLength="70" />
+          <Property Name="Alias_10" Type="varchar" MaxLength="70" />
+          <Property Name="Last_Current_PUR_Date" Type="smalldatetime" />
+          <Property Name="Last_Current_SALE_Date" Type="smalldatetime" />
+          <Property Name="Last_avg_cost_calc_date" Type="smalldatetime" />
+          <Property Name="last_import_cost_date" Type="smalldatetime" />
+          <Property Name="last_import_cost" Type="float" />
+          <Property Name="last_import_Qty" Type="float" />
+          <Property Name="SP_Inclusive_TAX" Type="varchar" MaxLength="3" />
+          <Property Name="Allow_Item_Name_Modification" Type="varchar" MaxLength="1" />
+          <Property Name="Loyalty_Points" Type="int" />
+          <Property Name="tax03" Type="float" />
+          <Property Name="tax04" Type="float" />
+          <Property Name="tax05" Type="float" />
+          <Property Name="tax06" Type="float" />
+          <Property Name="tax07" Type="float" />
+          <Property Name="tax08" Type="float" />
+          <Property Name="ITEM_DESC_SL" Type="nvarchar" MaxLength="100" />
+          <Property Name="SALE_PRICE4" Type="float" />
+          <Property Name="SALE_PRICE5" Type="float" />
+          <Property Name="Item_Weight" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="Item_Volume" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="NO_OF_MONTH_ST_REQ" Type="int" />
+          <Property Name="LEAD_TIME_IN_MONTH" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TMATS00012020.dbo.itmmast_photos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="itmmast_photos">
+          <Key>
+            <PropertyRef Name="Record_id" />
+          </Key>
+          <Property Name="Record_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="item_cd" Type="nvarchar" MaxLength="50" />
+          <Property Name="Item_Pic_cd" Type="int" />
+          <Property Name="image_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="image_data" Type="image" />
+        </EntityType>
+        <EntityContainer Name="TMATS00012020ModelStoreContainer">
+          <EntitySet Name="CustomerCart" EntityType="Self.CustomerCart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerRegistration" EntityType="Self.CustomerRegistration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerWishlist" EntityType="Self.CustomerWishlist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GRP_MASTER" EntityType="Self.GRP_MASTER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ITMMAST" EntityType="Self.ITMMAST" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="itmmast_photos" EntityType="Self.itmmast_photos" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [itmmast_photos].[Record_id] AS [Record_id], 
+    [itmmast_photos].[item_cd] AS [item_cd], 
+    [itmmast_photos].[Item_Pic_cd] AS [Item_Pic_cd], 
+    [itmmast_photos].[image_name] AS [image_name], 
+    [itmmast_photos].[image_data] AS [image_data]
+    FROM [dbo].[itmmast_photos] AS [itmmast_photos]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TMATS00012020Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="GRP_MASTER">
+          <Key>
+            <PropertyRef Name="GRP_CD" />
+          </Key>
+          <Property Name="GRP_CD" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="GRP_SNAME" Type="String" MaxLength="40" FixedLength="true" Unicode="false" />
+          <Property Name="GRP_NAME" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="GROUP_YN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="FOR_GRP_CD" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="LEVEL_TEXT" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Customer_Profit_Percentage" Type="Double" />
+          <Property Name="Delear_Profit_Percentage" Type="Double" />
+          <Property Name="Export_To_Zen_Cart" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="DateModified" Type="DateTime" Precision="0" />
+          <Property Name="Notes" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="GRP_sname_SL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="TMATS00012020Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="GRP_MASTER" EntityType="Self.GRP_MASTER" />
+          <EntitySet Name="ITMMASTs" EntityType="TMATS00012020Model.ITMMAST" />
+          <EntitySet Name="itmmast_photos" EntityType="TMATS00012020Model.itmmast_photos" />
+          <EntitySet Name="CustomerCarts" EntityType="TMATS00012020Model.CustomerCart" />
+          <EntitySet Name="CustomerWishlists" EntityType="TMATS00012020Model.CustomerWishlist" />
+          <EntitySet Name="CustomerRegistrations" EntityType="TMATS00012020Model.CustomerRegistration" />
+        </EntityContainer>
+        <EntityType Name="ITMMAST">
+          <Key>
+            <PropertyRef Name="ITEM_CD" />
+          </Key>
+          <Property Name="ITEM_CD" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="ITEM_DESC" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="GRP_CD" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="UNIT" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="RATE" Type="Double" />
+          <Property Name="Packing_Qty" Type="Int32" />
+          <Property Name="SALE_PRICE" Type="Double" />
+          <Property Name="AVG_COST" Type="Double" />
+          <Property Name="USER_AVG_COST" Type="Double" />
+          <Property Name="OP_STK" Type="Double" />
+          <Property Name="OP_RATE" Type="Double" />
+          <Property Name="OP_VAL" Type="Double" />
+          <Property Name="MIN_STK_LEVEL" Type="Int32" />
+          <Property Name="MAX_STK_LEVEL" Type="Int32" />
+          <Property Name="REORDER_LEVEL" Type="Int32" />
+          <Property Name="ABC" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="XYZ" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="GI_QTY_MM" Type="Double" />
+          <Property Name="GI_VAL_MM" Type="Double" />
+          <Property Name="IS_QTY_MM" Type="Double" />
+          <Property Name="IS_VAL_MM" Type="Double" />
+          <Property Name="CL_STK" Type="Double" />
+          <Property Name="CL_VAL" Type="Double" />
+          <Property Name="LOCATION" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="OP_DATE" Type="DateTime" Precision="0" />
+          <Property Name="USER_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Active_InActive" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Inv_NonInv" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Subtitution" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="Model_No" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CostADdPer" Type="Double" />
+          <Property Name="unit_dec_After_Conv" Type="Double" />
+          <Property Name="Temp_GI_QTY_MM" Type="Double" />
+          <Property Name="TEMP_IS_QTY_MM" Type="Double" />
+          <Property Name="TEMP_CL_QTY_MM" Type="Double" />
+          <Property Name="TEMP_AVG_COST" Type="Double" />
+          <Property Name="Super_session_to" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Brand_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Made_in" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Vehical_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Material" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Type_Of_Item" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Alias_01" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Alias_02" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Last_Cost" Type="Double" />
+          <Property Name="Last_Cost_Date" Type="DateTime" Precision="0" />
+          <Property Name="Per_Add_at_Cost_For_Display" Type="Double" />
+          <Property Name="Created_Date" Type="DateTime" Precision="0" />
+          <Property Name="User_Avg_Cost_Taken_In_Inv_Value_Y_N" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Packing_Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Collection_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Last_Purchase_Qty" Type="Double" />
+          <Property Name="SALE_PRICE2" Type="Double" />
+          <Property Name="SALE_PRICE3" Type="Double" />
+          <Property Name="Bar_Code" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Batch_Req_Y_N" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Remark_Memo_Itmmast" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Updated_Y_N" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="Updated_Date_Time" Type="DateTime" Precision="0" />
+          <Property Name="Expiry_Days" Type="Double" />
+          <Property Name="Rate_Change_Allow" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Trasnfer_To_POS_Location" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Restaurant_Stock_Calc_To_Item_Cd" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Restaurant_Item_Cd_Conv" Type="Double" />
+          <Property Name="Restaurant_Change_Rate_Allowed" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Type_Of_Item_F_B_T_G" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="C_001" Type="Int32" />
+          <Property Name="C_002" Type="Int32" />
+          <Property Name="C_003" Type="Int32" />
+          <Property Name="C_004" Type="Int32" />
+          <Property Name="C_005" Type="Int32" />
+          <Property Name="C_006" Type="Int32" />
+          <Property Name="C_007" Type="Int32" />
+          <Property Name="C_008" Type="Int32" />
+          <Property Name="C_009" Type="Int32" />
+          <Property Name="C_010" Type="Int32" />
+          <Property Name="C_011" Type="Int32" />
+          <Property Name="C_012" Type="Int32" />
+          <Property Name="C_013" Type="Int32" />
+          <Property Name="C_014" Type="Int32" />
+          <Property Name="C_015" Type="Int32" />
+          <Property Name="Export_To_Zen_Cart" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="Item_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tax01" Type="Double" />
+          <Property Name="tax02" Type="Double" />
+          <Property Name="POS_Disc_Per" Type="Double" />
+          <Property Name="POS_Disc_Dt_From" Type="DateTime" Precision="0" />
+          <Property Name="POS_Disc_Dt_To" Type="DateTime" Precision="0" />
+          <Property Name="Alias_03" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Alias_04" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Alias_05" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Alias_06" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Alias_07" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Alias_08" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Alias_09" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Alias_10" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Last_Current_PUR_Date" Type="DateTime" Precision="0" />
+          <Property Name="Last_Current_SALE_Date" Type="DateTime" Precision="0" />
+          <Property Name="Last_avg_cost_calc_date" Type="DateTime" Precision="0" />
+          <Property Name="last_import_cost_date" Type="DateTime" Precision="0" />
+          <Property Name="last_import_cost" Type="Double" />
+          <Property Name="last_import_Qty" Type="Double" />
+          <Property Name="SP_Inclusive_TAX" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Allow_Item_Name_Modification" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Loyalty_Points" Type="Int32" />
+          <Property Name="tax03" Type="Double" />
+          <Property Name="tax04" Type="Double" />
+          <Property Name="tax05" Type="Double" />
+          <Property Name="tax06" Type="Double" />
+          <Property Name="tax07" Type="Double" />
+          <Property Name="tax08" Type="Double" />
+          <Property Name="ITEM_DESC_SL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SALE_PRICE4" Type="Double" />
+          <Property Name="SALE_PRICE5" Type="Double" />
+          <Property Name="Item_Weight" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="Item_Volume" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="NO_OF_MONTH_ST_REQ" Type="Int32" />
+          <Property Name="LEAD_TIME_IN_MONTH" Type="Int32" />
+        </EntityType>
+        <EntityType Name="itmmast_photos">
+          <Key>
+            <PropertyRef Name="Record_id" />
+          </Key>
+          <Property Name="Record_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="item_cd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Item_Pic_cd" Type="Int32" />
+          <Property Name="image_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="image_data" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="CustomerCart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProductId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDatetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="CustomerWishlist">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDatetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="CustomerRegistration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pincode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShippingAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BillingAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RegistrationDatetime" Type="DateTime" Precision="3" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TMATS00012020ModelStoreContainer" CdmEntityContainer="TMATS00012020Entities">
+          <EntitySetMapping Name="GRP_MASTER">
+            <EntityTypeMapping TypeName="TMATS00012020Model.GRP_MASTER">
+              <MappingFragment StoreEntitySet="GRP_MASTER">
+                <ScalarProperty Name="GRP_CD" ColumnName="GRP_CD" />
+                <ScalarProperty Name="GRP_SNAME" ColumnName="GRP_SNAME" />
+                <ScalarProperty Name="GRP_NAME" ColumnName="GRP_NAME" />
+                <ScalarProperty Name="GROUP_YN" ColumnName="GROUP_YN" />
+                <ScalarProperty Name="FOR_GRP_CD" ColumnName="FOR_GRP_CD" />
+                <ScalarProperty Name="LEVEL_TEXT" ColumnName="LEVEL_TEXT" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Customer_Profit_Percentage" ColumnName="Customer_Profit_Percentage" />
+                <ScalarProperty Name="Delear_Profit_Percentage" ColumnName="Delear_Profit_Percentage" />
+                <ScalarProperty Name="Export_To_Zen_Cart" ColumnName="Export_To_Zen_Cart" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="GRP_sname_SL" ColumnName="GRP_sname_SL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ITMMASTs">
+            <EntityTypeMapping TypeName="TMATS00012020Model.ITMMAST">
+              <MappingFragment StoreEntitySet="ITMMAST">
+                <ScalarProperty Name="LEAD_TIME_IN_MONTH" ColumnName="LEAD_TIME_IN_MONTH" />
+                <ScalarProperty Name="NO_OF_MONTH_ST_REQ" ColumnName="NO_OF_MONTH_ST_REQ" />
+                <ScalarProperty Name="Item_Volume" ColumnName="Item_Volume" />
+                <ScalarProperty Name="Item_Weight" ColumnName="Item_Weight" />
+                <ScalarProperty Name="SALE_PRICE5" ColumnName="SALE_PRICE5" />
+                <ScalarProperty Name="SALE_PRICE4" ColumnName="SALE_PRICE4" />
+                <ScalarProperty Name="ITEM_DESC_SL" ColumnName="ITEM_DESC_SL" />
+                <ScalarProperty Name="tax08" ColumnName="tax08" />
+                <ScalarProperty Name="tax07" ColumnName="tax07" />
+                <ScalarProperty Name="tax06" ColumnName="tax06" />
+                <ScalarProperty Name="tax05" ColumnName="tax05" />
+                <ScalarProperty Name="tax04" ColumnName="tax04" />
+                <ScalarProperty Name="tax03" ColumnName="tax03" />
+                <ScalarProperty Name="Loyalty_Points" ColumnName="Loyalty_Points" />
+                <ScalarProperty Name="Allow_Item_Name_Modification" ColumnName="Allow_Item_Name_Modification" />
+                <ScalarProperty Name="SP_Inclusive_TAX" ColumnName="SP_Inclusive_TAX" />
+                <ScalarProperty Name="last_import_Qty" ColumnName="last_import_Qty" />
+                <ScalarProperty Name="last_import_cost" ColumnName="last_import_cost" />
+                <ScalarProperty Name="last_import_cost_date" ColumnName="last_import_cost_date" />
+                <ScalarProperty Name="Last_avg_cost_calc_date" ColumnName="Last_avg_cost_calc_date" />
+                <ScalarProperty Name="Last_Current_SALE_Date" ColumnName="Last_Current_SALE_Date" />
+                <ScalarProperty Name="Last_Current_PUR_Date" ColumnName="Last_Current_PUR_Date" />
+                <ScalarProperty Name="Alias_10" ColumnName="Alias_10" />
+                <ScalarProperty Name="Alias_09" ColumnName="Alias_09" />
+                <ScalarProperty Name="Alias_08" ColumnName="Alias_08" />
+                <ScalarProperty Name="Alias_07" ColumnName="Alias_07" />
+                <ScalarProperty Name="Alias_06" ColumnName="Alias_06" />
+                <ScalarProperty Name="Alias_05" ColumnName="Alias_05" />
+                <ScalarProperty Name="Alias_04" ColumnName="Alias_04" />
+                <ScalarProperty Name="Alias_03" ColumnName="Alias_03" />
+                <ScalarProperty Name="POS_Disc_Dt_To" ColumnName="POS_Disc_Dt_To" />
+                <ScalarProperty Name="POS_Disc_Dt_From" ColumnName="POS_Disc_Dt_From" />
+                <ScalarProperty Name="POS_Disc_Per" ColumnName="POS_Disc_Per" />
+                <ScalarProperty Name="tax02" ColumnName="tax02" />
+                <ScalarProperty Name="tax01" ColumnName="tax01" />
+                <ScalarProperty Name="Item_id" ColumnName="Item_id" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="Export_To_Zen_Cart" ColumnName="Export_To_Zen_Cart" />
+                <ScalarProperty Name="C_015" ColumnName="C_015" />
+                <ScalarProperty Name="C_014" ColumnName="C_014" />
+                <ScalarProperty Name="C_013" ColumnName="C_013" />
+                <ScalarProperty Name="C_012" ColumnName="C_012" />
+                <ScalarProperty Name="C_011" ColumnName="C_011" />
+                <ScalarProperty Name="C_010" ColumnName="C_010" />
+                <ScalarProperty Name="C_009" ColumnName="C_009" />
+                <ScalarProperty Name="C_008" ColumnName="C_008" />
+                <ScalarProperty Name="C_007" ColumnName="C_007" />
+                <ScalarProperty Name="C_006" ColumnName="C_006" />
+                <ScalarProperty Name="C_005" ColumnName="C_005" />
+                <ScalarProperty Name="C_004" ColumnName="C_004" />
+                <ScalarProperty Name="C_003" ColumnName="C_003" />
+                <ScalarProperty Name="C_002" ColumnName="C_002" />
+                <ScalarProperty Name="C_001" ColumnName="C_001" />
+                <ScalarProperty Name="Type_Of_Item_F_B_T_G" ColumnName="Type_Of_Item_F_B_T_G" />
+                <ScalarProperty Name="Restaurant_Change_Rate_Allowed" ColumnName="Restaurant_Change_Rate_Allowed" />
+                <ScalarProperty Name="Restaurant_Item_Cd_Conv" ColumnName="Restaurant_Item_Cd_Conv" />
+                <ScalarProperty Name="Restaurant_Stock_Calc_To_Item_Cd" ColumnName="Restaurant_Stock_Calc_To_Item_Cd" />
+                <ScalarProperty Name="Trasnfer_To_POS_Location" ColumnName="Trasnfer_To_POS_Location" />
+                <ScalarProperty Name="Rate_Change_Allow" ColumnName="Rate_Change_Allow" />
+                <ScalarProperty Name="Expiry_Days" ColumnName="Expiry_Days" />
+                <ScalarProperty Name="Updated_Date_Time" ColumnName="Updated_Date_Time" />
+                <ScalarProperty Name="Updated_Y_N" ColumnName="Updated_Y_N" />
+                <ScalarProperty Name="Remark_Memo_Itmmast" ColumnName="Remark_Memo_Itmmast" />
+                <ScalarProperty Name="Batch_Req_Y_N" ColumnName="Batch_Req_Y_N" />
+                <ScalarProperty Name="Bar_Code" ColumnName="Bar_Code" />
+                <ScalarProperty Name="SALE_PRICE3" ColumnName="SALE_PRICE3" />
+                <ScalarProperty Name="SALE_PRICE2" ColumnName="SALE_PRICE2" />
+                <ScalarProperty Name="Last_Purchase_Qty" ColumnName="Last_Purchase_Qty" />
+                <ScalarProperty Name="Collection_code" ColumnName="Collection_code" />
+                <ScalarProperty Name="Packing_Unit" ColumnName="Packing_Unit" />
+                <ScalarProperty Name="User_Avg_Cost_Taken_In_Inv_Value_Y_N" ColumnName="User_Avg_Cost_Taken_In_Inv_Value_Y_N" />
+                <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
+                <ScalarProperty Name="Per_Add_at_Cost_For_Display" ColumnName="Per_Add_at_Cost_For_Display" />
+                <ScalarProperty Name="Last_Cost_Date" ColumnName="Last_Cost_Date" />
+                <ScalarProperty Name="Last_Cost" ColumnName="Last_Cost" />
+                <ScalarProperty Name="Alias_02" ColumnName="Alias_02" />
+                <ScalarProperty Name="Alias_01" ColumnName="Alias_01" />
+                <ScalarProperty Name="Type_Of_Item" ColumnName="Type_Of_Item" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Material" ColumnName="Material" />
+                <ScalarProperty Name="Vehical_Name" ColumnName="Vehical_Name" />
+                <ScalarProperty Name="Made_in" ColumnName="Made_in" />
+                <ScalarProperty Name="Brand_Name" ColumnName="Brand_Name" />
+                <ScalarProperty Name="Super_session_to" ColumnName="Super_session_to" />
+                <ScalarProperty Name="TEMP_AVG_COST" ColumnName="TEMP_AVG_COST" />
+                <ScalarProperty Name="TEMP_CL_QTY_MM" ColumnName="TEMP_CL_QTY_MM" />
+                <ScalarProperty Name="TEMP_IS_QTY_MM" ColumnName="TEMP_IS_QTY_MM" />
+                <ScalarProperty Name="Temp_GI_QTY_MM" ColumnName="Temp_GI_QTY_MM" />
+                <ScalarProperty Name="unit_dec_After_Conv" ColumnName="unit_dec_After_Conv" />
+                <ScalarProperty Name="CostADdPer" ColumnName="CostADdPer" />
+                <ScalarProperty Name="Model_No" ColumnName="Model_No" />
+                <ScalarProperty Name="Subtitution" ColumnName="Subtitution" />
+                <ScalarProperty Name="Inv_NonInv" ColumnName="Inv_NonInv" />
+                <ScalarProperty Name="Active_InActive" ColumnName="Active_InActive" />
+                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+                <ScalarProperty Name="OP_DATE" ColumnName="OP_DATE" />
+                <ScalarProperty Name="LOCATION" ColumnName="LOCATION" />
+                <ScalarProperty Name="CL_VAL" ColumnName="CL_VAL" />
+                <ScalarProperty Name="CL_STK" ColumnName="CL_STK" />
+                <ScalarProperty Name="IS_VAL_MM" ColumnName="IS_VAL_MM" />
+                <ScalarProperty Name="IS_QTY_MM" ColumnName="IS_QTY_MM" />
+                <ScalarProperty Name="GI_VAL_MM" ColumnName="GI_VAL_MM" />
+                <ScalarProperty Name="GI_QTY_MM" ColumnName="GI_QTY_MM" />
+                <ScalarProperty Name="XYZ" ColumnName="XYZ" />
+                <ScalarProperty Name="ABC" ColumnName="ABC" />
+                <ScalarProperty Name="REORDER_LEVEL" ColumnName="REORDER_LEVEL" />
+                <ScalarProperty Name="MAX_STK_LEVEL" ColumnName="MAX_STK_LEVEL" />
+                <ScalarProperty Name="MIN_STK_LEVEL" ColumnName="MIN_STK_LEVEL" />
+                <ScalarProperty Name="OP_VAL" ColumnName="OP_VAL" />
+                <ScalarProperty Name="OP_RATE" ColumnName="OP_RATE" />
+                <ScalarProperty Name="OP_STK" ColumnName="OP_STK" />
+                <ScalarProperty Name="USER_AVG_COST" ColumnName="USER_AVG_COST" />
+                <ScalarProperty Name="AVG_COST" ColumnName="AVG_COST" />
+                <ScalarProperty Name="SALE_PRICE" ColumnName="SALE_PRICE" />
+                <ScalarProperty Name="Packing_Qty" ColumnName="Packing_Qty" />
+                <ScalarProperty Name="RATE" ColumnName="RATE" />
+                <ScalarProperty Name="UNIT" ColumnName="UNIT" />
+                <ScalarProperty Name="GRP_CD" ColumnName="GRP_CD" />
+                <ScalarProperty Name="ITEM_DESC" ColumnName="ITEM_DESC" />
+                <ScalarProperty Name="ITEM_CD" ColumnName="ITEM_CD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="itmmast_photos">
+            <EntityTypeMapping TypeName="TMATS00012020Model.itmmast_photos">
+              <MappingFragment StoreEntitySet="itmmast_photos">
+                <ScalarProperty Name="image_data" ColumnName="image_data" />
+                <ScalarProperty Name="image_name" ColumnName="image_name" />
+                <ScalarProperty Name="Item_Pic_cd" ColumnName="Item_Pic_cd" />
+                <ScalarProperty Name="item_cd" ColumnName="item_cd" />
+                <ScalarProperty Name="Record_id" ColumnName="Record_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerCarts">
+            <EntityTypeMapping TypeName="TMATS00012020Model.CustomerCart">
+              <MappingFragment StoreEntitySet="CustomerCart">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedDatetime" ColumnName="CreatedDatetime" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerWishlists">
+            <EntityTypeMapping TypeName="TMATS00012020Model.CustomerWishlist">
+              <MappingFragment StoreEntitySet="CustomerWishlist">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CreatedDatetime" ColumnName="CreatedDatetime" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerRegistrations">
+            <EntityTypeMapping TypeName="TMATS00012020Model.CustomerRegistration">
+              <MappingFragment StoreEntitySet="CustomerRegistration">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RegistrationDatetime" ColumnName="RegistrationDatetime" />
+                <ScalarProperty Name="BillingAddress" ColumnName="BillingAddress" />
+                <ScalarProperty Name="ShippingAddress" ColumnName="ShippingAddress" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

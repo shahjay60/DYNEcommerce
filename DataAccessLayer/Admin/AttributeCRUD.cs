@@ -1,34 +1,30 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain;
 
 namespace DataAccessLayer
 {
     public class AttributeCRUD
     {
-        public static void AddAttribute(AttributeDomain mAttribute)
+        public static void AddAttribute(string attributeName)
         {
 
             string mainconn = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
 
             SqlConnection sqlconn = new SqlConnection(mainconn);
-
+            sqlconn.Open();
             SqlCommand cmd = new SqlCommand("sp_Attribute", sqlconn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@mode", "PostAttribute");
 
-            cmd.Parameters.AddWithValue("@AttributeName", mAttribute.AttributeName);
+            cmd.Parameters.AddWithValue("@AttributeName", attributeName);
             //cmd.Parameters.AddWithValue("@AttributeValue", mAttribute.AttributeValue);
 
             cmd.ExecuteNonQuery();
-
-
+            sqlconn.Close();
         }
         public static List<AttributeDomain> GetAttribute(int AttributeId)
         {
@@ -127,7 +123,7 @@ namespace DataAccessLayer
 
                         AttributeId = Convert.ToInt16(dr["AttributeId"]),
                         AttributeName = dr["AttributeName"].ToString().ToLower(),
-                        AttributeValue = dr["AttributeValue"].ToString().ToLower(),
+                        AttributeValue = dr["AV"].ToString().ToLower(),
                     });
 
             }
@@ -141,9 +137,8 @@ namespace DataAccessLayer
                 string mainconn = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
                 SqlConnection sqlconn = new SqlConnection(mainconn);
 
-                SqlCommand cmd = new SqlCommand("Get_Attribute", sqlconn);
+                SqlCommand cmd = new SqlCommand("DeleteAttributeById", sqlconn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@mode", "DeleteAttribute");
                 cmd.Parameters.AddWithValue("@AttributeId", AttributeId);
 
                 SqlDataAdapter sd = new SqlDataAdapter(cmd);
@@ -163,7 +158,6 @@ namespace DataAccessLayer
 
 
         }
-
         public static bool UpdateAttribute(AttributeDomain smodel)
         {
             string mainconn = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;

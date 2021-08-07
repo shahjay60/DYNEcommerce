@@ -8,7 +8,7 @@
         if (item.ImageName == null)
         {
             <li>
-                <a href="category-page(left-sidebar).html">
+                <a href="/Product/Index?catId=@item.GRP_CD">
                     <img src="~/Assets/Images/01.png" alt="category-product">@item.GRP_NAME
                 </a>
             </li>
@@ -16,7 +16,7 @@
         else
         {
             <li>
-                <a href="category-page(left-sidebar).html">
+                <a href="/Product/Index?catId=@item.GRP_CD">
                     <img src="../CategoryImageUploadfiles/@item.ImageName" alt="category-product">@item.GRP_NAME
                 </a>
             </li>
@@ -25,6 +25,6 @@
 
 
     <li>
-        <a class="mor-slide-click">mor category <i class="fa fa-angle-down pro-down"></i><i class="fa fa-angle-up pro-up"></i></a>
+        <a class="mor-slide-click" href="@Url.Action("Index","Category")">View All category <i class="fa fa-angle-down pro-down"></i><i class="fa fa-angle-up pro-up"></i></a>
     </li>
 </ul>

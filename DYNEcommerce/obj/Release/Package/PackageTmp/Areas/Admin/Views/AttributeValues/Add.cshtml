@@ -1,0 +1,190 @@
+﻿@model Domain.AttributevaluesDomain
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+
+<link href="~/Assets/CSS/fstdropdown.css" rel="stylesheet" />
+
+<div class="page-body">
+
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="page-header-left">
+                        <h3>
+                            Create AttributeValue
+                            <small>Bigdeal Admin panel</small>
+                        </h3>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <ol class="breadcrumb pull-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Dashboard", "Login")"><i data-feather="home"></i></a></li>
+                        <li class="breadcrumb-item"> AttributeValue </li>
+                        <li class="breadcrumb-item active">Create  AttributeValue </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*@using (Html.BeginForm("AddProductAttribute", "ProductAttribute", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {*@
+
+    @Html.AntiForgeryToken()
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-sm-12">
+                <div class="card tab2-card">
+                    <div class="card-header">
+                        <h5> Add AttributeValue</h5>
+                    </div>
+                    <div class="card-body">
+                        <span style="color:red">
+                            Each attribute can have a number of values.
+                            The variations of a product are created on the basis of these values. For example, if you have an attribute named Size, its values will be similar to S, M, L and XL.
+                            If a product can relate to this characteristic, a variation for each of the values can be created.
+                        </span>
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Attribute Name</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                @*ViewBag.CityList is holding all the cities values*@
+                                @Html.DropDownListFor(m => m.AttributeId, Model.Attributes, "--- Select Attributes ---", new { @class = "form-control", @id = "ddlAttribute" })
+                                @Html.ValidationMessageFor(model => model.AttributeId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            <div class="col-xl-3 col-md-4">
+                                <label for="validationCustom0"><span>*</span>Attribute Value</label>
+                            </div>
+
+                            <div class="col-xl-8 col-md-7">
+                                @Html.EditorFor(model => model.AttributeValue, new { htmlAttributes = new { @class = "form-control", @id = "txtAttributeValue" } })
+                                @Html.ValidationMessageFor(model => model.AttributeValue, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="pull-right">
+                            @*<button type="button" class="btn btn-primary">Save</button>*@
+                            <input type="submit" class="btn btn-primary" value="Save As Draft" id="btnSubmit" />
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="alert alert-success" role="alert" style="display:none" id="divSuccess">
+                AttributeValue Added Successfully..!!
+            </div>
+            <div class="alert alert-danger" role="alert" style="display:none" id="divError">
+                AttributeValue Not Added Successfully..!!
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-responsive table-striped" id="productTable">
+        <thead>
+            <tr>
+                <td>Attribute Name</td>
+                <td>Attribute Value</td>
+                <td>Delete</td>
+            </tr>
+        </thead>
+        <tbody id="tblBody">
+        </tbody>
+        <tfoot>
+            <tr>
+                <td align="right" colspan="4">
+                    <a href="@Url.Action("Index", "AttributeValues")" class="btn btn-success">
+                        Back to List
+                    </a>
+                    <input type="submit" class="btn btn-primary" value="Save" id="btnfinalSubmit" />
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+<script src="~/Assets/js/jquery-3.3.1.min.js"></script>
+
+<script src="~/Assets/JS/fstdropdown.min.js"></script>
+<script>
+    $("#btnSubmit").click(function () {
+        if ($("#ddlProducts").val() != "" && $("#ddlAttribute").val() != "" && $("#txtAttributeValue").val() != "") {
+            productAddToTable();
+            formClear();
+        }
+        else {
+            alert("Please select data");
+        }
+    });
+    function productAddToTable() {
+        // First check if a <tbody> tag exists, add one if not
+        if ($("#productTable tbody").length == 0) {
+            $("#productTable").append("<tbody></tbody>");
+        }
+
+        // Append product to the table
+        $("#productTable tbody").append("<tr>" +
+            "<td hidden>" + $("#ddlAttribute").val() + "</td>" +
+            "<td>" + $("#ddlAttribute :selected").text() + "</td>" +
+            "<td>" + $("#txtAttributeValue").val() + "</td>" +
+            "<td>" +
+            "<a><button type='button' onclick='productDelete(this);' class='btn btn-default'>Delete" +
+            "</button></a>" +
+            "</td>" +
+            "</tr>");
+    }
+    function formClear() {
+        $("#txtAttributeValue").val("");
+    }
+    function productDelete(ctl) {
+        $(ctl).parents("tr").remove();
+    }
+
+    $("#btnfinalSubmit").click(function () {
+        var model = {};
+        var membersDetails = new Array();
+        $("#productTable TBODY TR").each(function () {
+            var row = $(this);
+            var memberDetails = {};
+            memberDetails.AttributeId = row.find("TD").eq(0).html();
+            memberDetails.AttributeValue = row.find("TD").eq(2).html();
+            membersDetails.push(memberDetails);
+        });
+        console.log(membersDetails);
+
+        model.Memberdetails = membersDetails;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("Add", "AttributeValues")",
+            data: JSON.stringify(membersDetails),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response) {
+                     $("#divSuccess").show();
+                        $("#divSuccess").fadeTo(2000, 500).slideUp(500, function () {
+                            $("#divSuccess").slideUp(500);
+                        });
+                    }
+                    else {
+                        $("#divError").show();
+                        $("#divError").fadeTo(2000, 500).slideUp(500, function () {
+                            $("#divError").slideUp(500);
+                        });
+                    }
+            }
+        });
+    });
+</script>

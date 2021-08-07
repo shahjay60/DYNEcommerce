@@ -1,12 +1,9 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain;
 
 namespace DataAccessLayer
 {
@@ -23,10 +20,10 @@ namespace DataAccessLayer
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@mode", "PostBrandmaster");
 
-         
+
             cmd.Parameters.AddWithValue("@GRP_CD", mBrandMaster.GRP_CD);
             cmd.Parameters.AddWithValue("@BrandName", mBrandMaster.BrandName);
-            
+
 
             cmd.ExecuteNonQuery();
 
@@ -41,7 +38,7 @@ namespace DataAccessLayer
             SqlCommand cmd = new SqlCommand("Get_Brandmaster", sqlconn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@mode", "GetBrandmaster");
-       
+
             cmd.Parameters.AddWithValue("@BrandId", BrandId);
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
 
@@ -130,7 +127,7 @@ namespace DataAccessLayer
 
                         GRP_CD = dr["GRP_CD"].ToString(),
                         BrandName = dr["BrandName"].ToString(),
-                        IsOnHomePage =Convert.ToBoolean(dr["IsHomePage"]),
+                        IsOnHomePage = Convert.ToBoolean(dr["IsHomePage"]),
                         ISOnWeb = Convert.ToBoolean(dr["IsOnWeb"]),
                     });
             }

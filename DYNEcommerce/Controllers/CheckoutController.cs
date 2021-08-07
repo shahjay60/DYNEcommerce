@@ -2,8 +2,10 @@
 using Domain;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
-using System.Web;
+using System.Net;
+using System.Net.Mail;
 using System.Web.Mvc;
 
 namespace DYNEcommerce.Controllers
@@ -11,6 +13,11 @@ namespace DYNEcommerce.Controllers
     public class CheckoutController : Controller
     {
         // GET: checkout
+        private string Host = ConfigurationManager.AppSettings["Host"];
+        private string Port = ConfigurationManager.AppSettings["Port"];
+        private string Email = ConfigurationManager.AppSettings["Email"];
+        private string Password = ConfigurationManager.AppSettings["Password"];
+
         public ActionResult Index()
         {
             try
@@ -47,7 +54,7 @@ namespace DYNEcommerce.Controllers
 
                         customercartList.Add(mObj);
                     }
-                    ViewBag.CustomerscartList = customercartList.Where(x=>x.IsPlace==false).ToList();
+                    ViewBag.CustomerscartList = customercartList.Where(x => x.IsPlace == false).ToList();
                     Session["customerCartOrders"] = customercartList;
 
                     ViewBag.Subtotal = customercartList.Where(x => x.IsPlace == false).Sum(x => x.Amount);
@@ -87,7 +94,7 @@ namespace DYNEcommerce.Controllers
                 model.PaymentType = "COD";
                 model.TransactionId = "Trans00" + lastOrder + 1;
 
-                CustomerOrderCRUD.AddToCustomerOrder(model);
+                string id = CustomerOrderCRUD.AddToCustomerOrder(model);
 
                 List<CustomerCartDomain> sessionCustomerCartOrders = (List<CustomerCartDomain>)Session["customerCartOrders"];
                 if (sessionCustomerCartOrders != null)
@@ -106,6 +113,35 @@ namespace DYNEcommerce.Controllers
                     }
 
                 }
+
+                #region Send Order Email to customer
+                MailMessage msgs = new MailMessage();
+                msgs.To.Add(model.OrderEmail);
+                MailAddress address = new MailAddress(Email);
+                msgs.From = address;
+                msgs.Subject = "Order " + id + " confirmed";
+                //   msgs.BodyEncoding = System.Text.Encoding.GetEncoding("utf-8");
+                string htmlBody = msgs.Subject = "Hi " + model.FirstName + " " + model.LastName + " , Thank you for your order with Buynoor!";
+                msgs.Body = htmlBody;
+                msgs.IsBodyHtml = true;
+                SmtpClient client = new SmtpClient();
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+                client.EnableSsl = false;
+
+                //client.Host = "smtp.gmail.com";
+                //client.Port = 587;
+                client.Host = Host;
+                client.Port = Convert.ToInt32(Port);
+
+                // client.Credentials = new System.Net.NetworkCredential("email@gmail.com", "pass@");
+                NetworkCredential credentials = new NetworkCredential(Email, Password);
+                client.UseDefaultCredentials = false;
+                client.Credentials = credentials;
+                //Send the msgs  
+                client.Send(msgs);
+                #endregion
+
                 return Json("True", JsonRequestBehavior.AllowGet);
 
             }

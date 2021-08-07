@@ -1,12 +1,9 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain;
 
 
 namespace DataAccessLayer.Admin
@@ -55,7 +52,7 @@ namespace DataAccessLayer.Admin
             cmd.Parameters.AddWithValue("@PhoneNumber", "");
             cmd.Parameters.AddWithValue("@PhoneNumber2", "");
             cmd.Parameters.AddWithValue("@EmailAddress", "");
-            
+
             cmd.Parameters.AddWithValue("@Logo", "");
 
             cmd.Parameters.AddWithValue("@FacebookLink", "");
@@ -85,7 +82,7 @@ namespace DataAccessLayer.Admin
                         FacebookLink = dr["FacebookLink"].ToString(),
                         InstagramLink = dr["InstagramLink"].ToString(),
                         FaxNo = (dr["FaxNo"]).ToString()
-                        
+
                     }); ;
 
             }
@@ -99,7 +96,7 @@ namespace DataAccessLayer.Admin
 
             SqlCommand cmd = new SqlCommand("Get_CompnayDetailsAll", sqlconn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
-           
+
 
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
 
