@@ -21,86 +21,93 @@ namespace DYNEcommerce.Controllers
                 {
                     string ProdId = ITMMASTCRUD.GETPRODUCTNAME_ID("").Where(x => x.Name == searchString).Select(x => x.Id).FirstOrDefault();
 
-                    var data = ITMMASTCRUD.GetProductById(ProdId);
-                    var productImageData = ProductImageCRUD.GetProductImageAll().Where(x => x.Pid == ProdId).ToList();
-                    var productAttribute = ProductAttributeCRUD.GetAttributeForProductDetail(ProdId);
-                    mITMMASTDomain.ProductImages = new List<string>();
-                    mITMMASTDomain.ProductAttributes = new List<Product_Attribute>();
+                    if (!string.IsNullOrEmpty(ProdId))
+                    {
+                        var data = ITMMASTCRUD.GetProductById(ProdId);
+                        var productImageData = ProductImageCRUD.GetProductImageAll().Where(x => x.Pid == ProdId).ToList();
+                        var productAttribute = ProductAttributeCRUD.GetAttributeForProductDetail(ProdId);
+                        mITMMASTDomain.ProductImages = new List<string>();
+                        mITMMASTDomain.ProductAttributes = new List<Product_Attribute>();
 
-                    foreach (var item in productAttribute)
-                    {
-                        Product_Attribute mProduct_Attribute = new Product_Attribute();
-                        mProduct_Attribute.AttributeName = item.AttributeName;
-                        mProduct_Attribute.AttributeValue = item.AttributeValue;
-                        mProduct_Attribute.AttributeId = item.AttributeId;
-                        mITMMASTDomain.ProductAttributes.Add(mProduct_Attribute);
-                    }
-                    mITMMASTDomain.DetailDesc = data[0].DetailDesc;
-                    mITMMASTDomain.GRP_CD = data[0].GRP_CD;
-                    mITMMASTDomain.Item_CD = data[0].Item_CD;
-                    mITMMASTDomain.Item_Desc = data[0].Item_Desc;
-                    if (!string.IsNullOrEmpty(attrValue))
-                    {
-                        string price = ProductAttributeCRUD.GetProduct_AttributeAll()
-                                                           .Where(x => x.AttributeValue.Trim().Contains(attrValue.Trim()))
-                                                           .Select(x => x.OfferPrice).FirstOrDefault();
-                        mITMMASTDomain.Offer_Price = Convert.ToDouble(price);
-
-                        //int AttributeValueId= ProductAttributeCRUD.GetProductAttribute
-                    }
-                    else
-                    {
-                        mITMMASTDomain.Offer_Price = data[0].Offer_Price;
-                    }
-                    if (!string.IsNullOrEmpty(attrValue))
-                    {
-                        string price = ProductAttributeCRUD.GetProduct_AttributeAll()
-                                                           .Where(x => x.AttributeValue.Trim().Contains(attrValue.Trim()))
-                                                           .Select(x => x.Price).FirstOrDefault();
-                        mITMMASTDomain.Sale_Price = Convert.ToDouble(price);
-
-                        //int AttributeValueId= ProductAttributeCRUD.GetProductAttribute
-                    }
-                    else
-                    {
-                        mITMMASTDomain.Sale_Price = data[0].Sale_Price;
-                    }
-                    mITMMASTDomain.AttributeName = data[0].AttributeName;
-                    mITMMASTDomain.AttributeValue = data[0].AttributeValue;
-
-                    if (Session["QTY"] != null)
-                        mITMMASTDomain.Qty = Session["QTY"].ToString();
-                    else
-                        mITMMASTDomain.Qty = "1";
-
-                    if (string.IsNullOrEmpty(attrValue))
-                    {
-                        foreach (var item in productImageData)
+                        foreach (var item in productAttribute)
                         {
-                            if (item.Viewon == "Detail")
-                            {
-                                mITMMASTDomain.ProductImages.Add(item.Image);
-                            }
-
+                            Product_Attribute mProduct_Attribute = new Product_Attribute();
+                            mProduct_Attribute.AttributeName = item.AttributeName;
+                            mProduct_Attribute.AttributeValue = item.AttributeValue;
+                            mProduct_Attribute.AttributeId = item.AttributeId;
+                            mITMMASTDomain.ProductAttributes.Add(mProduct_Attribute);
                         }
+                        mITMMASTDomain.DetailDesc = data[0].DetailDesc;
+                        mITMMASTDomain.GRP_CD = data[0].GRP_CD;
+                        mITMMASTDomain.Item_CD = data[0].Item_CD;
+                        mITMMASTDomain.Item_Desc = data[0].Item_Desc;
+                        if (!string.IsNullOrEmpty(attrValue))
+                        {
+                            string price = ProductAttributeCRUD.GetProduct_AttributeAll()
+                                                               .Where(x => x.AttributeValue.Trim().Contains(attrValue.Trim()))
+                                                               .Select(x => x.OfferPrice).FirstOrDefault();
+                            mITMMASTDomain.Offer_Price = Convert.ToDouble(price);
+
+                            //int AttributeValueId= ProductAttributeCRUD.GetProductAttribute
+                        }
+                        else
+                        {
+                            mITMMASTDomain.Offer_Price = data[0].Offer_Price;
+                        }
+                        if (!string.IsNullOrEmpty(attrValue))
+                        {
+                            string price = ProductAttributeCRUD.GetProduct_AttributeAll()
+                                                               .Where(x => x.AttributeValue.Trim().Contains(attrValue.Trim()))
+                                                               .Select(x => x.Price).FirstOrDefault();
+                            mITMMASTDomain.Sale_Price = Convert.ToDouble(price);
+
+                            //int AttributeValueId= ProductAttributeCRUD.GetProductAttribute
+                        }
+                        else
+                        {
+                            mITMMASTDomain.Sale_Price = data[0].Sale_Price;
+                        }
+                        mITMMASTDomain.AttributeName = data[0].AttributeName;
+                        mITMMASTDomain.AttributeValue = data[0].AttributeValue;
+
+                        if (Session["QTY"] != null)
+                            mITMMASTDomain.Qty = Session["QTY"].ToString();
+                        else
+                            mITMMASTDomain.Qty = "1";
+
+                        if (string.IsNullOrEmpty(attrValue))
+                        {
+                            foreach (var item in productImageData)
+                            {
+                                if (item.Viewon == "Detail")
+                                {
+                                    mITMMASTDomain.ProductImages.Add(item.Image);
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            foreach (var item in productImageData.Where(x => x.AttrValue.ToLower().Trim() == attrValue.ToLower().Trim()))
+                            {
+                                mITMMASTDomain.SelectedAttributeValue = attrValue;
+                                if (item.Viewon == "Detail")
+                                {
+                                    mITMMASTDomain.ProductImages.Add(item.Image);
+                                }
+
+                            }
+                        }
+                        mITMMASTDomain.SelectedAttributeValue = attrValue;
+                        var relatedProduct = ITMMASTCRUD.GetProductByCatId(data[0].GRP_CD.Trim());
+
+                        ViewBag.relatedProducts = relatedProduct.SkipWhile(a => a.Item_CD != ProdId && a.viewon == "List").ToList();
+                        return View(mITMMASTDomain);
                     }
                     else
                     {
-                        foreach (var item in productImageData.Where(x => x.AttrValue.ToLower().Trim() == attrValue.ToLower().Trim()))
-                        {
-                            mITMMASTDomain.SelectedAttributeValue = attrValue;
-                            if (item.Viewon == "Detail")
-                            {
-                                mITMMASTDomain.ProductImages.Add(item.Image);
-                            }
-
-                        }
+                        return View("NoData", "Search");
                     }
-                    mITMMASTDomain.SelectedAttributeValue = attrValue;
-                    var relatedProduct = ITMMASTCRUD.GetProductByCatId(data[0].GRP_CD.Trim());
-
-                    ViewBag.relatedProducts = relatedProduct.SkipWhile(a => a.Item_CD != ProdId && a.viewon == "List").ToList();
-                    return View(mITMMASTDomain);
 
                 }
                 else
