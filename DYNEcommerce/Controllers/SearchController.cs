@@ -106,7 +106,7 @@ namespace DYNEcommerce.Controllers
                     }
                     else
                     {
-                        return View("NoData", "Search");
+                        return View(mITMMASTDomain);
                     }
 
                 }
@@ -139,6 +139,17 @@ namespace DYNEcommerce.Controllers
                 Value = a.Id.ToString()
             });
             return Json(ProductsList);
+        }
+
+        public JsonResult AutoCompleteCat(string prefix)
+        {
+            var Categories = GRP_MASTERCRUD.GetAllCategory().Where(x=>x.GRP_NAME.ToLower().Contains(prefix.ToLower())).ToList();
+            var CategoriesList = Categories.Select(a => new SelectListItem
+            {
+                Text = a.GRP_NAME,
+                Value = a.GRP_CD.ToString()
+            });
+            return Json(CategoriesList);
         }
     }
 }

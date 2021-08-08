@@ -68,13 +68,14 @@
                 <div class="collection-content col">
                     <div class="page-main-content">
                         <div class="row">
-                                    <div class="col-sm-6 col-md-6 col-lg-6">
-                                        <input type="text" class="form-control" placeholder="Search Category" id="txtSearchCat">
-                                    </div>
-                                    <div class="col-sm-6 col-md-6 col-lg-6">
-                                        <input type="submit" value="Search" class="btn btn-success" id="CatSearch" />
-                                    </div>
-                                <br />
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                @Html.TextBox("SearchString", null, new { @class = "form-control", @placeholder = "Search a Product", @id = "txtSearchCat" })
+
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <input type="submit" value="Search" class="btn btn-success" id="CatSearch" />
+                            </div>
+                            <br />
                             <div class="collection-product-wrapper">
                                 <div class="product-top-filter">
                                     <div class="row">
@@ -128,12 +129,46 @@
 
         </div>
     </div>
-    </div>
 </section>
 <!-- section End -->
 
+
+<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css" rel="Stylesheet" type="text/css" />
 <script src="~/Assets/JS/jquery-3.3.1.min.js"></script>
-<script src="~/Assets/JS/feather-icon.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/jquery-ui.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function ($) {
+        $("#txtSearchCat").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/Search/AutoCompleteCat/',
+                    data: "{'prefix': '" + request.term + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Text, value: item.Text };
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#hfCustomer").val(i.item.val);
+            },
+            minLength: 1
+        });
+
+    });
+</script>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -176,7 +211,7 @@
             }
             fnGetCategories(ShortBy, currentPageIndex, CatId, record, checkedValues, categorySearch);
         });
-       
+
     });
 
     function fnGetCategories(ShortBy, currentPageIndex, brandId, record, checkedValues, categorySearch) {

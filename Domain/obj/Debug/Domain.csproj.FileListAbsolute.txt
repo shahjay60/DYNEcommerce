@@ -89,6 +89,7 @@ D:\Projects\DYNEcommerce_10-07\DYNEcommerce\Domain\bin\Debug\Microsoft.Web.Infra
 D:\Projects\DYNEcommerce_10-07\DYNEcommerce\Domain\bin\Debug\System.Web.WebPages.Deployment.dll
 D:\Projects\DYNEcommerce_10-07\DYNEcommerce\Domain\bin\Debug\EntityFramework.xml
 D:\Projects\DYNEcommerce_10-07\DYNEcommerce\Domain\bin\Debug\EntityFramework.SqlServer.xml
+D:\Projects\DYNEcommerce_10-07\DYNEcommerce\Domain\obj\Debug\Domain.csproj.AssemblyReference.cache
 D:\Projects\DYNEcommerce_10-07\DYNEcommerce\Domain\obj\Debug\Domain.csproj.CoreCompileInputs.cache
 D:\Projects\DYNEcommerce_10-07\DYNEcommerce\Domain\obj\Debug\Domain.csproj.CopyComplete
 D:\Projects\DYNEcommerce_10-07\DYNEcommerce\Domain\obj\Debug\Domain.dll
