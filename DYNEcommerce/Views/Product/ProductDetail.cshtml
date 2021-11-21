@@ -137,10 +137,8 @@
                                 <div class="product-right ">
                                     <div class="pro-group">
                                         <h2>@Model.Item_Desc</h2>
-                                        <ul class="pro-price">
-                                            <li>$ @Model.Offer_Price</li>
-                                            <li><span>mrp $@Model.Sale_Price</span></li>
-                                        </ul>
+                                        <p style="font-size:larger"> Was: <span  class="text-decoration-line-through">MRP $@Model.Sale_Price</span></p>
+                                        <p style="font-size:large;"> Now: <span style="color: #706a6;font-weight:bold">$@Model.Offer_Price</span> </p>
                                     </div>
 
                                     <div id="selectSize" class="pro-group addeffect-section product-description border-product">
@@ -148,7 +146,7 @@
                                         @if (@Model.ProductAttributes.Count() != 0)
                                         {
 
-                                            foreach (var item in @Model.ProductAttributes.Where(x=>x.AttributeValue!=""))
+                                            foreach (var item in @Model.ProductAttributes.Where(x => x.AttributeValue != ""))
                                             {
                                                 <h6 class="product-title">please select @item.AttributeName</h6>
                                                 <div class="size-box">

@@ -305,8 +305,10 @@ namespace DataAccessLayer
                         LEVEL_TEXT = dr["LEVEL_TEXT"].ToString(),
                         GROUP_YN = dr["GROUP_YN"].ToString(),
                         BrandId = dr["BrandId"].ToString() == "" ? Convert.ToInt32("0") : Convert.ToInt32(dr["BrandId"].ToString()),
-                        Isonmenu = dr["Isonmenu"].ToString() == "" ? false : Convert.ToBoolean(dr["Isonmenu"].ToString()),
-                        Isonhomepage = dr["Isonhomepage"].ToString() == "" ? false : Convert.ToBoolean(dr["Isonhomepage"].ToString())
+                        //Isonmenu = dr["Isonmenu"].ToString() == "" ? false : Convert.ToBoolean(dr["Isonmenu"].ToString()),
+                        //Isonhomepage = dr["Isonhomepage"].ToString() == "" ? false : Convert.ToBoolean(dr["Isonhomepage"].ToString())
+                        Isonmenu = Convert.ToBoolean(dr["Isonmenu"]),
+                        Isonhomepage = Convert.ToBoolean(dr["Isonhomepage"])
                     });
 
             }

@@ -2,45 +2,6 @@
     <div class="col-md-12">
         <div class="main-menu-block">
             <div class="header-left">
-                <div class="sm-nav-block">
-                    <span class="sm-nav-btn">
-                        <i class="fa fa-bars"></i>
-                    </span>
-                    <ul class="nav-slide">
-                        <li>
-                            <div class="nav-sm-back">
-                                back <i class="fa fa-angle-right ps-2"></i>
-                            </div>
-                        </li>
-                        <li><a href="category-page(left-sidebar).html">western ware</a></li>
-                        <li><a href="category-page(left-sidebar).html">TV, Appliances</a></li>
-                        <li><a href="category-page(left-sidebar).html">Pets Products</a></li>
-                        <li><a href="category-page(left-sidebar).html">Car, Motorbike</a></li>
-                        <li><a href="category-page(left-sidebar).html">Industrial Products</a></li>
-                        <li><a href="category-page(left-sidebar).html">Beauty, Health Products</a></li>
-                        <li><a href="category-page(left-sidebar).html">Grocery Products </a></li>
-                        <li><a href="category-page(left-sidebar).html">Sports</a></li>
-                        <li><a href="category-page(left-sidebar).html">Bags, Luggage</a></li>
-                        <li><a href="category-page(left-sidebar).html">Movies, Music </a></li>
-                        <li><a href="category-page(left-sidebar).html">Video Games</a></li>
-                        <li><a href="category-page(left-sidebar).html">Toys, Baby Products</a></li>
-                        <li class="mor-slide-open">
-                            <ul>
-                                <li><a href="category-page(left-sidebar).html">Bags, Luggage</a></li>
-                                <li><a href="category-page(left-sidebar).html">Movies, Music </a></li>
-                                <li><a href="category-page(left-sidebar).html">Video Games</a></li>
-                                <li><a href="category-page(left-sidebar).html">Toys, Baby Products</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="mor-slide-click">
-                                mor category
-                                <i class="fa fa-angle-down pro-down"></i>
-                                <i class="fa fa-angle-up pro-up"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
                 <div class="brand-logo logo-sm-center">
                     <a href="@Url.Action("Index","Home")">
                         <img src="~/Assets/Images/Think - PNG.png" class="img-fluid  " alt="logo" style="height:70px;width:135px;">
@@ -49,15 +10,20 @@
             </div>
             <div class="input-block">
                 <div class="input-box">
-                    <div class="row ">
+                    <div class="row">
                         @using (Html.BeginForm("Index", "Search"))
                         {
-                            <div class="col-sm-6 col-md-8 col-lg-8">
-                                @Html.TextBox("SearchString", null, new { @class = "form-control txtSearch", @placeholder = "Search a Product", @id = "txtSearch" })
+                            <div class="row">
+                                <div class="col">
+                                    @Html.TextBox("SearchString", null, new { @class = "form-control txtSearch", @placeholder = "Search a Product", @id = "txtSearch" })
+
+                                </div>
+                                <div class="col">
+                                    <input type="submit" value="Search" class="btn btn-success" />
+
+                                </div>
                             </div>
-                            <div class="col-sm-6 col-md-3 col-lg-4">
-                                <input type="submit" value="Search" class="btn btn-success" />
-                            </div>
+                           
                         }
 
                     </div>
@@ -144,16 +110,20 @@
     </div>
 </div>
 <div class="searchbar-input">
-    <div class="input-group">
-        @Html.TextBox("SearchString", null, new { @class = "form-control txtSearch", @placeholder = "Search a Product", @id = "txtSearch" })
-        <input type="submit" value="Search" class="btn btn-success" />
+    @using (Html.BeginForm("Index", "Search"))
+    {
+        <div class="input-group">
 
-        <span class="input-group-text close-searchbar">
-            <svg viewBox="0 0 329.26933 329" xmlns="http://www.w3.org/2000/svg"><path d="m194.800781 164.769531 128.210938-128.214843c8.34375-8.339844 8.34375-21.824219 0-30.164063-8.339844-8.339844-21.824219-8.339844-30.164063 0l-128.214844 128.214844-128.210937-128.214844c-8.34375-8.339844-21.824219-8.339844-30.164063 0-8.34375 8.339844-8.34375 21.824219 0 30.164063l128.210938 128.214843-128.210938 128.214844c-8.34375 8.339844-8.34375 21.824219 0 30.164063 4.15625 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921875-2.089844 15.082031-6.25l128.210937-128.214844 128.214844 128.214844c4.160156 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921874-2.089844 15.082031-6.25 8.34375-8.339844 8.34375-21.824219 0-30.164063zm0 0" /></svg>
-        </span>
-       
+            @Html.TextBox("SearchString", null, new { @class = "form-control txtSearch", @placeholder = "Search a Product", @id = "txtSearch" })
+            <input type="submit" value="Search" class="btn btn-success" />
+
+            <span class="input-group-text close-searchbar">
+                <svg viewBox="0 0 329.26933 329" xmlns="http://www.w3.org/2000/svg"><path d="m194.800781 164.769531 128.210938-128.214843c8.34375-8.339844 8.34375-21.824219 0-30.164063-8.339844-8.339844-21.824219-8.339844-30.164063 0l-128.214844 128.214844-128.210937-128.214844c-8.34375-8.339844-21.824219-8.339844-30.164063 0-8.34375 8.339844-8.34375 21.824219 0 30.164063l128.210938 128.214843-128.210938 128.214844c-8.34375 8.339844-8.34375 21.824219 0 30.164063 4.15625 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921875-2.089844 15.082031-6.25l128.210937-128.214844 128.214844 128.214844c4.160156 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921874-2.089844 15.082031-6.25 8.34375-8.339844 8.34375-21.824219 0-30.164063zm0 0" /></svg>
+            </span>
+
+        </div>
+    }
     </div>
-</div>
 
 <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css" rel="Stylesheet" type="text/css" />
 <script src="~/Assets/JS/jquery-3.3.1.min.js"></script>

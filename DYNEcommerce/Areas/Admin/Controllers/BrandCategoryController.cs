@@ -56,17 +56,17 @@ namespace DYNEcommerce.Areas.Admin.Controllers
             {
                 var data = Admin_BrandCRUD.GetBrandMasterAll("SelctBrandWiseCategory");
                 var chkexists = data.Where(x => x.GRP_CD == model.GRP_CD && x.BrandId == model.brandId).FirstOrDefault();
-                if (chkexists != null)
-                {
+                //if (chkexists != null)
+                //{
                     var result = GRP_MASTERCRUD.UpdateCategoryByBrandId(model);
                     Session["Message"] = "Success";
-                    return RedirectToAction("Add", "BrandCategory", "Success");
-                }
-                else
-                {
-                    Session["Message"] = "Error";
-                    return RedirectToAction("Add", "BrandCategory", "Error");
-                }
+                   return RedirectToAction("Add", "BrandCategory", "Success");
+                //}
+                //else
+                //{
+                //    Session["Message"] = "Error";
+                //    return RedirectToAction("Add", "BrandCategory", "Error");
+                //}
 
             }
             catch (Exception ex)
@@ -99,8 +99,8 @@ namespace DYNEcommerce.Areas.Admin.Controllers
             mBrandmasterDomain.GRP_CD = data[0].GRP_CD;
             mBrandmasterDomain.CategoryName = data[0].CategoryName;
             mBrandmasterDomain.Brands = new SelectList(brandSelectList, "Value", "Text");
-            if (Session["Message"] != null)
-                ViewBag.Message = Session["Message"];
+            if (Session["Message1"] != null)
+                ViewBag.Message = Session["Message1"];
             return View(mBrandmasterDomain);
         }
 
@@ -113,18 +113,18 @@ namespace DYNEcommerce.Areas.Admin.Controllers
                 mBrandCategoryDomain.brandId = model.BrandId;
                 mBrandCategoryDomain.GRP_CD = model.GRP_CD;
                 var data = Admin_BrandCRUD.GetBrandMasterAll("SelctBrandWiseCategory");
-                var chkexists = data.Where(x => x.GRP_CD == model.GRP_CD && x.BrandId == model.BrandId).FirstOrDefault();
-                if (chkexists != null)
-                {
+                //var chkexists = data.Where(x => x.GRP_CD == model.GRP_CD.Trim() && x.BrandId == model.BrandId).FirstOrDefault();
+                //if (chkexists != null)
+                //{
                     var result = GRP_MASTERCRUD.UpdateCategoryByBrandId(mBrandCategoryDomain);
-                    ViewBag.Success = "Success";
+                Session["Message1"] = "Success";
                     return RedirectToAction("Edit", "BrandCategory", "Success");
-                }
-                else
-                {
-                    Session["Message"] = "Error";
-                    return RedirectToAction("Edit", "BrandCategory", "Error");
-                }
+                //}
+                //else
+                //{
+                //    Session["Message1"] = "Error";
+                //    return RedirectToAction("Edit", "BrandCategory", "Error");
+                //}
 
             }
             catch (Exception ex)

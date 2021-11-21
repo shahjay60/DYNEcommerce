@@ -2,7 +2,6 @@
     <div class="col-md-12">
         <div class="main-menu-block">
             <div class="header-left">
-                
                 <div class="brand-logo logo-sm-center">
                     <a href="@Url.Action("Index","Home")">
                         <img src="~/Assets/Images/Think - PNG.png" class="img-fluid  " alt="logo" style="height:70px;width:135px;">
@@ -11,15 +10,20 @@
             </div>
             <div class="input-block">
                 <div class="input-box">
-                    <div class="row ">
+                    <div class="row">
                         @using (Html.BeginForm("Index", "Search"))
                         {
-                            <div class="col-sm-6 col-md-8 col-lg-8">
-                                @Html.TextBox("SearchString", null, new { @class = "form-control txtSearch", @placeholder = "Search a Product", @id = "txtSearch" })
+                            <div class="row">
+                                <div class="col">
+                                    @Html.TextBox("SearchString", null, new { @class = "form-control txtSearch", @placeholder = "Search a Product", @id = "txtSearch" })
+
+                                </div>
+                                <div class="col">
+                                    <input type="submit" value="Search" class="btn btn-success" />
+
+                                </div>
                             </div>
-                            <div class="col-sm-6 col-md-3 col-lg-4">
-                                <input type="submit" value="Search" class="btn btn-success" />
-                            </div>
+                           
                         }
 
                     </div>

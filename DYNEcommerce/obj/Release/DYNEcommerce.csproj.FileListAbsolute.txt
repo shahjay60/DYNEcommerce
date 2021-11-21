@@ -254,3 +254,5 @@ D:\Projects\DYNEcommerce_10-07\DYNEcommerce\DYNEcommerce\obj\Release\DYNEcommerc
 D:\Projects\DYNEcommerce_10-07\DYNEcommerce\DYNEcommerce\obj\Release\DYNEcommerce.csproj.CopyComplete
 D:\Projects\DYNEcommerce_10-07\DYNEcommerce\DYNEcommerce\obj\Release\DYNEcommerce.dll
 D:\Projects\DYNEcommerce_10-07\DYNEcommerce\DYNEcommerce\obj\Release\DYNEcommerce.pdb
+D:\Projects\DYNEcommerce_10-07\DYNEcommerce\DYNEcommerce\bin\log4net.dll
+D:\Projects\DYNEcommerce_10-07\DYNEcommerce\DYNEcommerce\bin\log4net.xml

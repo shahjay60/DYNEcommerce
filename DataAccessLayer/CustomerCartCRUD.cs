@@ -37,7 +37,6 @@ namespace DataAccessLayer
             return modified;
         }
 
-
         public static void AddToCartAttribute(CartAttribute mCartAttribute)
         {
             string mainconn = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
@@ -54,7 +53,6 @@ namespace DataAccessLayer
             cmd.ExecuteNonQuery();
             sqlconn.Close();
         }
-
 
         public static List<CustomerCartDomain> GetCartByCustomerId(int CustomerId)
         {
@@ -167,9 +165,6 @@ namespace DataAccessLayer
             }
             return result;
         }
-
-
-
         public static List<CheckoutDomain> GetCartByALLCustomerId(int CustomerId)
         {
             List<CheckoutDomain> mcheckout = new List<CheckoutDomain>();
@@ -249,6 +244,40 @@ namespace DataAccessLayer
             else
                 return false;
         }
+
+        public static List<CustomerModel> GetPassWordByEmailId(string emailId)
+        {
+            List<CustomerModel> grp = new List<CustomerModel>();
+            string mainconn = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
+            SqlConnection sqlconn = new SqlConnection(mainconn);
+
+            SqlCommand cmd = new SqlCommand("Get_CustomrCart", sqlconn);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@mode", "GetcartByCustID");
+            cmd.Parameters.AddWithValue("@Id", "");
+            cmd.Parameters.AddWithValue("@CustomerId", emailId);
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+
+            DataTable dt = new DataTable();
+
+            sqlconn.Open();
+            sd.Fill(dt);
+            sqlconn.Close();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+
+                grp.Add(
+                    new CustomerModel
+                    {
+                        Id = Convert.ToInt16(dr["Id"]),
+                        Password = dr["Password"].ToString(),
+                    });
+
+            }
+            return grp;
+        }
+
 
     }
 }

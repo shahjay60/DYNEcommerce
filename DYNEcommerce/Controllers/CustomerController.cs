@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer;
 using Domain;
+using DYNEcommerce.Models;
 using System;
 using System.Configuration;
 using System.Linq;
@@ -100,64 +101,76 @@ namespace DYNEcommerce.Controllers
                     // TO DO
                     CustomerCRUD.AddToCustomer(model);
 
-                    #region Send Email to new customer
-                    MailMessage msgs = new MailMessage();
-                    msgs.To.Add(model.Email);
-                    MailAddress address = new MailAddress(Email);
-                    msgs.From = address;
-                    msgs.Subject = "Welcome to Buynoor";
-                    //   msgs.BodyEncoding = System.Text.Encoding.GetEncoding("utf-8");
-                    string htmlBody = msgs.Subject = "Welcome to Think software! Take a tour of your Amazon account features here: http://buynoor.stockde.com/";
-                    msgs.Body = htmlBody;
-                    msgs.IsBodyHtml = true;
-                    SmtpClient client = new SmtpClient();
-                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    Log.Info("Register Mail started...");
+                    try
+                    {
 
-                    client.EnableSsl = false;
+                        #region Send Email to new customer
+                        MailMessage msgs = new MailMessage();
+                        msgs.To.Add(model.Email);
+                        MailAddress address = new MailAddress(Email);
+                        msgs.From = address;
+                        msgs.Subject = "Welcome to Buynoor";
+                        //   msgs.BodyEncoding = System.Text.Encoding.GetEncoding("utf-8");
+                        string htmlBody = msgs.Subject = "Welcome to Think software! Take a tour of your Amazon account features here: http://buynoor.stockde.com/";
+                        msgs.Body = htmlBody;
+                        msgs.IsBodyHtml = true;
+                        SmtpClient client = new SmtpClient();
+                        client.DeliveryMethod = SmtpDeliveryMethod.Network;
 
-                    //client.Host = "smtp.gmail.com";
-                    //client.Port = 587;
-                    client.Host = Host;
-                    client.Port = Convert.ToInt32(Port);
+                        client.EnableSsl = false;
 
-                    // client.Credentials = new System.Net.NetworkCredential("email@gmail.com", "pass@");
-                    NetworkCredential credentials = new NetworkCredential(Email, Password);
-                    client.UseDefaultCredentials = false;
-                    client.Credentials = credentials;
-                    //Send the msgs  
-                    client.Send(msgs);
-                    #endregion
+                        //client.Host = "smtp.gmail.com";
+                        //client.Port = 587;
+                        client.Host = Host;
+                        client.Port = Convert.ToInt32(Port);
 
-                    #region Send Email to Admin
-                    msgs = new MailMessage();
-                    msgs.To.Add(Email);
-                    address = new MailAddress(model.Email);
-                    msgs.From = address;
-                    msgs.Subject = "New customer Register";
-                    //   msgs.BodyEncoding = System.Text.Encoding.GetEncoding("utf-8");
-                    htmlBody = msgs.Subject = "There is one new customer " + model.FirstName + " " + model.LastName + " register on " + DateTime.Now + "";
-                    msgs.Body = htmlBody;
-                    msgs.IsBodyHtml = true;
-                    client = new SmtpClient();
-                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        // client.Credentials = new System.Net.NetworkCredential("email@gmail.com", "pass@");
+                        NetworkCredential credentials = new NetworkCredential(Email, Password);
+                        client.UseDefaultCredentials = false;
+                        client.Credentials = credentials;
+                        //Send the msgs  
+                        client.Send(msgs);
+                        #endregion
 
-                    client.EnableSsl = false;
+                        #region Send Email to Admin
+                        msgs = new MailMessage();
+                        msgs.To.Add(Email);
+                        address = new MailAddress(model.Email);
+                        msgs.From = address;
+                        msgs.Subject = "New customer Register";
+                        //   msgs.BodyEncoding = System.Text.Encoding.GetEncoding("utf-8");
+                        htmlBody = msgs.Subject = "There is one new customer " + model.FirstName + " " + model.LastName + " register on " + DateTime.Now + "";
+                        msgs.Body = htmlBody;
+                        msgs.IsBodyHtml = true;
+                        client = new SmtpClient();
+                        client.DeliveryMethod = SmtpDeliveryMethod.Network;
 
-                    //client.Host = "smtp.gmail.com";
-                    //client.Port = 587;
-                    client.Host = Host;
-                    client.Port = Convert.ToInt32(Port);
+                        client.EnableSsl = false;
 
-                    // client.Credentials = new System.Net.NetworkCredential("email@gmail.com", "pass@");
-                    credentials = new NetworkCredential(Email, Password);
-                    client.UseDefaultCredentials = false;
-                    client.Credentials = credentials;
-                    //Send the msgs  
-                    client.Send(msgs);
-                    #endregion
+                        //client.Host = "smtp.gmail.com";
+                        //client.Port = 587;
+                        client.Host = Host;
+                        client.Port = Convert.ToInt32(Port);
+
+                        // client.Credentials = new System.Net.NetworkCredential("email@gmail.com", "pass@");
+                        credentials = new NetworkCredential(Email, Password);
+                        client.UseDefaultCredentials = false;
+                        client.Credentials = credentials;
+                        //Send the msgs  
+                        client.Send(msgs);
+                        #endregion
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error("Register Mail Failed..."+ex.Message.ToString());
+                    }
+
+                    Log.Info("Register Mail end...");
+
 
                 }
-                return RedirectToAction("Login");
+                return View();
             }
             catch (Exception ex)
             {
@@ -273,6 +286,59 @@ namespace DYNEcommerce.Controllers
             {
                 return RedirectToAction("Login", "Customer");
             }
+        }
+
+        [HttpGet]
+        public ActionResult ForGetPassword()
+        {
+            return View();
+        }
+        public ActionResult ForGetPassword(CustomerModel model)
+        {
+
+            if (string.IsNullOrEmpty(model.Email))
+            {
+                var data = CustomerCartCRUD.GetPassWordByEmailId(model.Email);
+
+                var userPassword = data[0].Password;
+                try
+                {
+
+                    #region Send Email to forget Password
+                    MailMessage msgs = new MailMessage();
+                    msgs.To.Add(model.Email);
+                    MailAddress address = new MailAddress(Email);
+                    msgs.From = address;
+                    msgs.Subject = "Forget Password";
+                    //   msgs.BodyEncoding = System.Text.Encoding.GetEncoding("utf-8");
+                    string htmlBody = msgs.Subject = "Use below password for Login";
+                    htmlBody += "Your Password" + userPassword;
+                    msgs.Body = htmlBody;
+                    msgs.IsBodyHtml = true;
+                    SmtpClient client = new SmtpClient();
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+                    client.EnableSsl = false;
+
+                    //client.Host = "smtp.gmail.com";
+                    //client.Port = 587;
+                    client.Host = Host;
+                    client.Port = Convert.ToInt32(Port);
+
+                    // client.Credentials = new System.Net.NetworkCredential("email@gmail.com", "pass@");
+                    NetworkCredential credentials = new NetworkCredential(Email, Password);
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = credentials;
+                    //Send the msgs  
+                    client.Send(msgs);
+                    #endregion
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("Forget Mail Failed..." + ex.Message.ToString());
+                }
+            }
+            return View();
         }
 
         public ActionResult UpdateCustomer(CustomerDomain model)
